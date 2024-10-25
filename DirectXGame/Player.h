@@ -1,7 +1,12 @@
-﻿
+﻿#pragma once
+
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include"WorldTransformBlock.h"
+#include "Input.h"
+#include "MyMath.h"
+
 
 /// <summary>
 /// 自キャラ
@@ -26,6 +31,7 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
+	WorldTransformBlock* worldTransformBlock_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -33,4 +39,6 @@ private:
 
 	ViewProjection* viewProjection_ = nullptr;
 
+	// キーボード入力
+	Input* input_ = nullptr;
 };
