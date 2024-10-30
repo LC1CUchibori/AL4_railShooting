@@ -1,22 +1,24 @@
-﻿#pragma once
-
-#include "Model.h"
-#include "ViewProjection.h"
-#include "WorldTransform.h"
-#include "Input.h"
-#include "MyMath.h"
-
-class WorldTransformBlock
-{
-public:
-
-	Matrix4x4 matWorld;  // ワールド行列
-	Vector3 scale;          // スケール
-	Vector3 rotation;       // 回転
-	Vector3 translation;    // 平行移動
-	void TransferMatrix();
-
-private:
-
-};
+﻿//#pragma once
+//
+//#include "Model.h"
+//#include "ViewProjection.h"
+//#include "WorldTransform.h"
+//#include "Input.h"
+//#include "MyMath.h"
+//
+//class WorldTransformBlock
+//{
+//public:
+//	// ローカルスケール
+//	Vector3 scale_ = {1, 1, 1};
+//	// X,Y,Z軸回りのローカル回転角
+//	Vector3 rotation_ = {0, 0, 0};
+//	// ローカル座標
+//	Vector3 translation_ = {0, 0, 0};
+//	// ローカル → ワールド変換行列
+//	Matrix4x4 matWorld_;
+//
+//	void TransferMatrix();
+//
+//};
 
