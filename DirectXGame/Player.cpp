@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include <cassert>
 
+
 void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection){
 
 	// NULLチェック
@@ -20,15 +21,6 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 }
 
 void Player::Update(){
-
-	// ワールド行列の計算
-	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
-
-	// 定数バッファに転送する
-	worldTransform_.TransferMatrix();
-
-	// 行列を定数バッファに転送
-	worldTransform_.TransferMatrix();
 
 	// キャラクターの移動ベクトル
 	Vector3 move = { 0,0,0 };
@@ -54,6 +46,28 @@ void Player::Update(){
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
+
+	// 移動限界座標
+	const float kMoveLimitX = 32.0f;
+	const float kMoveLimitY = 18.0f;
+
+	// 範囲を超えない処理
+	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitX);
+	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kMoveLimitX);
+	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kMoveLimitY);
+	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLimitY);
+
+	// ワールド行列の計算
+	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+	// 定数バッファに転送する
+	worldTransform_.TransferMatrix();
+	// 行列を定数バッファに転送
+	worldTransform_.TransferMatrix();
+
+	// キャラクターの座標を画面表示する処理
+	ImGui::Begin("Player");
+	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
+	ImGui::End();
 }
 
 void Player::Draw(){
