@@ -44,6 +44,9 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
 
+	// 自キャラの旋回更新
+	player_->Rotate();
+
 	// デバッグカメラの更新
 	debugCamera_->Update();
 

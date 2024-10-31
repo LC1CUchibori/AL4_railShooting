@@ -66,3 +66,16 @@ void Player::Draw(){
 	// 3Dモデルを描画
 	model_->Draw(worldTransform_, *viewProjection_, textureHandle_);
 }
+
+void Player::Rotate()
+{
+	// 回転速さ
+	const float kRotSpeed = 0.02f;
+
+	// 押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y += kRotSpeed;
+	}else if (input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	}
+}

@@ -28,6 +28,8 @@ public:
 	/// </summary>
 	void Draw();
 
+	void Rotate();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
