@@ -9,6 +9,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "DebugCamera.h"
 
 /// <summary>
 /// ゲームシーン
@@ -41,6 +42,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	bool isDebugCameraActiv_ = false;
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -61,4 +64,8 @@ private: // メンバ変数
 
 	// 自キャラ
 	Player* player_ = nullptr;
+
+	// デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
+	bool debugCameraFlag_ = false;
 };

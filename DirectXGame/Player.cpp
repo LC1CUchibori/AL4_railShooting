@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include <cassert>
+#include <ImGuiManager.h>
 
 void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection){
 
@@ -54,6 +55,10 @@ void Player::Update(){
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
+
+	ImGui::Begin("Player");
+	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
+	ImGui::End();
 }
 
 void Player::Draw(){
