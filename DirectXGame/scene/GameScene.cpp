@@ -8,6 +8,10 @@ GameScene::GameScene() {}
 GameScene::~GameScene() { 
 	delete model_; 
 	delete player_;
+	delete skydome_;
+	delete modelSkydome_;
+	delete ground_;
+	delete modelGround_;
 }
 
 void GameScene::Initialize() {
@@ -29,11 +33,39 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_, &viewProjection_);
+
+	// 天球の生成
+	skydome_ = new Skydome();
+	// 天球3Dモデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	// 天球の初期化
+	skydome_->Initialize(modelSkydome_, &viewProjection_);
+
+	// 天球の初期位置とスケール
+	skydome_->GetWorldTransform().translation_ = {0.0f, 0.0f, 0.0f}; // 中心に配置
+	skydome_->GetWorldTransform().scale_ = {50.0f, 50.0f, 50.0f}; // 大きめのスケールで初期化
+
+	// 地面の生成
+	ground_ = new Ground();
+	// 地面3Dモデルの生成
+	modelGround_ = Model::CreateFromOBJ("Ground", true);
+	// モデルの初期化
+	ground_->Initialize(modelGround_, &viewProjection_);
 }
 
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+
+	// 天球の更新
+	skydome_->Update();
+
+	// 天球の回転を少しずつ加える
+	skydome_->GetWorldTransform().rotation_.y += 0.002f; // Y軸方向にゆっくり回転
+	
+
+	// 地面の更新
+	ground_->Update();
 }
 
 void GameScene::Draw() {
@@ -67,6 +99,12 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw();
+
+	// 地面の描画
+	ground_->Draw();
+
+	// 天球の描画
+	skydome_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

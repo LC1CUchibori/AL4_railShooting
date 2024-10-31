@@ -9,6 +9,8 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "Skydome.h"
+#include "Ground.h"
 
 /// <summary>
 /// ゲームシーン
@@ -61,4 +63,16 @@ private: // メンバ変数
 
 	// 自キャラ
 	Player* player_ = nullptr;
+
+	// 天球
+	Skydome* skydome_ = nullptr;
+	// 3Dモデル
+	Model* modelSkydome_ = nullptr;
+
+	// 地面
+	Ground* ground_ = nullptr;
+	Model* modelGround_ = nullptr;
+
+	// 背景スプライトのトランスフォーム
+	WorldTransform backGroundSpriteTransform_;
 };
