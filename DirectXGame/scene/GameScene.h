@@ -61,6 +61,9 @@ private: // メンバ変数
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
+	uint32_t BackGround_ = 0;
+	Sprite* backGroundSprite_ = nullptr;
+
 	// 自キャラ
 	Player* player_ = nullptr;
 
@@ -73,6 +76,4 @@ private: // メンバ変数
 	Ground* ground_ = nullptr;
 	Model* modelGround_ = nullptr;
 
-	// 背景スプライトのトランスフォーム
-	WorldTransform backGroundSpriteTransform_;
 };

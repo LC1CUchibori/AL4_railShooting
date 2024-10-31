@@ -12,6 +12,7 @@ GameScene::~GameScene() {
 	delete modelSkydome_;
 	delete ground_;
 	delete modelGround_;
+	delete backGroundSprite_;
 }
 
 void GameScene::Initialize() {
@@ -29,6 +30,9 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
+	BackGround_ = TextureManager::Load("Danjon.png");
+	backGroundSprite_ = Sprite::Create(BackGround_, { 0,0 });
+
 	// 自キャラの生成
 	player_ = new Player();
 	// 自キャラの初期化
@@ -41,9 +45,6 @@ void GameScene::Initialize() {
 	// 天球の初期化
 	skydome_->Initialize(modelSkydome_, &viewProjection_);
 
-	// 天球の初期位置とスケール
-	skydome_->GetWorldTransform().translation_ = {0.0f, 0.0f, 0.0f}; // 中心に配置
-	skydome_->GetWorldTransform().scale_ = {50.0f, 50.0f, 50.0f}; // 大きめのスケールで初期化
 
 	// 地面の生成
 	ground_ = new Ground();
@@ -59,9 +60,6 @@ void GameScene::Update() {
 
 	// 天球の更新
 	skydome_->Update();
-
-	// 天球の回転を少しずつ加える
-	skydome_->GetWorldTransform().rotation_.y += 0.002f; // Y軸方向にゆっくり回転
 	
 
 	// 地面の更新
@@ -80,6 +78,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
+	//backGroundSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

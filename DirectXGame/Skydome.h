@@ -2,6 +2,7 @@
 #include "WorldTransform.h"
 #include "Viewprojection.h"
 
+
 class Skydome{
 public:
 	void Initialize(Model* model, ViewProjection* viewProjection); 
@@ -9,9 +10,6 @@ public:
 	void Update();
 
 	void Draw();
-
-	// WorldTransform へのアクセスを許可
-	WorldTransform& GetWorldTransform() { return worldTransform_; }
 
 private:
 	// ワールド変換データ

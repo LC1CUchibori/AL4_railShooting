@@ -1,6 +1,7 @@
 ﻿#include "Model.h"
 #include "WorldTransform.h"
 #include "Viewprojection.h"
+#include "Mymath.h"
 
 class Ground{
 public:
