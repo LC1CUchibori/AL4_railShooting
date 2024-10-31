@@ -1,7 +1,12 @@
-﻿
+﻿#pragma once
+
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Input.h"
+#include "ImGuiManager.h"
+
+
 
 /// <summary>
 /// 自キャラ
@@ -33,4 +38,6 @@ private:
 
 	ViewProjection* viewProjection_ = nullptr;
 
+	// キーボード入力
+	Input* input_ = nullptr;
 };
