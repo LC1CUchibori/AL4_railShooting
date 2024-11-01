@@ -23,7 +23,9 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 void Player::Update(){
 
 	// ワールド行列の計算
-	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+	//worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+
+	worldTransform_.UpdateMatrix();
 
 	// 定数バッファに転送する
 	worldTransform_.TransferMatrix();
@@ -56,6 +58,14 @@ void Player::Update(){
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
 
+	// キャラクター攻撃処理
+	Attack();
+
+	// 弾更新
+	if (bullet_) {
+		bullet_->Update();
+	}
+
 	ImGui::Begin("Player");
 	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
 	ImGui::End();
@@ -65,6 +75,11 @@ void Player::Draw(){
 
 	// 3Dモデルを描画
 	model_->Draw(worldTransform_, *viewProjection_, textureHandle_);
+
+	// 弾描画
+	if (bullet_) {
+		bullet_->Draw(*viewProjection_);
+	}
 }
 
 void Player::Rotate()
@@ -77,5 +92,25 @@ void Player::Rotate()
 		worldTransform_.rotation_.y += kRotSpeed;
 	}else if (input_->PushKey(DIK_D)) {
 		worldTransform_.rotation_.y -= kRotSpeed;
+	}
+}
+
+void Player::Attack()
+{
+	if (input_->TriggerKey(DIK_SPACE)) {
+
+		//// 弾の速度
+		//const float kBulletSpeed = 1.0f;
+		//Vector3 velocity(0, 0, kBulletSpeed);
+
+		//// 速度ベクトルを自機の向きに合わせて回転させる
+		//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+
+		// 弾を生成し、初期化
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(model_, worldTransform_.translation_);
+
+		// 弾を登録する
+		bullet_ = newBullet;
 	}
 }
