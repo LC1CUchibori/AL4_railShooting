@@ -2,6 +2,12 @@
 #include <cassert>
 #include <ImGuiManager.h>
 
+Player::~Player()
+{
+	// bullet_の解放
+	delete bullet_;
+}
+
 void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection){
 
 	// NULLチェック

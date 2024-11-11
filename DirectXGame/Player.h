@@ -3,7 +3,7 @@
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include"WorldTransformBlock.h"
+#include "WorldTransformBlock.h"
 #include "Input.h"
 #include "MyMath.h"
 #include <PlayerBullet.h>
@@ -14,6 +14,11 @@
 /// </summary>
 class Player {
 public:
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~Player();
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
