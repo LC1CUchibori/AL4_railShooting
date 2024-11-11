@@ -14,6 +14,10 @@
 /// </summary>
 class Player {
 public:
+
+	
+
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
