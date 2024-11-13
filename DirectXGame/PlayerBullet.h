@@ -3,7 +3,6 @@
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "WorldTransformBlock.h"
 
 class PlayerBullet
 {
