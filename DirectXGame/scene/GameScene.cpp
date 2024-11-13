@@ -100,7 +100,7 @@ void GameScene::Draw() {
 	player_->Draw();
 
 	// 地面の描画
-	ground_->Draw();
+	//ground_->Draw();
 
 	// 天球の描画
 	skydome_->Draw();
