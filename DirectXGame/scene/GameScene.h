@@ -47,6 +47,8 @@ public: // メンバ関数
 
 	bool isDebugCameraActiv_ = false;
 
+	bool IsFinished() const { return finished_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -75,8 +77,14 @@ private: // メンバ変数
 
 	// 敵
 	EnemyAnswer* enemy_ = nullptr;
+	EnemyAnswer* enemy2_ = nullptr;
 
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	bool debugCameraFlag_ = false;
+
+	bool finished_ = false;
+
+	std::vector<EnemyAnswer> enemies_;
+	Model* enemyModel_ = nullptr;
 };

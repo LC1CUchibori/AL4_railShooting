@@ -20,6 +20,11 @@ public:
 	//};
 
 private:
+	enum class MovePhase {
+		Approach,    // 接近フェーズ
+		RandomMove   // ランダム移動フェーズ
+	};
+
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
@@ -30,18 +35,13 @@ private:
 	// 移動時間のカウント
 	float moveTimer_ = 0.0f;
 
-	// 方向変更のインターバル（秒）
 	float changeInterval_ = 2.0f;
 
 	const float kCharacterSpeed = 0.05f;  // 移動速度調整
 
 	Vector3 moveDirection_ = { 0.0f, 0.0f, 0.0f };
 
-	// フェーズ
-	//Phase phase_ = Phase::Approach;
-
-	//// 接近フェーズの移動
-	//const float ApproachSpeed = 0.1f;
-	//// 離脱フェーズの移動
-	//const float LeaveSpeed = 0.2f;
+	MovePhase movePhase_ = MovePhase::Approach;
+	float approachSpeed_ = 0.01f;               // 接近時の移動速度
+	Vector3 stopPosition_ = {0.0f, 0.0f, -1.0f}; // 停止位置
 };

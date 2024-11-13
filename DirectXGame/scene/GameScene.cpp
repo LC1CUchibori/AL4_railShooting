@@ -12,6 +12,7 @@ GameScene::~GameScene() {
 	delete skydome_;
 	delete modelSkydome_;
 	delete enemy_;
+	delete enemy2_;  
 }
 
 void GameScene::Initialize() {
@@ -50,6 +51,10 @@ void GameScene::Initialize() {
 	// 敵の初期化
 	enemy_->Initialize(model_,worldTransform_.translation_);
 
+	// 敵2の生成と初期化
+	enemy2_ = new EnemyAnswer();  // 新しい敵の生成
+	enemy2_->Initialize(model_, {3.0f, 1.0f, -2.0f});
+
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
@@ -72,6 +77,8 @@ void GameScene::Update() {
 
 	// 敵の更新
 	enemy_->Update();
+	// 敵2の更新
+	enemy2_->Update();
 
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_SPACE)) {
@@ -128,9 +135,10 @@ void GameScene::Draw() {
 	// 天球の描画
 	skydome_->Draw();
 
-
 	// 敵の描画
 	enemy_->Draw(viewProjection_);
+	// 敵2の描画
+	enemy2_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
