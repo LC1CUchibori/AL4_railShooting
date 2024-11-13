@@ -6,7 +6,8 @@
 #include "WorldTransformBlock.h"
 #include "Input.h"
 #include "MyMath.h"
-#include <PlayerBullet.h>
+#include "PlayerBullet.h"
+#include <list>
 
 
 /// <summary>
@@ -38,6 +39,9 @@ public:
 
 	void Attack();
 
+	// 弾
+	std::list<PlayerBullet*>bullets_;
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -47,6 +51,7 @@ private:
 	uint32_t textureHandle_ = 0u;
 
 	ViewProjection* viewProjection_ = nullptr;
+
 
 	// キーボード入力
 	Input* input_ = nullptr;

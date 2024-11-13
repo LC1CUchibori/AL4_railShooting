@@ -5,7 +5,10 @@
 Player::~Player()
 {
 	// bullet_の解放
-	delete bullet_;
+	for (PlayerBullet* bullet : bullets_) {
+		delete bullet;
+	}
+	bullets_.clear();
 }
 
 void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection){
@@ -68,8 +71,8 @@ void Player::Update(){
 	Attack();
 
 	// 弾更新
-	if (bullet_) {
-		bullet_->Update();
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Update();
 	}
 
 	ImGui::Begin("Player");
@@ -83,8 +86,8 @@ void Player::Draw(){
 	model_->Draw(worldTransform_, *viewProjection_, textureHandle_);
 
 	// 弾描画
-	if (bullet_) {
-		bullet_->Draw(*viewProjection_);
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Draw(*viewProjection_);
 	}
 }
 
@@ -112,11 +115,12 @@ void Player::Attack()
 		//// 速度ベクトルを自機の向きに合わせて回転させる
 		//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 
+
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, worldTransform_.translation_);
 
 		// 弾を登録する
-		bullet_ = newBullet;
+		bullets_.push_back(newBullet);
 	}
 }
