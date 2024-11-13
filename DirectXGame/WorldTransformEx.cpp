@@ -1,10 +1,10 @@
-#include "WorldTransform.h"
+ï»¿#include "WorldTransform.h"
 #include "MyMath.h"
 
 void WorldTransform::UpdateMatrix()
 {
-	// ƒXƒP[ƒ‹A‰ñ“]A•½sˆÚ“®‚ğ‡¬‚µ‚Äs—ñ‚ğŒvZ‚·‚é
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã€å›è»¢ã€å¹³è¡Œç§»å‹•ã‚’åˆæˆã—ã¦è¡Œåˆ—ã‚’è¨ˆç®—ã™ã‚‹
 	matWorld_ =MakeAffineMatrix(scale_, rotation_, translation_);
-	// ’è”ƒoƒbƒtƒ@‚É“]‘—‚·‚é
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«è»¢é€ã™ã‚‹
 	TransferMatrix();
 }
