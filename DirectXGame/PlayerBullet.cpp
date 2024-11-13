@@ -1,33 +1,33 @@
-#include "PlayerBullet.h"
+ï»¿#include "PlayerBullet.h"
 #include <cassert>
 
 void PlayerBullet::Initialize(Model* model, const Vector3& position,const Vector3& velocity)
 {
-	// NULLƒ|ƒCƒ“ƒ^ƒ`ƒFƒbƒN
+	// NULLãƒã‚¤ãƒ³ã‚¿ãƒã‚§ãƒƒã‚¯
 	assert(model);
 
 	model_ = model;
-	// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	textureHandle_ = TextureManager::Load("white1x1.png");
-	// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®åˆæœŸåŒ–
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_ = position;
 
-	// ˆø”‚Åó‚¯æ‚Á‚½‘¬“x‚ğƒƒ“ƒo•Ï”‚É‘ã“ü
+	// å¼•æ•°ã§å—ã‘å–ã£ãŸé€Ÿåº¦ã‚’ãƒ¡ãƒ³ãƒå¤‰æ•°ã«ä»£å…¥
 	velocity_ = velocity;
 }
 
 void PlayerBullet::Update()
 {
-	// À•W‚ğˆÚ“®‚³‚¹‚é
+	// åº§æ¨™ã‚’ç§»å‹•ã•ã›ã‚‹
 	worldTransform_.translation_.z += 2.0f;
 
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
 	}
 
-	// s—ñ‚ğXV
+	// è¡Œåˆ—ã‚’æ›´æ–°
 	worldTransform_.UpdateMatrix();
 }
 

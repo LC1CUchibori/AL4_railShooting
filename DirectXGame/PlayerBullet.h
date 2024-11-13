@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Model.h"
 #include "ViewProjection.h"
@@ -8,36 +8,36 @@ class PlayerBullet
 {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(Model* model, const Vector3& position,const Vector3& velocity);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(const ViewProjection& viewProjection);
 
 	bool IsDead()const { return isDead_; }
 
 private:
-	// ƒ[ƒ‹ƒh•ÏŠ·ƒf[ƒ^
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ãƒ‡ãƒ¼ã‚¿
 	WorldTransform worldTransform_;
-	// ƒ‚ƒfƒ‹
+	// ãƒ¢ãƒ‡ãƒ«
 	Model* model_ = nullptr;
-	// ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
 	uint32_t textureHandle_ = 0;
-	// ‘¬“x
+	// é€Ÿåº¦
 	Vector3 velocity_;
 
-	// õ–½
+	// å¯¿å‘½
 	static const int32_t klifeTime = 60 * 5;
-	// ƒfƒXƒ^ƒCƒ}[
+	// ãƒ‡ã‚¹ã‚¿ã‚¤ãƒãƒ¼
 	int32_t deathTimer_ = klifeTime;
-	// ƒfƒXƒtƒ‰ƒO
+	// ãƒ‡ã‚¹ãƒ•ãƒ©ã‚°
 	bool isDead_ = false;
 };
