@@ -3,10 +3,11 @@
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "WorldTransformBlock.h"
 #include "Input.h"
-#include "Mymath.h"
-#include "ImGuiManager.h"
-
+#include "MyMath.h"
+#include "PlayerBullet.h"
+#include <list>
 
 
 /// <summary>
@@ -14,9 +15,10 @@
 /// </summary>
 class Player {
 public:
-
-	
-
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~Player();
 
 	/// <summary>
 	/// 初期化
@@ -33,6 +35,13 @@ public:
 	/// </summary>
 	void Draw();
 
+	void Rotate();
+
+	void Attack();
+
+	// 弾
+	std::list<PlayerBullet*>bullets_;
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -43,6 +52,9 @@ private:
 
 	ViewProjection* viewProjection_ = nullptr;
 
+
 	// キーボード入力
 	Input* input_ = nullptr;
+
+	PlayerBullet* bullet_ = nullptr;
 };
