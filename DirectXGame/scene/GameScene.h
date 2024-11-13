@@ -9,8 +9,10 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "DebugCamera.h"
+#include "EnemyAnswer.h"
 #include "Skydome.h"
-#include "Ground.h"
+
 
 /// <summary>
 /// ゲームシーン
@@ -43,6 +45,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	bool isDebugCameraActiv_ = false;
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -61,9 +65,6 @@ private: // メンバ変数
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	uint32_t BackGround_ = 0;
-	Sprite* backGroundSprite_ = nullptr;
-
 	// 自キャラ
 	Player* player_ = nullptr;
 
@@ -72,8 +73,10 @@ private: // メンバ変数
 	// 3Dモデル
 	Model* modelSkydome_ = nullptr;
 
-	// 地面
-	Ground* ground_ = nullptr;
-	Model* modelGround_ = nullptr;
+	// 敵
+	EnemyAnswer* enemy_ = nullptr;
 
+	// デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
+	bool debugCameraFlag_ = false;
 };

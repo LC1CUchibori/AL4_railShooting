@@ -1,46 +1,49 @@
 ﻿#include "EnemyAnswer.h"
-#include <cassert>
+#include <cstdlib> // rand, srand
+#include <ctime>   // time
 
 void EnemyAnswer::Initialize(Model* model, const Vector3& position)
 {
+    model_ = model;
+    textureHandle_ = TextureManager::Load("white1x1.png");
+    worldTransform_.Initialize();
+    worldTransform_.translation_ = position;
 
-	model_ = model;
-	// テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("white1x1.png");
-	// ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
-
-	worldTransform_.translation_ = position;
+    // 乱数のシードを設定
+    srand(static_cast<unsigned>(time(nullptr)));
 }
 
 void EnemyAnswer::Update()
 {
+    // 行列を更新
+    worldTransform_.UpdateMatrix();
 
+    // ランダムな移動量を生成
+    float randomX = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * ApproachSpeed;
+    float randomY = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * ApproachSpeed;
+    float randomZ = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * ApproachSpeed;
 
+    switch (phase_)
+    {
+    default:
+    case Phase::Approach:
+        // ランダムな方向に移動
+        worldTransform_.translation_.x += randomX;
+        worldTransform_.translation_.y += randomY;
+        worldTransform_.translation_.z += randomZ;
 
-	// 行列を更新
-	worldTransform_.UpdateMatrix();
-
-	switch (phase_)
-	{
-	default:
-	case Phase::Approach:
-		// 移動
-		/*worldTransform_.translation_.x -=ApproachSpeed;
-		worldTransform_.translation_.y -=ApproachSpeed;*/
-		worldTransform_.translation_.z -=ApproachSpeed;
-		// 既定の位置に到達したら離脱
-		if (worldTransform_.translation_.z < 0.0f) {
-			phase_ = Phase::Leave;
-		}
-		break;
-	case Phase::Leave:
-		// 移動
-		/*worldTransform_.translation_.x -= LeaveSpeed;
-		worldTransform_.translation_.y -= LeaveSpeed;*/
-		worldTransform_.translation_.z -= LeaveSpeed;
-		break;
-	}
+        // 既定の位置に到達したら離脱フェーズへ
+        if (worldTransform_.translation_.z < 0.0f) {
+            phase_ = Phase::Leave;
+        }
+        break;
+    case Phase::Leave:
+        // 離脱フェーズでもランダムな移動量で離れていく
+        worldTransform_.translation_.x += randomX * LeaveSpeed;
+        worldTransform_.translation_.y += randomY * LeaveSpeed;
+        worldTransform_.translation_.z -= LeaveSpeed;
+        break;
+    }
 }
 
 void EnemyAnswer::Draw(const ViewProjection& viewProjection)
