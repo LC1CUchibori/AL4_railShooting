@@ -9,6 +9,7 @@ GameScene::~GameScene() {
 	delete model_; 
 	delete player_;
 	delete debugCamera_;
+	delete enemy_;
 }
 
 void GameScene::Initialize() {
@@ -34,6 +35,11 @@ void GameScene::Initialize() {
 	// デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
+	// 敵の生成
+	enemy_ = new Enemy();
+	// 敵の初期化
+	enemy_->Initialize(model_,worldTransform_.translation_);
+
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
@@ -49,6 +55,9 @@ void GameScene::Update() {
 
 	// デバッグカメラの更新
 	debugCamera_->Update();
+
+	// 敵の更新
+	enemy_->Update();
 
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_SPACE)) {
@@ -101,6 +110,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw();
+
+	// 敵の描画
+	enemy_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
