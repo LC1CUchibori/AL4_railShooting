@@ -37,11 +37,12 @@ private:
 
 	float changeInterval_ = 2.0f;
 
-	const float kCharacterSpeed = 0.05f;  // 移動速度調整
+	const float kCharacterSpeed = 0.08f;  // 移動速度調整
 
 	Vector3 moveDirection_ = { 0.0f, 0.0f, 0.0f };
 
 	MovePhase movePhase_ = MovePhase::Approach;
 	float approachSpeed_ = 0.01f;               // 接近時の移動速度
-	Vector3 stopPosition_ = {0.0f, 0.0f, -1.0f}; // 停止位置
+	Vector3 stopPosition_ = {0.0f, -10.0f, 1.0f}; // 停止位置
+
 };

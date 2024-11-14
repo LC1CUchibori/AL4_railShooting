@@ -20,17 +20,19 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
 
     // 移動開始からの経過時間
     moveTimer_ = 0.0f;
-   
-    changeInterval_ = 2.0f;  
+
+    changeInterval_ = 2.0f;
 
     // 接近フェーズから開始
     movePhase_ = MovePhase::Approach;
 
     // 接近時の移動速度
-    approachSpeed_ = 0.1f;
+    approachSpeed_ = 0.5f;
 
-    // ランダム移動の開始位置 (敵が停止する位置)
-    stopPosition_ = Vector3{0.0f, 0.0f, -1.0f};
+
+    // z座標を少し奥に変更する
+    worldTransform_.translation_.y -= 10.0f;
+    worldTransform_.translation_.z = 100.0f;
 }
 
 void EnemyAnswer::Update()
@@ -66,17 +68,18 @@ void EnemyAnswer::Update()
         // 現在の移動方向に基づいて移動
         worldTransform_.translation_.x += moveDirection_.x * kCharacterSpeed;
         worldTransform_.translation_.y += moveDirection_.y * kCharacterSpeed;
-        worldTransform_.translation_.z += moveDirection_.z * kCharacterSpeed;
+       // worldTransform_.translation_.z += moveDirection_.z * kCharacterSpeed;
 
         // 画面範囲内に収まるように制限
-        const float kLimit = 5.0f;
-        worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -kLimit, kLimit);
-        worldTransform_.translation_.y = std::clamp(worldTransform_.translation_.y, -kLimit, kLimit);
-        worldTransform_.translation_.z = std::clamp(worldTransform_.translation_.z, -kLimit, kLimit);
+        const float kLimitX = 35.0f;    // x軸の範囲
+        const float kLimitY = -10.0f;    // y軸は下半分の範囲を設定
+        const float kLimitZ = 10.0f;    // z軸の範囲
+
+        worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -kLimitX, kLimitX);
+        worldTransform_.translation_.y = std::clamp(worldTransform_.translation_.y, kLimitY, 0.0f);  
+        worldTransform_.translation_.z = std::clamp(worldTransform_.translation_.z, -kLimitZ, kLimitZ);
     }
 
-    // z座標を少し奥に変更す
-    worldTransform_.translation_.z -= 10.0f;
 
 
 }

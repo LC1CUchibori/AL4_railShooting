@@ -49,11 +49,11 @@ void GameScene::Initialize() {
 	// 敵の生成
 	enemy_ = new EnemyAnswer();
 	// 敵の初期化
-	enemy_->Initialize(model_,worldTransform_.translation_);
+	enemy_->Initialize(model_,{-10.0f,1.0f,-2.0f});
 
 	// 敵2の生成と初期化
 	enemy2_ = new EnemyAnswer();  // 新しい敵の生成
-	enemy2_->Initialize(model_, {3.0f, 1.0f, -2.0f});
+	enemy2_->Initialize(model_, {10.0f, 1.0f, -2.0f});
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
