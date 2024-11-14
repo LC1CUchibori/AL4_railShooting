@@ -15,6 +15,9 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
     worldTransform_.Initialize();
     worldTransform_.translation_ = position;
 
+    // 初期位置を保存
+    initialPosition_ = position;
+
     // ランダムシードの設定
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
@@ -33,6 +36,8 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
     // z座標を少し奥に変更する
     worldTransform_.translation_.y -= 10.0f;
     worldTransform_.translation_.z = 100.0f;
+
+    isDead_ = false;
 }
 
 void EnemyAnswer::Update()
@@ -80,13 +85,11 @@ void EnemyAnswer::Update()
         worldTransform_.translation_.z = std::clamp(worldTransform_.translation_.z, -kLimitZ, kLimitZ);
     }
 
-
-
 }
 
 void EnemyAnswer::Draw(const ViewProjection& viewProjection)
 {
-    if (isDead == false) {
+    if (isDead_ == false) {
         model_->Draw(worldTransform_, viewProjection, textureHandle_);
    }
 }
@@ -104,6 +107,20 @@ void EnemyAnswer::ChangeDirection()
 
 void EnemyAnswer::OnCollision()
 {
-    isDead = true;
+    isDead_ = true;
+}
+
+void EnemyAnswer::SetPosition(const Vector3& position)
+{
+    worldTransform_.translation_ = position;
+}
+
+void EnemyAnswer::Revive()
+{
+    if (isDead_) {
+        isDead_ = false;
+        worldTransform_.translation_ = initialPosition_;  // 初期位置に戻す
+        movePhase_ = MovePhase::Approach;  // 接近フェーズから再開
+    }
 }
 

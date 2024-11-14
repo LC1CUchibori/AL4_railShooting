@@ -20,6 +20,11 @@ public:
 		return worldTransform_.translation_;
 	}
 
+	void SetPosition(const Vector3& position);
+
+	void Revive(); 
+
+	bool IsDead()const { return isDead_; }
 
 private:
 	enum class MovePhase {
@@ -47,6 +52,8 @@ private:
 	float approachSpeed_ = 0.01f;               // 接近時の移動速度
 	Vector3 stopPosition_ = {0.0f, -10.0f, 10.0f}; // 停止位置
 
+	// デスフラグ
+	bool isDead_ = false;
 
-	bool isDead = false;
+	Vector3 initialPosition_;  // 敵の初期位置
 };

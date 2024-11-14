@@ -134,3 +134,8 @@ void Player::Attack()
 		bullets_.push_back(newBullet);
 	}
 }
+
+void Player::SetPosition(const Vector3& position)
+{
+	worldTransform_.translation_ = position;
+}

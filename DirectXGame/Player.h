@@ -50,6 +50,8 @@ public:
 
 	const std::list<PlayerBullet*>& GetBullet()const { return bullets_; }
 
+	void SetPosition(const Vector3& position);
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;

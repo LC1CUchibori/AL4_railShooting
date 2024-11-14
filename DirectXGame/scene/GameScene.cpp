@@ -55,16 +55,6 @@ void GameScene::Initialize() {
 	enemy2_ = new EnemyAnswer();  // 新しい敵の生成
 	enemy2_->Initialize(model_, {10.0f, 1.0f, 10.0f});
 
-	//// 敵の状態
-	//EnemyState state_;  // 〇か×の状態
-	//GamePhase phase_;   // 現在のフェーズ
-
-
-	// // 初期の状態を〇に設定
- //   state_ = EnemyState::O;
-
- //   // 初期フェーズをPhase1に設定
- //   phase_ = GamePhase::Phase1;
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -112,6 +102,31 @@ void GameScene::Update() {
 		viewProjection_.UpdateMatrix();
 	}
 
+	switch (phase_) {
+	case GamePhase::Phase1:
+		// フェーズ1の処理
+		state_ = EnemyState::O;  // 〇が正解
+		break;
+	case GamePhase::Phase2:
+		// フェーズ2の処理
+		state_ = EnemyState::X;  // ×が正解
+		break;
+	case GamePhase::Phase3:
+		// フェーズ3の処理
+		state_ = EnemyState::O;  // 〇が正解
+		break;
+	case GamePhase::Phase4:
+		// フェーズ4の処理
+		state_ = EnemyState::X;  // ×が正解
+		break;
+	case GamePhase::Phase5:
+		// フェーズ5の処理
+		state_ = EnemyState::O;  // 〇が正解
+		break;
+	case GamePhase::Complete:
+		// 完了フェーズ
+		break;
+	}
 }
 
 void GameScene::Draw() {
@@ -185,6 +200,7 @@ void GameScene::CheckAllCollision()
 		if (((posB.x - posA.x)*(posB.x - posA.x) + (posB.y - posA.y) *(posB.y - posA.y)  + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
 			enemy_->OnCollision();
 			bullet->OnCollision();
+			CheckNextPhaseO();
 		}
 	}
 
@@ -196,8 +212,83 @@ void GameScene::CheckAllCollision()
 		if (((posB.x - posA.x)*(posB.x - posA.x) + (posB.y - posA.y) *(posB.y - posA.y)  + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
 			bullet->OnCollision();
 			enemy2_->OnCollision();
+			CheckNextPhaseO();
 		}
 	}
+	
+}
+void GameScene::CheckNextPhaseO()
+{
+	// 現在のフェーズに応じた判定
+	if (phase_ == GamePhase::Complete) {
+		return;  // 完了フェーズなので何もしない
+	}
 
+	// 敵を復活
+	if (enemy_->IsDead()) {
+		enemy_->Revive();
+	}
+
+	if (state_ == EnemyState::O) {
+		// 〇を撃った場合
+
+		// 次のフェーズに進む
+		if (phase_ == GamePhase::Phase1) {
+			phase_ = GamePhase::Phase2;
+		}
+		else if (phase_ == GamePhase::Phase2) {
+			phase_ = GamePhase::Phase3;
+		}
+		else if (phase_ == GamePhase::Phase3) {
+			phase_ = GamePhase::Phase4;
+		}
+		else if (phase_ == GamePhase::Phase4) {
+			phase_ = GamePhase::Phase5;
+		}
+		else if (phase_ == GamePhase::Phase5) {
+			phase_ = GamePhase::Complete;
+		}
+		// プレイヤーと敵の位置を初期位置にリセット
+		ResetPosition();
+
+	}
+}
+void GameScene::CheckNextPhaseX()
+{
+	if (enemy2_->IsDead()) {
+		enemy2_->Revive();
+	}
+
+	if (state_ == EnemyState::X) {
+		// ×を撃った場合
+
+		// 次のフェーズに進む
+		if (phase_ == GamePhase::Phase1) {
+			phase_ = GamePhase::Phase2;
+		}
+		else if (phase_ == GamePhase::Phase2) {
+			phase_ = GamePhase::Phase3;
+		}
+		else if (phase_ == GamePhase::Phase3) {
+			phase_ = GamePhase::Phase4;
+		}
+		else if (phase_ == GamePhase::Phase4) {
+			phase_ = GamePhase::Phase5;
+		}
+		else if (phase_ == GamePhase::Phase5) {
+			phase_ = GamePhase::Complete;
+		}
+		// プレイヤーと敵の位置を初期位置にリセット
+		ResetPosition();
+	}
+}
+void GameScene::ResetPosition()
+{
+	// プレイヤーの初期位置を設定
+	player_->SetPosition({ 0.0f, 1.0f, 0.0f });  // 初期位置の座標に変更
+
+	// 敵の初期位置を設定
+	enemy_->SetPosition({ -10.0f, 1.0f, 10.0f });  // 敵の初期位置に変更
+	enemy2_->SetPosition({ 10.0f, 1.0f, 10.0f });  // 敵2の初期位置に変更
 }
 #pragma endregion

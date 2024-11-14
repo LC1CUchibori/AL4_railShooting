@@ -54,20 +54,24 @@ public: // メンバ関数
 
 private: // メンバ変数
 
-	//enum class EnemyState {
-	//	O,  // 〇の状態
-	//	X   // ×の状態
-	//};
+	enum class EnemyState {
+		O,  // 〇の状態
+		X   // ×の状態
+	};
 
-	//enum class GamePhase {
-	//	Phase1,    // フェーズ1
-	//	Phase2,    // フェーズ2
-	//	Phase3,    // フェーズ3
-	//	Phase4,    // フェーズ4
-	//	Phase5,    // フェーズ5
-	//	Complete   // 完了
-	//};
+	enum class GamePhase {
+		Phase1,    // フェーズ1
+		Phase2,    // フェーズ2
+		Phase3,    // フェーズ3
+		Phase4,    // フェーズ4
+		Phase5,    // フェーズ5
+		Complete   // 完了
+	};
 
+	// 初期の状態を〇に設定
+	EnemyState state_ = EnemyState::O;
+	// 初期フェーズをPhase1に設定
+	GamePhase phase_ = GamePhase::Phase1;
 
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -106,5 +110,12 @@ private: // メンバ変数
 
 	std::vector<EnemyAnswer> enemies_;
 	Model* enemyModel_ = nullptr;
+
+	void CheckNextPhaseO();
+
+	void CheckNextPhaseX();
+
+	void ResetPosition();
+
 
 };
