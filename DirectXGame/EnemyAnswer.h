@@ -36,8 +36,10 @@ private:
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+	Model* model2_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
+	
 
 	// 移動時間のカウント
 	float moveTimer_ = 0.0f;

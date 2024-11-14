@@ -102,6 +102,10 @@ private: // メンバ変数
 	EnemyAnswer* enemy_ = nullptr;
 	EnemyAnswer* enemy2_ = nullptr;
 
+	// モデル
+	Model* modelO_ = nullptr;
+	Model* modelX_ = nullptr;
+
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	bool debugCameraFlag_ = false;

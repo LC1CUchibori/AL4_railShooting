@@ -11,7 +11,8 @@ enum class MovePhase {
 void EnemyAnswer::Initialize(Model* model, const Vector3& position)
 {
     model_ = model;
-    textureHandle_ = TextureManager::Load("white1x1.png");
+    //textureHandleO_ = TextureManager::Load("white1x1.png");
+  
     worldTransform_.Initialize();
     worldTransform_.translation_ = position;
 
@@ -90,8 +91,9 @@ void EnemyAnswer::Update()
 void EnemyAnswer::Draw(const ViewProjection& viewProjection)
 {
     if (isDead_ == false) {
-        model_->Draw(worldTransform_, viewProjection, textureHandle_);
-   }
+        model_->Draw(worldTransform_, viewProjection);
+        model2_->Draw(worldTransform_, viewProjection);
+    }
 }
 
 // ランダムな移動方向を変更する関数

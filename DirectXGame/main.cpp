@@ -1,22 +1,27 @@
 #include "Audio.h"
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
-#include "GameScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
 #include "WinApp.h"
-#include "TitleScene.h"
 
-GameScene* gameScene = nullptr;
+#include "TitleScene.h"
+#include "RuleScene.h"
+#include "GameScene.h"
+#include "GameClearScene.h"
+
 TitleScene* titleScene = nullptr;
+RuleScene* ruleScene = nullptr;
+GameScene* gameScene = nullptr;
+GameClearScene* gameClearScene = nullptr;
+
 
 enum class Scene {
-
-	kUnknown = 0,
-
 	kTitle,
+	kRule,
 	kGame,
+	kGameClear,
 };
 
 Scene scene = Scene::kTitle;
@@ -37,7 +42,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
-
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -86,6 +90,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	titleScene = new TitleScene;
 	titleScene->Initialize();
 
+	ruleScene = new RuleScene();
+	ruleScene->Initialize();
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -126,7 +133,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// 各種解放
 	delete titleScene;
+	delete ruleScene;
 	delete gameScene;
+	delete gameClearScene;
 
 	audio->Finalize();
 	// ImGui解放
@@ -145,10 +154,22 @@ void ChangeScene()
 	case Scene::kTitle:
 		if (titleScene->IsFinished()) {
 			// シーン変更
-			scene = Scene::kGame;
+			scene = Scene::kRule;
 			// 旧シーンの解放
 			delete titleScene;
 			titleScene = nullptr;
+			// 新シーンの生成と初期化
+			ruleScene = new RuleScene;
+			ruleScene->Initialize();
+		}
+		break;
+	case Scene::kRule:
+		if (ruleScene->IsFinished()) {
+			// シーン変更
+			scene = Scene::kGame;
+			// 旧シーンの解放
+			delete ruleScene;
+			ruleScene = nullptr;
 			// 新シーンの生成と初期化
 			gameScene = new GameScene;
 			gameScene->Initialize();
@@ -157,15 +178,26 @@ void ChangeScene()
 	case Scene::kGame:
 		if (gameScene->IsFinished()) {
 			// シーン変更
-			scene = Scene::kTitle;
+			scene = Scene::kGameClear;
 			// 旧シーンの解放
 			delete gameScene;
 			gameScene = nullptr;
 			// 新シーンの生成と初期化
+			gameClearScene = new GameClearScene;
+			gameClearScene->Initialize();
+		}
+		break;
+	case Scene::kGameClear:
+		if (gameClearScene->IsFinished()) {
+			// シーン変更
+			scene = Scene::kTitle;
+			// 旧シーンの解放
+			delete gameClearScene;
+			gameClearScene = nullptr;
+			// 新シーンの生成と初期化
 			titleScene = new TitleScene;
 			titleScene->Initialize();
 		}
-		break;
 	}
 }
 
@@ -176,8 +208,14 @@ void UpdataScene()
 	case Scene::kTitle:
 		titleScene->Update();
 		break;
+	case Scene::kRule:
+		ruleScene->Update();
+		break;
 	case Scene::kGame:
 		gameScene->Update();
+		break;
+	case Scene::kGameClear:
+		gameClearScene->Update();
 		break;
 	}
 }
@@ -189,8 +227,14 @@ void DrawScene()
 	case Scene::kTitle:
 		titleScene->Draw();
 		break;
+	case Scene::kRule:
+		ruleScene->Draw();
+		break;
 	case Scene::kGame:
 		gameScene->Draw();
+		break;
+	case Scene::kGameClear:
+		gameClearScene->Draw();
 		break;
 	}
 }
