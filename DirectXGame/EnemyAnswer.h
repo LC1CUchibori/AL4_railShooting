@@ -13,11 +13,13 @@ public:
 	// 最初のランダムな移動方向を決定
 	void ChangeDirection();
 
-	//enum class Phase
-	//{
-	//	Approach, // 接近する
-	//	Leave,    // 離脱する
-	//};
+	void OnCollision();
+
+	// ワールド座標を取得するメソッド
+	Vector3 GetWorldPosition() const {
+		return worldTransform_.translation_;
+	}
+
 
 private:
 	enum class MovePhase {
@@ -43,6 +45,8 @@ private:
 
 	MovePhase movePhase_ = MovePhase::Approach;
 	float approachSpeed_ = 0.01f;               // 接近時の移動速度
-	Vector3 stopPosition_ = {0.0f, -10.0f, 1.0f}; // 停止位置
+	Vector3 stopPosition_ = {0.0f, -10.0f, 10.0f}; // 停止位置
 
+
+	bool isDead = false;
 };

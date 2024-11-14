@@ -86,7 +86,9 @@ void EnemyAnswer::Update()
 
 void EnemyAnswer::Draw(const ViewProjection& viewProjection)
 {
-    model_->Draw(worldTransform_, viewProjection, textureHandle_);
+    if (isDead == false) {
+        model_->Draw(worldTransform_, viewProjection, textureHandle_);
+   }
 }
 
 // ランダムな移動方向を変更する関数
@@ -98,5 +100,10 @@ void EnemyAnswer::ChangeDirection()
         static_cast<float>(std::rand() % 2001 - 1000) / 1000.0f,  // -1.0 ~ 1.0
         static_cast<float>(std::rand() % 2001 - 1000) / 1000.0f   // -1.0 ~ 1.0
     };
+}
+
+void EnemyAnswer::OnCollision()
+{
+    isDead = true;
 }
 

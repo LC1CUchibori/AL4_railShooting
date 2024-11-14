@@ -45,11 +45,30 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void CheckAllCollision();
+
 	bool isDebugCameraActiv_ = false;
 
 	bool IsFinished() const { return finished_; }
 
+
 private: // メンバ変数
+
+	//enum class EnemyState {
+	//	O,  // 〇の状態
+	//	X   // ×の状態
+	//};
+
+	//enum class GamePhase {
+	//	Phase1,    // フェーズ1
+	//	Phase2,    // フェーズ2
+	//	Phase3,    // フェーズ3
+	//	Phase4,    // フェーズ4
+	//	Phase5,    // フェーズ5
+	//	Complete   // 完了
+	//};
+
+
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
@@ -87,4 +106,5 @@ private: // メンバ変数
 
 	std::vector<EnemyAnswer> enemies_;
 	Model* enemyModel_ = nullptr;
+
 };

@@ -39,8 +39,16 @@ public:
 
 	void Attack();
 
+	// ワールド座標を取得するメソッド
+	Vector3 GetWorldPosition() const {
+		return worldTransform_.translation_;
+	}
+
+
 	// 弾
 	std::list<PlayerBullet*>bullets_;
+
+	const std::list<PlayerBullet*>& GetBullet()const { return bullets_; }
 
 private:
 	// ワールド変換データ
@@ -52,9 +60,9 @@ private:
 
 	ViewProjection* viewProjection_ = nullptr;
 
-
 	// キーボード入力
 	Input* input_ = nullptr;
 
 	PlayerBullet* bullet_ = nullptr;
+
 };

@@ -24,6 +24,13 @@ public:
 
 	bool IsDead()const { return isDead_; }
 
+	// ワールド座標を取得するメソッド
+	Vector3 GetWorldPosition() const {
+		return worldTransform_.translation_;
+	}
+
+	void OnCollision();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -40,4 +47,5 @@ private:
 	int32_t deathTimer_ = klifeTime;
 	// デスフラグ
 	bool isDead_ = false;
+	bool isCollisionDead_ = false;
 };
