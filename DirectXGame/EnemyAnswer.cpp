@@ -38,6 +38,8 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
     worldTransform_.translation_.y -= 10.0f;
     worldTransform_.translation_.z = 100.0f;
 
+    worldTransform_.scale_ = {2.0f, 2.0f, 2.0f};
+
     isDead_ = false;
 }
 
@@ -92,7 +94,6 @@ void EnemyAnswer::Draw(const ViewProjection& viewProjection)
 {
     if (isDead_ == false) {
         model_->Draw(worldTransform_, viewProjection);
-        model2_->Draw(worldTransform_, viewProjection);
     }
 }
 

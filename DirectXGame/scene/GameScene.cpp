@@ -46,6 +46,9 @@ void GameScene::Initialize() {
 	// デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
+	modelO_ = Model::CreateFromOBJ("X", true);
+	modelX_ = Model::CreateFromOBJ("X", true);
+
 	// 敵の生成
 	enemy_ = new EnemyAnswer();
 	// 敵の初期化
@@ -55,8 +58,6 @@ void GameScene::Initialize() {
 	enemy2_ = new EnemyAnswer();  // 新しい敵の生成
 	enemy2_->Initialize(modelX_, {10.0f, 1.0f, 10.0f});
 
-	//modelO_ = Model::CreateFromOBJ("O", true);
-	modelX_ = Model::CreateFromOBJ("X", true);
 
 
 	// 軸方向表示の表示を有効にする
