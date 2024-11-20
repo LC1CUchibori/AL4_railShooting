@@ -10,11 +10,13 @@
 #include "RuleScene.h"
 #include "GameScene.h"
 #include "GameClearScene.h"
+#include "GameOverScene.h"
 
 TitleScene* titleScene = nullptr;
 RuleScene* ruleScene = nullptr;
 GameScene* gameScene = nullptr;
 GameClearScene* gameClearScene = nullptr;
+GameOverScene* gameOverScene = nullptr;
 
 
 enum class Scene {
@@ -22,6 +24,7 @@ enum class Scene {
 	kRule,
 	kGame,
 	kGameClear,
+	kGameOver,
 };
 
 Scene scene = Scene::kTitle;
@@ -136,6 +139,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	delete ruleScene;
 	delete gameScene;
 	delete gameClearScene;
+	delete gameOverScene;
 
 	audio->Finalize();
 	// ImGui解放
@@ -198,6 +202,18 @@ void ChangeScene()
 			titleScene = new TitleScene;
 			titleScene->Initialize();
 		}
+		break;
+	case Scene::kGameOver:
+		if (gameOverScene->IsFinished()) {
+			// シーン変更
+			scene = Scene::kTitle;
+			// 旧シーンの解放
+			delete gameOverScene;
+			gameOverScene = nullptr;
+			// 新シーンの生成と初期化
+			titleScene = new TitleScene;
+			titleScene->Initialize();
+		}
 	}
 }
 
@@ -217,6 +233,9 @@ void UpdataScene()
 	case Scene::kGameClear:
 		gameClearScene->Update();
 		break;
+	case Scene::kGameOver:
+		gameOverScene->Update();
+		break;
 	}
 }
 
@@ -235,6 +254,9 @@ void DrawScene()
 		break;
 	case Scene::kGameClear:
 		gameClearScene->Draw();
+		break;
+	case Scene::kGameOver:
+		gameOverScene->Draw();
 		break;
 	}
 }

@@ -51,6 +51,8 @@ public: // メンバ関数
 
 	bool IsFinished() const { return finished_; }
 
+	void GameOver(); 
+
 
 private: // メンバ変数
 
@@ -114,6 +116,10 @@ private: // メンバ変数
 
 	std::vector<EnemyAnswer> enemies_;
 	Model* enemyModel_ = nullptr;
+
+	int missCount_ = 0; // ミス回数
+	const int maxMisses_ = 3;
+
 
 	void CheckNextPhaseO();
 

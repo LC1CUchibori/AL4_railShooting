@@ -145,6 +145,7 @@ void GameScene::Update() {
 
 	ImGui::Begin("Game Phase");  // ウィンドウのタイトル
 	ImGui::Text("Current Phase: %s", phaseName);  // フェーズ名を表示
+	ImGui::Text("miss Count %d", missCount_);
 	ImGui::End();
 }
 
@@ -236,6 +237,11 @@ void GameScene::CheckAllCollision()
 		}
 	}
 }
+void GameScene::GameOver()
+{
+	finished_ = true;
+}
+
 void GameScene::CheckNextPhaseO()
 {
 	// 現在のフェーズに応じた判定
@@ -255,8 +261,9 @@ void GameScene::CheckNextPhaseO()
 
 	if (phase_ == GamePhase::Phase2)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
+			++missCount_;
 		}
 	}
 
@@ -270,8 +277,9 @@ void GameScene::CheckNextPhaseO()
 
 	if (phase_ == GamePhase::Phase4)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
+			++missCount_;
 		}
 	}
 
@@ -281,6 +289,11 @@ void GameScene::CheckNextPhaseO()
 		{
 			phase_ = GamePhase::Complete;
 		}
+	}
+
+	if (missCount_ >= 3) {
+		// 3回ミスでゲームオーバー
+		GameOver();
 	}
 }
 
@@ -295,8 +308,9 @@ void GameScene::CheckNextPhaseX()
 
 	if (phase_==GamePhase::Phase1)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
+			++missCount_;
 		}
 	}
 
@@ -310,8 +324,9 @@ void GameScene::CheckNextPhaseX()
 
 	if (phase_ == GamePhase::Phase3)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
+			++missCount_;
 		}
 	}
 
@@ -325,11 +340,17 @@ void GameScene::CheckNextPhaseX()
 
 	if (phase_ == GamePhase::Phase5)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
+			++missCount_;
 		}
 	}
+	if (missCount_ >= 3) {
+		// 3回ミスでゲームオーバー
+		GameOver();
+	}
 }
+
 void GameScene::ResetPosition()
 {
 	// プレイヤーの初期位置を設定
