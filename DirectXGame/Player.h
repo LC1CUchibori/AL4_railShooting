@@ -52,6 +52,7 @@ public:
 
 	void SetPosition(const Vector3& position);
 
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -66,5 +67,7 @@ private:
 	Input* input_ = nullptr;
 
 	PlayerBullet* bullet_ = nullptr;
+
+	int hp_;  // プレイヤーのHP
 
 };

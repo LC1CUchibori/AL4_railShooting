@@ -28,6 +28,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 
+	
 }
 
 void Player::Update(){
@@ -85,6 +86,7 @@ void Player::Update(){
 		bullet->Update();
 	}
 
+
 	ImGui::Begin("Player");
 	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
 	ImGui::End();
@@ -139,3 +141,5 @@ void Player::SetPosition(const Vector3& position)
 {
 	worldTransform_.translation_ = position;
 }
+
+

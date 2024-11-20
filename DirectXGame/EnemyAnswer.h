@@ -26,6 +26,7 @@ public:
 
 	bool IsDead()const { return isDead_; }
 
+
 private:
 	enum class MovePhase {
 		Approach,    // 接近フェーズ
