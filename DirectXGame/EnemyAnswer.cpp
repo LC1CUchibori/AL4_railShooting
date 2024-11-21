@@ -41,10 +41,12 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
     worldTransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
     isDead_ = false;
+
 }
 
 void EnemyAnswer::Update()
 {
+
     // 行列を更新
     worldTransform_.UpdateMatrix();
 
@@ -76,18 +78,17 @@ void EnemyAnswer::Update()
         // 現在の移動方向に基づいて移動
         worldTransform_.translation_.x += moveDirection_.x * kCharacterSpeed;
         worldTransform_.translation_.y += moveDirection_.y * kCharacterSpeed;
-       // worldTransform_.translation_.z += moveDirection_.z * kCharacterSpeed;
+        // worldTransform_.translation_.z += moveDirection_.z * kCharacterSpeed;
 
-        // 画面範囲内に収まるように制限
+         // 画面範囲内に収まるように制限
         const float kLimitX = 35.0f;    // x軸の範囲
         const float kLimitY = -10.0f;    // y軸は下半分の範囲を設定
         const float kLimitZ = 10.0f;    // z軸の範囲
 
         worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -kLimitX, kLimitX);
-        worldTransform_.translation_.y = std::clamp(worldTransform_.translation_.y, kLimitY, 0.0f);  
+        worldTransform_.translation_.y = std::clamp(worldTransform_.translation_.y, kLimitY, 0.0f);
         worldTransform_.translation_.z = std::clamp(worldTransform_.translation_.z, -kLimitZ, kLimitZ);
     }
-
 }
 
 void EnemyAnswer::Draw(const ViewProjection& viewProjection)
@@ -120,11 +121,10 @@ void EnemyAnswer::SetPosition(const Vector3& position)
 
 void EnemyAnswer::Revive()
 {
-    if (isDead_) {
         isDead_ = false;
         worldTransform_.translation_ = initialPosition_;  // 初期位置に戻す
+        worldTransform_.translation_.z = 10.0f;
         movePhase_ = MovePhase::Approach;  // 接近フェーズから再開
-    }
 }
 
 

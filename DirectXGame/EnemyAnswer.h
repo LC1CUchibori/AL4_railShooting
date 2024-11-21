@@ -22,6 +22,7 @@ public:
 
 	void SetPosition(const Vector3& position);
 
+
 	void Revive(); 
 
 	bool IsDead()const { return isDead_; }

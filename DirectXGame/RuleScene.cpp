@@ -11,7 +11,7 @@ void RuleScene::Initialize()
 
 void RuleScene::Update()
 {
-	if (Input::GetInstance()->PushKey(DIK_SPACE)) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		finished_ = true;
 	}
 }

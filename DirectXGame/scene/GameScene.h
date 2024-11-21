@@ -12,6 +12,8 @@
 #include "DebugCamera.h"
 #include "EnemyAnswer.h"
 #include "Skydome.h"
+#include "Boss.h"
+#include "HumanBoss.h"
 
 
 /// <summary>
@@ -53,6 +55,7 @@ public: // メンバ関数
 
 	void GameOver(); 
 
+	void GameClear();
 
 private: // メンバ変数
 
@@ -85,12 +88,32 @@ private: // メンバ変数
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
+
 	// 3Dモデル
 	Model* model_ = nullptr;
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
+
+	uint32_t Q1Handle_ = 0;
+	Sprite* Q1sprite_ = nullptr;
+
+	// 体力1個目
+	uint32_t HealthHandle1_ = 0;
+	Sprite* HealthSprite1_ = nullptr;
+	// 体力2個目
+	uint32_t HealthHandle2_ = 0;
+	Sprite* HealthSprite2_ = nullptr;
+	// 体力3個目
+	uint32_t HealthHandle3_ = 0;
+	Sprite* HealthSprite3_ = nullptr;
+
+	Boss* boss_ = nullptr;
+	Model* modelBoss_ = nullptr;
+
+	HumanBoss* humanBoss_ = nullptr;
+	Model* modelHumanBoss_ = nullptr;
 
 	// 自キャラ
 	Player* player_ = nullptr;
@@ -127,5 +150,10 @@ private: // メンバ変数
 
 	void ResetPosition();
 
+	bool NextPhaseFlag = false;
+	int NextPhaseTimer = 0;
 
+	bool Health1Flag = false;
+	bool Health2Flag = false;
+	bool Health3Flag = false;
 };

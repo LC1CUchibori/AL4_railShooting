@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include <cassert>
 #include <ImGuiManager.h>
+#include <algorithm>
 
 Player::~Player()
 {
@@ -12,7 +13,7 @@ Player::~Player()
 	bullets_.clear();
 }
 
-void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection){
+void Player::Initialize(Model* model, ViewProjection* viewProjection){
 
 	// NULLチェック
 	assert(model);
@@ -22,7 +23,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 
 	// 引数の内容をメンバ変数に記録
 	model_ = model;
-	textureHandle_ = textureHandle;
+	//textureHandle_ = textureHandle;
 	viewProjection_ = viewProjection;
 
 	// シングルトンインスタンスを取得する
@@ -60,16 +61,16 @@ void Player::Update(){
 	const float kCharacterSpeed = 0.2f;
 
 	// 押した方向で移動ベクトルを変更(左右)
-	if (input_->PushKey(DIK_LEFT)) {
+	if (input_->PushKey(DIK_A)) {
 		move.x -= kCharacterSpeed;
-	} else if (input_->PushKey(DIK_RIGHT)) {
+	} else if (input_->PushKey(DIK_D)) {
 		move.x += kCharacterSpeed;
 	}
 
 	// 押した方向で移動ベクトルを変更(上下)
-	if (input_->PushKey(DIK_UP)) {
+	if (input_->PushKey(DIK_W)) {
 		move.y += kCharacterSpeed;
-	} else if (input_->PushKey(DIK_DOWN)) {
+	} else if (input_->PushKey(DIK_S)) {
 		move.y -= kCharacterSpeed;
 	}
 
@@ -77,6 +78,15 @@ void Player::Update(){
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
+
+	// 画面範囲内に収まるように制限
+	const float kLimitX = 35.0f;    // x軸の範囲
+	const float kLimitY = -10.0f;    // y軸は下半分の範囲を設定
+	const float kLimitZ = 10.0f;    // z軸の範囲
+
+	worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -kLimitX, kLimitX);
+	worldTransform_.translation_.y = std::clamp(worldTransform_.translation_.y, kLimitY, 0.0f);
+	worldTransform_.translation_.z = std::clamp(worldTransform_.translation_.z, -kLimitZ, kLimitZ);
 
 	// キャラクター攻撃処理
 	Attack();
@@ -105,15 +115,15 @@ void Player::Draw(){
 
 void Player::Rotate()
 {
-	// 回転速さ
-	const float kRotSpeed = 0.02f;
+	//// 回転速さ
+	//const float kRotSpeed = 0.02f;
 
-	// 押した方向で移動ベクトルを変更
-	if (input_->PushKey(DIK_A)) {
-		worldTransform_.rotation_.y += kRotSpeed;
-	}else if (input_->PushKey(DIK_D)) {
-		worldTransform_.rotation_.y -= kRotSpeed;
-	}
+	//// 押した方向で移動ベクトルを変更
+	//if (input_->PushKey(DIK_A)) {
+	//	worldTransform_.rotation_.y += kRotSpeed;
+	//}else if (input_->PushKey(DIK_D)) {
+	//	worldTransform_.rotation_.y -= kRotSpeed;
+	//}
 }
 
 void Player::Attack()

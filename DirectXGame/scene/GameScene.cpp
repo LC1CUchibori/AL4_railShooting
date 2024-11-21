@@ -15,6 +15,12 @@ GameScene::~GameScene() {
 	delete modelSkydome_;
 	delete enemy_;
 	delete enemy2_;  
+	delete Q1sprite_;
+	delete HealthSprite1_;
+	delete HealthSprite2_; 
+	delete HealthSprite3_;
+	delete modelBoss_;
+	delete modelHumanBoss_;
 }
 
 void GameScene::Initialize() {
@@ -24,7 +30,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("mario.jpg");
+	//textureHandle_ = TextureManager::Load("mario.jpg");
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化
@@ -32,10 +38,34 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
+	// 問題１
+	Q1Handle_ = TextureManager::Load("Q1.png");
+	Q1sprite_ = Sprite::Create(Q1Handle_, { 100,50 });
+
+	// 体力1
+	HealthHandle1_ = TextureManager::Load("Health.png");
+	HealthSprite1_ = Sprite::Create(HealthHandle1_, { 100,600 });
+	// 体力2
+	HealthHandle2_ = TextureManager::Load("Health.png");
+	HealthSprite2_ = Sprite::Create(HealthHandle2_, { 140,600 });
+	// 体力3
+	HealthHandle3_ = TextureManager::Load("Health.png");
+	HealthSprite3_ = Sprite::Create(HealthHandle3_, { 180,600 });
+
+
+	boss_ = new Boss();
+	modelBoss_ = Model::CreateFromOBJ("TV", true);
+	boss_->Initialize(modelBoss_, &viewProjection_);
+
+	humanBoss_ = new HumanBoss();
+	modelHumanBoss_ = Model::CreateFromOBJ("kao", true);
+	humanBoss_->Initialize(modelHumanBoss_, &viewProjection_);
+
 	// 自キャラの生成
 	player_ = new Player();
+	//model_ = Model::CreateFromOBJ("perikann",true);
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_, &viewProjection_);
+	player_->Initialize(model_, &viewProjection_);
 
 	// 天球の生成
 	skydome_ = new Skydome();
@@ -84,11 +114,20 @@ void GameScene::Update() {
 
 	CheckAllCollision();
 
+	if (NextPhaseFlag == false) {
+		// 敵の更新
+		enemy_->Update();
+		// 敵2の更新
+		enemy2_->Update();
+	}
+	if (NextPhaseFlag == true) {
+		NextPhaseTimer -= 1;
+		if (NextPhaseTimer <= 0) {
+			NextPhaseFlag = false;
+		}
+	}
 
-	// 敵の更新
-	enemy_->Update();
-	// 敵2の更新
-	enemy2_->Update();
+
 
 
 #ifdef _DEBUG
@@ -186,10 +225,13 @@ void GameScene::Draw() {
 	skydome_->Draw();
 
 	// 敵の描画
-
 	enemy_->Draw(viewProjection_);
 	// 敵2の描画
 	enemy2_->Draw(viewProjection_);
+
+	boss_->Draw();
+
+	humanBoss_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -202,6 +244,70 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	switch (phase_)
+	{
+	case GameScene::GamePhase::Phase1:
+		Q1sprite_->Draw();
+		if (Health1Flag == false) {
+			HealthSprite1_->Draw();
+		}
+		if (Health2Flag == false) {
+			HealthSprite2_->Draw();
+		}
+		if (Health3Flag == false) {
+			HealthSprite3_->Draw();
+		}
+		break;
+	case GameScene::GamePhase::Phase2:
+		if (Health1Flag == false) {
+			HealthSprite1_->Draw();
+		}
+		if (Health2Flag == false) {
+			HealthSprite2_->Draw();
+		}
+		if (Health3Flag == false) {
+			HealthSprite3_->Draw();
+		}
+		break;
+	case GameScene::GamePhase::Phase3:
+		if (Health1Flag == false) {
+			HealthSprite1_->Draw();
+		}
+		if (Health2Flag == false) {
+			HealthSprite2_->Draw();
+		}
+		if (Health3Flag == false) {
+			HealthSprite3_->Draw();
+		}
+		break;
+	case GameScene::GamePhase::Phase4:
+		if (Health1Flag == false) {
+			HealthSprite1_->Draw();
+		}
+		if (Health2Flag == false) {
+			HealthSprite2_->Draw();
+		}
+		if (Health3Flag == false) {
+			HealthSprite3_->Draw();
+		}
+		break;
+	case GameScene::GamePhase::Phase5:
+		if (Health1Flag == false) {
+			HealthSprite1_->Draw();
+		}
+		if (Health2Flag == false) {
+			HealthSprite2_->Draw();
+		}
+		if (Health3Flag == false) {
+			HealthSprite3_->Draw();
+		}
+		break;
+	case GameScene::GamePhase::Complete:
+		break;
+	default:
+		break;
+	}
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -242,12 +348,20 @@ void GameScene::GameOver()
 	finished_ = true;
 }
 
+void GameScene::GameClear()
+{
+	finished_ = true;
+}
+
 void GameScene::CheckNextPhaseO()
 {
 	// 現在のフェーズに応じた判定
 	if (phase_ == GamePhase::Complete) {
 		return;  // 完了フェーズなので何もしない
 	}
+
+	NextPhaseFlag = true;
+	NextPhaseTimer = 180;
 
 	ResetPosition();
 	
@@ -291,9 +405,23 @@ void GameScene::CheckNextPhaseO()
 		}
 	}
 
+	// 体力1減ったら
+	if (missCount_ >= 1) {
+		Health1Flag = true;
+	}
+	// 体力2減ったら
+	if (missCount_ >= 2) {
+		Health2Flag = true;
+	}
+
 	if (missCount_ >= 3) {
+		Health3Flag = true;
 		// 3回ミスでゲームオーバー
 		GameOver();
+	}
+
+	if (phase_ == GamePhase::Complete) {
+		GameClear();
 	}
 }
 
@@ -345,18 +473,36 @@ void GameScene::CheckNextPhaseX()
 			++missCount_;
 		}
 	}
+
+	// 体力1減ったら
+	if (missCount_ >= 1) {
+		Health1Flag = true;
+	}
+	// 体力2減ったら
+	if (missCount_ >= 2) {
+		Health2Flag = true;
+	}
+
 	if (missCount_ >= 3) {
+		Health3Flag = true;
 		// 3回ミスでゲームオーバー
 		GameOver();
+	}
+
+	if (phase_ == GamePhase::Complete) {
+		GameClear();
 	}
 }
 
 void GameScene::ResetPosition()
 {
-	// プレイヤーの初期位置を設定
-	player_->SetPosition({ 0.0f, 1.0f, 0.0f });  // 初期位置の座標に変更
+		// プレイヤーの初期位置を設定
+		player_->SetPosition({ 0.0f, 1.0f, 0.0f });  // 初期位置の座標に変更
 
-	enemy_->Revive();
-	enemy2_->Revive();
+		enemy_->Revive();
+		enemy2_->Revive();
+
+		enemy_->Update();
+		enemy2_->Update();
 }
 #pragma endregion
