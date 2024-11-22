@@ -10,6 +10,7 @@
 /// </summary>
 class RuleScene {
 public:
+	~RuleScene();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -34,4 +35,8 @@ private:
 	ViewProjection viewProjection_;
 
 	bool finished_ = false;
+
+	uint32_t RuleHandle_ = 0;
+	Sprite* ruleSprite_ = nullptr;
+
 };
