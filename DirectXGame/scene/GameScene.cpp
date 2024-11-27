@@ -122,15 +122,13 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
-	// 自キャラの更新
-	player_->Update();
 
 	// 天球の更新
 	skydome_->Update();
 
 
 	// 自キャラの旋回更新
-	player_->Rotate();
+	//player_->Rotate();
 
 	humanBoss_->Update();
 
@@ -140,6 +138,8 @@ void GameScene::Update() {
 	CheckAllCollision();
 
 	if (NextPhaseFlag == false) {
+		// 自機の更新
+		player_->Update();
 		// 敵の更新
 		enemy_->Update();
 		// 敵2の更新
@@ -401,7 +401,7 @@ void GameScene::CheckNextPhaseO()
 	}
 
 	NextPhaseFlag = true;
-	NextPhaseTimer = 180;
+	NextPhaseTimer = 120;
 
 	ResetPosition();
 
