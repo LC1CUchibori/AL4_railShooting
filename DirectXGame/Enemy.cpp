@@ -20,14 +20,15 @@ void Enemy::Update()
 	default:
 	case Phase::Approach:
 		// 移動
-		worldTransform_.translation_.z -=ApproachSpeed;
+		worldTransform_.translation_ += Vector3(0, 0, 0.1f);
 		// 既定の位置に到達したら離脱
-		if (worldTransform_.translation_.z < 0.0f) {
+		if (worldTransform_.translation_.z >5.0f) {
 			phase_ = Phase::Leave;
 		}
 		break;
 	case Phase::Leave:
-		worldTransform_.translation_.z -= LeaveSpeed;
+		worldTransform_.translation_ += Vector3(-0.1f, 0.1f, -0.1f);
+		
 		break;
 	}
 

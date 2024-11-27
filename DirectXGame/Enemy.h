@@ -28,8 +28,8 @@ private:
 	Phase phase_ = Phase::Approach;
 
 	// 接近フェーズの移動
-	const float ApproachSpeed = 0.3f;
+	const float ApproachSpeed = 0.1f;
 	// 離脱フェーズの移動
-	const float LeaveSpeed = 0.5f;
+	const float LeaveSpeed = 0.1f;
 };
 
