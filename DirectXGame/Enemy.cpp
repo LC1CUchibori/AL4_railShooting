@@ -15,19 +15,11 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 
 void Enemy::Update()
 {
-
-	
-
-	// 行列を更新
-	worldTransform_.UpdateMatrix();
-
 	switch (phase_)
 	{
 	default:
 	case Phase::Approach:
 		// 移動
-		/*worldTransform_.translation_.x -=ApproachSpeed;
-		worldTransform_.translation_.y -=ApproachSpeed;*/
 		worldTransform_.translation_.z -=ApproachSpeed;
 		// 既定の位置に到達したら離脱
 		if (worldTransform_.translation_.z < 0.0f) {
@@ -35,12 +27,12 @@ void Enemy::Update()
 		}
 		break;
 	case Phase::Leave:
-		// 移動
-		/*worldTransform_.translation_.x -= LeaveSpeed;
-		worldTransform_.translation_.y -= LeaveSpeed;*/
 		worldTransform_.translation_.z -= LeaveSpeed;
 		break;
 	}
+
+	// 行列を更新
+	worldTransform_.UpdateMatrix();
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection)
