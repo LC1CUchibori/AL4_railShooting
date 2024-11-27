@@ -57,6 +57,10 @@ public: // メンバ関数
 
 	void GameClear();
 
+	void GameStart();
+
+	bool IsHealth()const { return Health3Flag; }
+
 private: // メンバ変数
 
 	enum class EnemyState {
@@ -137,8 +141,7 @@ private: // メンバ変数
 
 	bool finished_ = false;
 
-	bool GameOverFinished_ = false;
-
+	
 	std::vector<EnemyAnswer> enemies_;
 	Model* enemyModel_ = nullptr;
 

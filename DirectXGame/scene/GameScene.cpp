@@ -90,7 +90,7 @@ void GameScene::Initialize() {
 	enemy2_ = new EnemyAnswer();  // 新しい敵の生成
 	enemy2_->Initialize(modelX_, {10.0f, 1.0f, 10.0f});
 
-
+	GameStart();
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -315,19 +315,26 @@ void GameScene::Draw() {
 
 void GameScene::CheckAllCollision()
 {
+
+	
 	Vector3 posA, posB;
 
 	const std::list<PlayerBullet*>& playerBullets = player_->GetBullet();
 
+
 	posA = enemy_->GetWorldPosition();
 
 	for (PlayerBullet* bullet : playerBullets) {
-		posB = bullet->GetWorldPosition();
 
-		if (((posB.x - posA.x)*(posB.x - posA.x) + (posB.y - posA.y) *(posB.y - posA.y)  + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
-			enemy_->OnCollision();
-			bullet->OnCollision();
-			CheckNextPhaseO();
+		if(bullet->IsDead()==false){
+
+			posB = bullet->GetWorldPosition();
+
+			if (((posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
+				enemy_->OnCollision();
+				bullet->OnCollision();
+				CheckNextPhaseO();
+			}
 		}
 	}
 
@@ -335,22 +342,36 @@ void GameScene::CheckAllCollision()
 	// 敵2との衝突判定
 	posB = enemy2_->GetWorldPosition();  // 敵2の位置
 	for (PlayerBullet* bullet : playerBullets) {
-		posA = bullet->GetWorldPosition();  // 弾の位置
-		if (((posB.x - posA.x)*(posB.x - posA.x) + (posB.y - posA.y) *(posB.y - posA.y)  + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
-			bullet->OnCollision();
-			enemy2_->OnCollision();
-			CheckNextPhaseX();
+
+		if (bullet->IsDead() == false) {
+
+			posA = bullet->GetWorldPosition();  // 弾の位置
+			if (((posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
+				bullet->OnCollision();
+				enemy2_->OnCollision();
+				CheckNextPhaseX();
+			}
 		}
 	}
 }
+
 void GameScene::GameOver()
 {
-	GameOverFinished_ = true;
+	finished_ = true;
 }
 
 void GameScene::GameClear()
 {
 	finished_ = true;
+}
+
+void GameScene::GameStart()
+{
+	finished_ = false;
+	missCount_ = 0;
+	Health1Flag = false;
+	Health2Flag = false;
+	Health3Flag = false;
 }
 
 void GameScene::CheckNextPhaseO()

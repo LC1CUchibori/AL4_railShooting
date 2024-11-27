@@ -10,7 +10,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model, const Vector3& position,const Vector3& velocity);
+	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -31,6 +31,7 @@ public:
 
 	void OnCollision();
 
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -47,5 +48,4 @@ private:
 	int32_t deathTimer_ = klifeTime;
 	// デスフラグ
 	bool isDead_ = false;
-	bool isCollisionDead_ = false;
 };

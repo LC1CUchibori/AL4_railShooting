@@ -181,14 +181,23 @@ void ChangeScene()
 		break;
 	case Scene::kGame:
 		if (gameScene->IsFinished()) {
-			// シーン変更
-			scene = Scene::kGameClear;
+			if (gameScene->IsHealth()) {
+				// シーン変更
+				scene = Scene::kGameOver;
+				// 新シーンの生成と初期化
+				gameOverScene = new GameOverScene;
+				gameOverScene->Initialize();
+			}
+			else {
+				// シーン変更
+				scene = Scene::kGameClear;
+				// 新シーンの生成と初期化
+				gameClearScene = new GameClearScene;
+				gameClearScene->Initialize();
+			}
 			// 旧シーンの解放
 			delete gameScene;
 			gameScene = nullptr;
-			// 新シーンの生成と初期化
-			gameClearScene = new GameClearScene;
-			gameClearScene->Initialize();
 		}
 		break;
 	case Scene::kGameClear:
