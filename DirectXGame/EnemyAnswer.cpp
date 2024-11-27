@@ -25,7 +25,7 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
     // 移動開始からの経過時間
     moveTimer_ = 0.0f;
 
-    changeInterval_ = 2.0f;
+    changeInterval_ = 1.0f;
 
     // 接近フェーズから開始
     movePhase_ = MovePhase::Approach;
@@ -46,7 +46,6 @@ void EnemyAnswer::Initialize(Model* model, const Vector3& position)
 
 void EnemyAnswer::Update()
 {
-
     // 行列を更新
     worldTransform_.UpdateMatrix();
 

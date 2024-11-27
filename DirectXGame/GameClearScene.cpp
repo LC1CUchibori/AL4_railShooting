@@ -7,7 +7,7 @@ void GameClearScene::Initialize()
 	titleWorldTransform_.Initialize();
 	viewProjection_.Initialize();
 
-	CrearHandle_ = TextureManager::Load("GameCrear.png");
+	CrearHandle_ = TextureManager::Load("GameClear.png");
 	crearSprite_ = Sprite::Create(CrearHandle_, { 0,0 });
 }
 

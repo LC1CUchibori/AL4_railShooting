@@ -57,8 +57,6 @@ public: // メンバ関数
 
 	void GameClear();
 
-	void GameStart();
-
 	bool IsHealth()const { return Health3Flag; }
 
 private: // メンバ変数
@@ -100,8 +98,25 @@ private: // メンバ変数
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
+	// 問題1
+	uint32_t Q2Handle_ = 0;
+	Sprite* Q2sprite_ = nullptr;
+
+	// 問題2
 	uint32_t Q1Handle_ = 0;
 	Sprite* Q1sprite_ = nullptr;
+
+	// 問題3
+	uint32_t Q3Handle_ = 0;
+	Sprite* Q3sprite_ = nullptr;
+
+	// 問題4
+	uint32_t Q4Handle_ = 0;
+	Sprite* Q4sprite_ = nullptr;
+
+	// 問題5
+	uint32_t Q5Handle_ = 0;
+	Sprite* Q5sprite_ = nullptr;
 
 	// 体力1個目
 	uint32_t HealthHandle1_ = 0;
@@ -127,6 +142,7 @@ private: // メンバ変数
 	// 3Dモデル
 	Model* modelSkydome_ = nullptr;
 
+
 	// 敵
 	EnemyAnswer* enemy_ = nullptr;
 	EnemyAnswer* enemy2_ = nullptr;
@@ -135,13 +151,14 @@ private: // メンバ変数
 	Model* modelO_ = nullptr;
 	Model* modelX_ = nullptr;
 
+
+
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	bool debugCameraFlag_ = false;
 
 	bool finished_ = false;
 
-	
 	std::vector<EnemyAnswer> enemies_;
 	Model* enemyModel_ = nullptr;
 
@@ -161,4 +178,14 @@ private: // メンバ変数
 	bool Health1Flag = false;
 	bool Health2Flag = false;
 	bool Health3Flag = false;
+
+	//サウンド
+	uint32_t soundDataHandle=0;
+	uint32_t voiceHandle=0;    
+
+	uint32_t Seikai_= 0;
+	uint32_t Fuseikai_= 0;
+
+	uint32_t PlaySeikai_= 0;
+	uint32_t PlayFuseikai_= 0;
 };

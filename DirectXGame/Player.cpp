@@ -2,6 +2,7 @@
 #include <cassert>
 #include <ImGuiManager.h>
 #include <algorithm>
+#include <numbers>
 
 Player::~Player()
 {
@@ -29,7 +30,8 @@ void Player::Initialize(Model* model, ViewProjection* viewProjection){
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 
-	
+	worldTransform_.rotation_.y = std::numbers::pi_v<float>;
+
 }
 
 void Player::Update(){
@@ -81,7 +83,7 @@ void Player::Update(){
 
 	// 画面範囲内に収まるように制限
 	const float kLimitX = 35.0f;    // x軸の範囲
-	const float kLimitY = -10.0f;    // y軸は下半分の範囲を設定
+	const float kLimitY = -20.0f;    // y軸は下半分の範囲を設定
 	const float kLimitZ = 10.0f;    // z軸の範囲
 
 	worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -kLimitX, kLimitX);
@@ -97,9 +99,7 @@ void Player::Update(){
 	}
 
 
-	ImGui::Begin("Player");
-	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
-	ImGui::End();
+	
 }
 
 void Player::Draw(){

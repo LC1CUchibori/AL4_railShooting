@@ -8,11 +8,13 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position,const Vector
 
 	model_ = model;
 	// テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("white1x1.png");
+	textureHandle_ = TextureManager::Load("tama.png");
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_ = position;
+
+	worldTransform_.scale_ = { -0.5f,0.5f,-0.5f };
 
 	// 引数で受け取った速度をメンバ変数に代入
 	velocity_ = velocity;

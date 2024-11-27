@@ -14,7 +14,7 @@ GameScene::~GameScene() {
 	delete skydome_;
 	delete modelSkydome_;
 	delete enemy_;
-	delete enemy2_;  
+	delete enemy2_;
 	delete Q1sprite_;
 	delete HealthSprite1_;
 	delete HealthSprite2_; 
@@ -40,7 +40,20 @@ void GameScene::Initialize() {
 
 	// 問題１
 	Q1Handle_ = TextureManager::Load("Q1.png");
-	Q1sprite_ = Sprite::Create(Q1Handle_, { 100,50 });
+	Q1sprite_ = Sprite::Create(Q1Handle_, { 100,20 });
+	// 問題2
+	Q2Handle_ = TextureManager::Load("Q2.png");
+	Q2sprite_ = Sprite::Create(Q2Handle_, { 100,20 });
+	// 問題3
+	Q3Handle_ = TextureManager::Load("Q3.png");
+	Q3sprite_ = Sprite::Create(Q3Handle_, { 100,20 });
+	// 問題4
+	Q4Handle_ = TextureManager::Load("Q4.png");
+	Q4sprite_ = Sprite::Create(Q4Handle_, { 100,20 });
+	// 問題5
+	Q5Handle_ = TextureManager::Load("Q5.png");
+	Q5sprite_ = Sprite::Create(Q5Handle_, { 100,20 });
+
 
 	// 体力1
 	HealthHandle1_ = TextureManager::Load("Health.png");
@@ -52,10 +65,9 @@ void GameScene::Initialize() {
 	HealthHandle3_ = TextureManager::Load("Health.png");
 	HealthSprite3_ = Sprite::Create(HealthHandle3_, { 180,600 });
 
-
-	boss_ = new Boss();
+	/*boss_ = new Boss();
 	modelBoss_ = Model::CreateFromOBJ("TV", true);
-	boss_->Initialize(modelBoss_, &viewProjection_);
+	boss_->Initialize(modelBoss_, &viewProjection_);*/
 
 	humanBoss_ = new HumanBoss();
 	modelHumanBoss_ = Model::CreateFromOBJ("kao", true);
@@ -63,9 +75,10 @@ void GameScene::Initialize() {
 
 	// 自キャラの生成
 	player_ = new Player();
-	//model_ = Model::CreateFromOBJ("perikann",true);
+	model_ = Model::CreateFromOBJ("perikann",true);
 	// 自キャラの初期化
 	player_->Initialize(model_, &viewProjection_);
+
 
 	// 天球の生成
 	skydome_ = new Skydome();
@@ -90,7 +103,17 @@ void GameScene::Initialize() {
 	enemy2_ = new EnemyAnswer();  // 新しい敵の生成
 	enemy2_->Initialize(modelX_, {10.0f, 1.0f, 10.0f});
 
-	GameStart();
+
+	//サウンド
+	soundDataHandle=audio_->LoadWave("GameBGM.mp3");
+	//音声再生
+	voiceHandle=audio_->PlayWave(soundDataHandle,true);
+
+	Seikai_= audio_->LoadWave("Seikai.mp3");
+	Fuseikai_= audio_->LoadWave("Fuseikai.mp3");
+
+	PlaySeikai_= audio_->PlayWave(Seikai_,false);
+	PlayFuseikai_= audio_->PlayWave(Fuseikai_,false);
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -108,6 +131,8 @@ void GameScene::Update() {
 
 	// 自キャラの旋回更新
 	player_->Rotate();
+
+	humanBoss_->Update();
 
 	// デバッグカメラの更新
 	debugCamera_->Update();
@@ -130,62 +155,63 @@ void GameScene::Update() {
 
 
 
-#ifdef _DEBUG
-	if (input_->TriggerKey(DIK_SPACE)) {
-		debugCameraFlag_ = true;
-	}
-#endif
-
-	// カメラの処理
-	if (debugCameraFlag_) {
-		debugCamera_->Update();
-		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-		// ビュープロジェクション行rの転送
-		viewProjection_.TransferMatrix();
-	}
-	else {
-		// ビュープロジェクション行列の更新転送
-		viewProjection_.UpdateMatrix();
-	}
+//#ifdef _DEBUG
+//	if (input_->TriggerKey(DIK_SPACE)) {
+//		debugCameraFlag_ = true;
+//	}
+//#endif
+//
+//	// カメラの処理
+//	if (debugCameraFlag_) {
+//		debugCamera_->Update();
+//		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+//		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+//		// ビュープロジェクション行rの転送
+//		viewProjection_.TransferMatrix();
+//	}
+//	else {
+//		// ビュープロジェクション行列の更新転送
+//		viewProjection_.UpdateMatrix();
+//	}
 
 
 	const char* phaseName = "Phase 1";
 	switch (phase_) {
 	case GamePhase::Phase1:
 		// フェーズ1の処理
-		state_ = EnemyState::O;  // 〇が正解
+		state_ = EnemyState::X;  // 〇が正解
 		phaseName = "Phase 1";
 		break;
 	case GamePhase::Phase2:
 		// フェーズ2の処理
-		state_ = EnemyState::X;  // ×が正解
+		state_ = EnemyState::O;  // ×が正解
 		phaseName = "Phase 2";
 		break;
 	case GamePhase::Phase3:
 		// フェーズ3の処理
-		state_ = EnemyState::O;  // 〇が正解
+		state_ = EnemyState::X;  // 〇が正解
 		phaseName = "Phase 3";
 		break;
 	case GamePhase::Phase4:
 		// フェーズ4の処理
-		state_ = EnemyState::X;  // ×が正解
+		state_ = EnemyState::O;  // ×が正解
 		phaseName = "Phase 4";
 		break;
 	case GamePhase::Phase5:
 		// フェーズ5の処理
-		state_ = EnemyState::O;  // 〇が正解
+		state_ = EnemyState::X;  // 〇が正解
 		phaseName = "Phase 5";
 		break;
 	case GamePhase::Complete:
+		audio_->StopWave(voiceHandle);
 		// 完了フェーズ
 		break;
 	}
 
-	ImGui::Begin("Game Phase");  // ウィンドウのタイトル
-	ImGui::Text("Current Phase: %s", phaseName);  // フェーズ名を表示
-	ImGui::Text("miss Count %d", missCount_);
-	ImGui::End();
+	//ImGui::Begin("Game Phase");  // ウィンドウのタイトル
+	//ImGui::Text("Current Phase: %s", phaseName);  // フェーズ名を表示
+	//ImGui::Text("miss Count %d", missCount_);
+	//ImGui::End();
 }
 
 void GameScene::Draw() {
@@ -218,8 +244,9 @@ void GameScene::Draw() {
 	//	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 自キャラの描画
-	
+
 	player_->Draw();
+
 
 	// 天球の描画
 	skydome_->Draw();
@@ -229,7 +256,7 @@ void GameScene::Draw() {
 	// 敵2の描画
 	enemy2_->Draw(viewProjection_);
 
-	boss_->Draw();
+	//boss_->Draw();
 
 	humanBoss_->Draw();
 
@@ -259,6 +286,7 @@ void GameScene::Draw() {
 		}
 		break;
 	case GameScene::GamePhase::Phase2:
+		Q2sprite_->Draw();
 		if (Health1Flag == false) {
 			HealthSprite1_->Draw();
 		}
@@ -270,6 +298,7 @@ void GameScene::Draw() {
 		}
 		break;
 	case GameScene::GamePhase::Phase3:
+		Q3sprite_->Draw();
 		if (Health1Flag == false) {
 			HealthSprite1_->Draw();
 		}
@@ -281,6 +310,7 @@ void GameScene::Draw() {
 		}
 		break;
 	case GameScene::GamePhase::Phase4:
+		Q4sprite_->Draw();
 		if (Health1Flag == false) {
 			HealthSprite1_->Draw();
 		}
@@ -292,6 +322,7 @@ void GameScene::Draw() {
 		}
 		break;
 	case GameScene::GamePhase::Phase5:
+		Q5sprite_->Draw();
 		if (Health1Flag == false) {
 			HealthSprite1_->Draw();
 		}
@@ -301,6 +332,8 @@ void GameScene::Draw() {
 		if (Health3Flag == false) {
 			HealthSprite3_->Draw();
 		}
+
+
 		break;
 	case GameScene::GamePhase::Complete:
 		break;
@@ -315,19 +348,16 @@ void GameScene::Draw() {
 
 void GameScene::CheckAllCollision()
 {
-
-	
 	Vector3 posA, posB;
 
 	const std::list<PlayerBullet*>& playerBullets = player_->GetBullet();
 
-
 	posA = enemy_->GetWorldPosition();
+
 
 	for (PlayerBullet* bullet : playerBullets) {
 
-		if(bullet->IsDead()==false){
-
+		if (bullet->IsDead() == false) {
 			posB = bullet->GetWorldPosition();
 
 			if (((posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
@@ -342,7 +372,6 @@ void GameScene::CheckAllCollision()
 	// 敵2との衝突判定
 	posB = enemy2_->GetWorldPosition();  // 敵2の位置
 	for (PlayerBullet* bullet : playerBullets) {
-
 		if (bullet->IsDead() == false) {
 
 			posA = bullet->GetWorldPosition();  // 弾の位置
@@ -354,7 +383,6 @@ void GameScene::CheckAllCollision()
 		}
 	}
 }
-
 void GameScene::GameOver()
 {
 	finished_ = true;
@@ -363,15 +391,6 @@ void GameScene::GameOver()
 void GameScene::GameClear()
 {
 	finished_ = true;
-}
-
-void GameScene::GameStart()
-{
-	finished_ = false;
-	missCount_ = 0;
-	Health1Flag = false;
-	Health2Flag = false;
-	Health3Flag = false;
 }
 
 void GameScene::CheckNextPhaseO()
@@ -385,44 +404,49 @@ void GameScene::CheckNextPhaseO()
 	NextPhaseTimer = 180;
 
 	ResetPosition();
-	
+
 	if (phase_==GamePhase::Phase1)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
-			phase_ = GamePhase::Phase2;
+			++missCount_;
+			audio_->PlayWave(Fuseikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase2)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
-			++missCount_;
+			phase_ = GamePhase::Phase3;
+			audio_->PlayWave(Seikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase3)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
-			phase_ = GamePhase::Phase4;
+			++missCount_;
+			audio_->PlayWave(Fuseikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase4)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
-			++missCount_;
+			phase_ = GamePhase::Phase5;
+			audio_->PlayWave(Seikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase5)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
-			phase_ = GamePhase::Complete;
+			++missCount_;
+			audio_->PlayWave(Fuseikai_);
 		}
 	}
 
@@ -457,41 +481,46 @@ void GameScene::CheckNextPhaseX()
 
 	if (phase_==GamePhase::Phase1)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
-			++missCount_;
+			phase_ = GamePhase::Phase2;
+			audio_->PlayWave(Seikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase2)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
-			phase_ = GamePhase::Phase3;
+			++missCount_;
+			audio_->PlayWave(Fuseikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase3)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
-			++missCount_;
+			phase_ = GamePhase::Phase4;
+			audio_->PlayWave(Seikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase4)
 	{
-		if (state_ == EnemyState::X)
+		if (state_ == EnemyState::O)
 		{
-			phase_ = GamePhase::Phase5;
+			++missCount_;
+			audio_->PlayWave(Fuseikai_);
 		}
 	}
 
 	if (phase_ == GamePhase::Phase5)
 	{
-		if (state_ == EnemyState::O)
+		if (state_ == EnemyState::X)
 		{
-			++missCount_;
+			phase_ = GamePhase::Complete;
+			audio_->PlayWave(Seikai_);
 		}
 	}
 
@@ -517,13 +546,13 @@ void GameScene::CheckNextPhaseX()
 
 void GameScene::ResetPosition()
 {
-		// プレイヤーの初期位置を設定
-		player_->SetPosition({ 0.0f, 1.0f, 0.0f });  // 初期位置の座標に変更
+	// プレイヤーの初期位置を設定
+	player_->SetPosition({ 0.0f, 1.0f, 0.0f });  // 初期位置の座標に変更
 
-		enemy_->Revive();
-		enemy2_->Revive();
+	enemy_->Revive();
+	enemy2_->Revive();
 
-		enemy_->Update();
-		enemy2_->Update();
+	enemy_->Update();
+	enemy2_->Update();
 }
 #pragma endregion
