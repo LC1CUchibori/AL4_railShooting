@@ -345,7 +345,7 @@ void GameScene::CheckAllCollision()
 }
 void GameScene::GameOver()
 {
-	finished_ = true;
+	GameOverFinished_ = true;
 }
 
 void GameScene::GameClear()

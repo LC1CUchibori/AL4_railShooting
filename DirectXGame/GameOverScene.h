@@ -34,4 +34,7 @@ private:
 	ViewProjection viewProjection_;
 
 	bool finished_ = false;
+
+	uint32_t GameOverHandle_ = 0;
+	Sprite* gameOverSprite_ = nullptr;
 };

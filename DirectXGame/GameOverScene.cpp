@@ -7,11 +7,13 @@ void GameOverScene::Initialize()
 	titleWorldTransform_.Initialize();
 	viewProjection_.Initialize();
 
+	GameOverHandle_ = TextureManager::Load("GameOver.png");
+	gameOverSprite_ = Sprite::Create(GameOverHandle_, { 0,0 });
 }
 
 void GameOverScene::Update()
 {
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+	if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
 		finished_ = true;
 	}
 }
@@ -25,4 +27,11 @@ void GameOverScene::Draw()
 
 	Model::PostDraw();
 
+	// 前景スプライト描画前処理
+	Sprite::PreDraw(commandList);
+
+	gameOverSprite_->Draw();
+
+	// スプライト描画後処理
+	Sprite::PostDraw();
 }

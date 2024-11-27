@@ -34,4 +34,7 @@ private:
 	ViewProjection viewProjection_;
 
 	bool finished_ = false;
+
+	uint32_t CrearHandle_ = 0;
+	Sprite* crearSprite_ = nullptr;
 };

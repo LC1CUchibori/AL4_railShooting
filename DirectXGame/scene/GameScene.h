@@ -137,6 +137,8 @@ private: // メンバ変数
 
 	bool finished_ = false;
 
+	bool GameOverFinished_ = false;
+
 	std::vector<EnemyAnswer> enemies_;
 	Model* enemyModel_ = nullptr;
 
