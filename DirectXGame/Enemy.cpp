@@ -11,18 +11,18 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_ = position;
+	worldTransform_.translation_.z = 15.0f;
 }
 
 void Enemy::Update()
 {
 	switch (phase_)
 	{
-	default:
 	case Phase::Approach:
 		// 移動
-		worldTransform_.translation_ += Vector3(0, 0, 0.1f);
+		worldTransform_.translation_ -= Vector3(0, 0, 0.1f);
 		// 既定の位置に到達したら離脱
-		if (worldTransform_.translation_.z >5.0f) {
+		if (worldTransform_.translation_.z <10.0f) {
 			phase_ = Phase::Leave;
 		}
 		break;

@@ -1,6 +1,10 @@
 ﻿#include "Player.h"
 #include <cassert>
-#include <ImGuiManager.h>
+
+#ifdef _DEBUG
+
+#include<imgui.h>
+#endif // _DEBUG
 
 Player::~Player()
 {
@@ -84,10 +88,11 @@ void Player::Update(){
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("Player");
 	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void Player::Draw(){
