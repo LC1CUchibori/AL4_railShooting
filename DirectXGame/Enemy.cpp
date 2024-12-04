@@ -11,7 +11,8 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_ = position;
-	worldTransform_.translation_.z = 15.0f;
+	worldTransform_.translation_.x = 10.0f;
+	worldTransform_.translation_.z = 50.0f;
 }
 
 void Enemy::Update()
