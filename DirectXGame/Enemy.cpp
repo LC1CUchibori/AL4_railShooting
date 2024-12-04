@@ -23,13 +23,27 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 
 	worldTransform_.translation_ = position;
 	worldTransform_.translation_.x = 15.0f;
-	worldTransform_.translation_.z = 20.0f;
+	worldTransform_.translation_.z = 50.0f;
 	
-	Fire();
+	// 弾を発射
+	//Fire();
+
+	// 接近フェーズ初期化
+	ApproachInitialize();
 }
 
 void Enemy::Update()
 {
+
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+		});
+
 	switch (phase_)
 	{
 	case Phase::Approach:
@@ -39,6 +53,15 @@ void Enemy::Update()
 		// 既定の位置に到達したら離脱
 		if (worldTransform_.translation_.z <10.0f) {
 			phase_ = Phase::Leave;
+		}
+		// 発射タイマーカウントダウン
+		fireTimer--;
+		// 指定時間に達した
+		if (fireTimer<=0) {
+			// 弾を発射
+			Fire();
+			// 発射タイマーを初期化
+			fireTimer = kFIreInterval;
 		}
 		break;
 	case Phase::Leave:
@@ -82,4 +105,10 @@ void Enemy::Fire()
 
 	// 弾を登録する
 	bullets_.push_back(newBullet);
+}
+
+void Enemy::ApproachInitialize()
+{
+	// 発射タイマーを初期化
+	fireTimer = kFIreInterval;
 }

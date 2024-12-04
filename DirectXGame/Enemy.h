@@ -21,6 +21,11 @@ public:
 
 	void Fire();
 
+	// 接近フェーズ初期化
+	void ApproachInitialize();
+	// 発射間隔
+	static const int kFIreInterval = 60;
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -36,6 +41,9 @@ private:
 	const float ApproachSpeed = 0.1f;
 	// 離脱フェーズの移動
 	const float LeaveSpeed = 0.1f;
+
+	// 発射タイマー
+	int32_t fireTimer = 0;
 
 	// 弾丸のリスト
 	std::list<EnemyBullet*> bullets_;

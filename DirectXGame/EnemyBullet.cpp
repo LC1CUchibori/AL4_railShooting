@@ -21,7 +21,7 @@ void EnemyBullet::Initialize(Model* model, const Vector3& position,const Vector3
 void EnemyBullet::Update()
 {
 	// 座標を移動させる
-	worldTransform_.translation_.z += 2.0f;
+	worldTransform_.translation_.z -= 2.0f;
 
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
