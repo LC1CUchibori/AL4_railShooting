@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include <WorldTransform.h>
 #include <Model.h>
+#include <EnemyBullet.h>
 class Enemy
 {
 public:
+	~Enemy();
+
 	void Initialize(Model* model, const Vector3& position);
 
 	void Update();
@@ -15,6 +18,8 @@ public:
 		Approach, // 接近する
 		Leave,    // 離脱する
 	};
+
+	void Fire();
 
 private:
 	// ワールド変換データ
@@ -31,4 +36,7 @@ private:
 	const float ApproachSpeed = 0.1f;
 	// 離脱フェーズの移動
 	const float LeaveSpeed = 0.1f;
+
+	// 弾丸のリスト
+	std::list<EnemyBullet*> bullets_;
 };
