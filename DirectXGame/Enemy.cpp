@@ -20,6 +20,7 @@ void Enemy::Update()
 	{
 	case Phase::Approach:
 		// 移動
+		// 移動
 		worldTransform_.translation_ -= Vector3(0, 0, 0.1f);
 		// 既定の位置に到達したら離脱
 		if (worldTransform_.translation_.z <10.0f) {

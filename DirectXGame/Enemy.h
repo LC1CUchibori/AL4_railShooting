@@ -32,4 +32,3 @@ private:
 	// 離脱フェーズの移動
 	const float LeaveSpeed = 0.1f;
 };
-
