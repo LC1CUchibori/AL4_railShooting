@@ -80,6 +80,8 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の更新転送
 		viewProjection_.UpdateMatrix();
 	}
+
+	CheckAllCollision();
 }
 
 void GameScene::Draw() {
@@ -139,12 +141,11 @@ void GameScene::CheckAllCollision()
 {
 	Vector3 posA, posB;
 
-	//const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
 
 	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
 
 	posA = player_->GetWorldPosition();
-
 
 	for (EnemyBullet* bullet : enemyBullets) {
 
@@ -156,6 +157,37 @@ void GameScene::CheckAllCollision()
 		}
 	}
 
+	// 敵のワールド座標を取得
+	posA = enemy_->GetWorldPosition();
 
+	// プレイヤーの弾と敵の当たり判定
+	for (PlayerBullet* bullet : playerBullets) {
+		posB = bullet->GetWorldPosition();
+
+		// 距離の二乗を計算し、判定
+		if (((posB.x - posA.x) * (posB.x - posA.x) + 
+			(posB.y - posA.y) * (posB.y - posA.y) + 
+			(posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
+			enemy_->OnCollision();
+			bullet->OnCollision();
+		}
+	}
 	
+
+	// 自弾と敵弾の当たり判定
+	for (PlayerBullet* playerBullet : playerBullets) {
+		posA = playerBullet->GetWorldPosition();
+
+		for (EnemyBullet* enemyBullet : enemyBullets) {
+			posB = enemyBullet->GetWorldPosition();
+
+			if (((posB.x - posA.x) * (posB.x - posA.x) + 
+				(posB.y - posA.y) * (posB.y - posA.y) + 
+				(posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
+				// 双方に衝突処理を実行
+				playerBullet->OnCollision();
+				enemyBullet->OnCollision();
+			}
+		}
+	}
 }

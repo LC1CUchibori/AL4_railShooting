@@ -25,6 +25,8 @@ public:
 
 	void OnCollision();
 
+	Vector3 GetWorldPosition()const { return worldTransform_.translation_; }
+
 	bool IsDead()const { return isDead_; }
 
 private:
