@@ -137,4 +137,27 @@ void GameScene::Draw() {
 
 void GameScene::CheckAllCollision()
 {
+	Vector3 posA, posB;
+
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+
+	posA = enemy_->GetWorldPosition();
+
+
+	for (PlayerBullet* bullet : playerBullets) {
+
+		if (bullet->IsDead() == false) {
+			posB = bullet->GetWorldPosition();
+
+			if (((posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
+				enemy_->OnCollision();
+				bullet->OnCollision();
+			}
+		}
+	}
+
+
+	
 }
