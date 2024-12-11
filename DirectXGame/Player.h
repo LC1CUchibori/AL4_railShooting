@@ -44,6 +44,9 @@ public:
 	// 弾
 	std::list<PlayerBullet*>bullets_;
 
+	// 弾リストを取得
+	const std::list<PlayerBullet*>& GetBullets()const { return bullets_; }
+
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
@@ -63,6 +66,4 @@ private:
 
 	PlayerBullet* bullet_ = nullptr;
 
-	// 弾リストを取得
-	const std::list<PlayerBullet*>& GetBullet()const { return bullets_; }
 };
