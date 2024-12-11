@@ -148,13 +148,12 @@ void GameScene::CheckAllCollision()
 
 	for (EnemyBullet* bullet : enemyBullets) {
 
-			posB = bullet->GetWorldPosition();
+		posB = bullet->GetWorldPosition();
 
-			if (((posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
-				player_->OnCollision();
-				bullet->OnCollision();
-			}
-	
+		if (((posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) + (posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
+			player_->OnCollision();
+			bullet->OnCollision();
+		}
 	}
 
 
