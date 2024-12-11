@@ -23,6 +23,8 @@ public:
 	/// </summary>
 	void Draw(const ViewProjection& viewProjection);
 
+	void OnCollision();
+
 	bool IsDead()const { return isDead_; }
 
 private:

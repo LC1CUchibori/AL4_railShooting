@@ -39,6 +39,8 @@ public:
 
 	void Attack();
 
+	void OnCollision();
+
 	// 弾
 	std::list<PlayerBullet*>bullets_;
 
@@ -60,4 +62,7 @@ private:
 	Input* input_ = nullptr;
 
 	PlayerBullet* bullet_ = nullptr;
+
+	// 弾リストを取得
+	const std::list<PlayerBullet*>& GetBullet()const { return bullets_; }
 };

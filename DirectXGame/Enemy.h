@@ -25,6 +25,8 @@ public:
 
 	void Fire();
 
+	void OnCollision();
+
 	// 接近フェーズ初期化
 	void ApproachInitialize();
 	// 発射間隔
@@ -61,4 +63,7 @@ private:
 	Player* player_ = nullptr;
 
 	Enemy* enemy_ = nullptr;
+
+	// 弾リストを取得
+	const std::list<EnemyBullet*>& GetBullets()const { return bullets_; }
 };

@@ -121,6 +121,10 @@ void Enemy::Fire()
 	bullets_.push_back(newBullet);
 }
 
+void Enemy::OnCollision()
+{
+}
+
 void Enemy::ApproachInitialize()
 {
 	// 発射タイマーを初期化

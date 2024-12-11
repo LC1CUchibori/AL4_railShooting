@@ -43,6 +43,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void CheckAllCollision();
+
 	bool isDebugCameraActiv_ = false;
 
 private: // メンバ変数
