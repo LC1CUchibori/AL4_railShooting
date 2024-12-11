@@ -2,6 +2,10 @@
 #include <WorldTransform.h>
 #include <Model.h>
 #include <EnemyBullet.h>
+
+// 自爆クラス
+class Player;
+
 class Enemy
 {
 public:
@@ -26,6 +30,11 @@ public:
 	// 発射間隔
 	static const int kFIreInterval = 60;
 
+	void SetPlayer(Player* player) { player_ = player; }
+
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -47,4 +56,9 @@ private:
 
 	// 弾丸のリスト
 	std::list<EnemyBullet*> bullets_;
+
+	// 自キャラ
+	Player* player_ = nullptr;
+
+	Enemy* enemy_ = nullptr;
 };

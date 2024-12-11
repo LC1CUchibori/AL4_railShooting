@@ -1,8 +1,23 @@
 #pragma once
+#include <numbers>
+#include <cmath>
+#include <cassert>
 
 class Vector3 {
 public:
     float x, y, z;
+
+    float Length(const Vector3& v) { return (float)std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z); }
+
+    // 正規化
+    Vector3 Normalize(const Vector3& v) {
+        float len = Length(v);
+        Vector3 result = v;
+        if (len != 0) {
+            result /= len;
+        }
+        return result;
+    }
 
     // コンストラクタ
     Vector3() : x(0), y(0), z(0) {}

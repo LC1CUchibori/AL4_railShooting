@@ -1,6 +1,7 @@
 ﻿#include "Enemy.h"
 #include <cassert>
 #include <MyMath.h>
+#include "Player.h"
 
 Enemy::~Enemy()
 {
@@ -91,13 +92,26 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 
 void Enemy::Fire()
 {
+	assert(player_);
 
 	// 弾の速度
-	const float kBulletSpeed = 1.0f;
-	Vector3 velocity(0, 0, -kBulletSpeed);
+	const float kBulletSpeed = 0.03f;
 
-	// 速度ベクトルを自機の向きに合わせて回転させる
-	velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+	// 目キャラのワールド座標を取得する
+	Vector3 playerPosition = player_->GetWorldPosition();
+
+	// 敵キャラのワールド座標を取得する
+	Vector3 enemyPosition = GetWorldPosition();
+
+
+	// 敵キャラから目キャラへの差分ベクトルを求める
+	Vector3 diff = playerPosition - enemyPosition;
+
+	// ベクトルの正規化
+	diff.Normalize(diff);
+
+	// ベクトルの長さを速度に合わせる
+	Vector3 velocity = diff * kBulletSpeed;
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
@@ -111,4 +125,15 @@ void Enemy::ApproachInitialize()
 {
 	// 発射タイマーを初期化
 	fireTimer = kFIreInterval;
+}
+
+Vector3 Enemy::GetWorldPosition()
+{
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得 (ワールド座標)
+	worldPos.x = worldTransform_.matWorld_.m[3][0]; 
+	worldPos.y = worldTransform_.matWorld_.m[3][1]; 
+	worldPos.z = worldTransform_.matWorld_.m[3][2]; 
+
+	return worldPos;
 }

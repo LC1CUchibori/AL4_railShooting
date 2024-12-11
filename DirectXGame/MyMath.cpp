@@ -1,6 +1,6 @@
 ﻿#include "MyMath.h"
-
 #include <cmath>
+
 
 // 拡大縮小行列
 Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
