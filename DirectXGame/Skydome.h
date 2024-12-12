@@ -6,7 +6,7 @@
 class Skydome
 {
 public:
-	void Initalize();
+	void Initalize(Model* model, ViewProjection* viewProjection);
 
 	void Update();
 
@@ -15,7 +15,7 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	ViewProjection viewProjection_;
+	ViewProjection* viewProjection_;
 	// モデル
 	//Model* model_ = nullptr;
 

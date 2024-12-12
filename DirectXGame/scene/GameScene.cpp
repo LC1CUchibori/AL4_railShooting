@@ -44,8 +44,12 @@ void GameScene::Initialize() {
 	// 敵キャラに自キャラのアドレスを渡す
 	enemy_->SetPlayer(player_);
 
+	// 天球の生成
 	skydome_ = new Skydome();
-	
+	// 天球3Dモデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	// 天球の初期化
+	skydome_->Initalize(modelSkydome_, &viewProjection_);
 
 
 	// 軸方向表示の表示を有効にする
