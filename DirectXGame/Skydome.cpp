@@ -1,6 +1,6 @@
 ﻿#include "Skydome.h"
 
-void Skydome::Initalize()
+void Skydome::Initalize(Model* model, ViewProjection* viewProjection);
 {
 }
 
