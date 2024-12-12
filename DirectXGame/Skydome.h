@@ -5,7 +5,7 @@
 class Skydome
 {
 public:
-	void Initalize(Model* model, ViewProjection* viewProjection);
+	void Initalize(Model*model,ViewProjection*viewProjection);
 
 	void Update();
 
