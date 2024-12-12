@@ -2,19 +2,24 @@
 
 
 
-void Skydome::Initalize(Model* model, ViewProjection* viewProjection)
+void Skydome::Initalize()
 {
-	worldTransform_.Initialize(); 
-	model_ = model;
-	viewProjection_ = viewProjection;
+
+	dxCommon_ = DirectXCommon::GetInstance();
+	// 3Dモデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+
+	// ワールドトランスフォームの初期化
+	worldTransform_.Initialize();
+	// ビュープロジェクションの初期化
+	viewProjection_.Initialize();
 }
 
 void Skydome::Update()
 {
-	worldTransform_.UpdateMatrix();
 }
 
 void Skydome::Draw()
 {
-	model_->Draw(viewProjection_);
+	modelSkydome_->Draw(worldTransform_,viewProjection_);
 }
