@@ -13,7 +13,7 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	ViewProjection viewProjection_;
+	ViewProjection* viewProjection_;
 	// モデル
 	Model* model_ = nullptr;
 };
