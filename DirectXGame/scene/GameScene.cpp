@@ -54,7 +54,6 @@ void GameScene::Initialize() {
 	Q5Handle_ = TextureManager::Load("Q5.png");
 	Q5sprite_ = Sprite::Create(Q5Handle_, { 100,20 });
 
-
 	// 体力1
 	HealthHandle1_ = TextureManager::Load("Health.png");
 	HealthSprite1_ = Sprite::Create(HealthHandle1_, { 100,600 });
