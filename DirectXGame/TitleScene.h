@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
@@ -6,22 +6,22 @@
 #include "Input.h"
 #include "GameScene.h"
 /// <summary>
-/// ƒ^ƒCƒgƒ‹ƒV[ƒ“
+/// ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³
 /// </summary>
 class TitleScene {
 public:
     /// <summary>
-    /// ‰Šú‰»
+    /// åˆæœŸåŒ–
     /// </summary>
     void Initialize();
 
     /// <summary>
-    /// –ˆƒtƒŒ[ƒ€ˆ—
+    /// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
     /// </summary>
     void Update();
 
     /// <summary>
-    /// •`‰æ
+    /// æç”»
     /// </summary>
     void Draw();
 

@@ -83,4 +83,6 @@ private: // メンバ変数
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	bool debugCameraFlag_ = false;
+
+	bool finished_ = false;
 };

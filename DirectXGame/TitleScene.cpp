@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+ï»¿#include "TitleScene.h"
 #include <numbers>
 
 void TitleScene::Initialize()
@@ -7,8 +7,8 @@ void TitleScene::Initialize()
 	titleWorldTransform_.Initialize();
 	viewProjection_.Initialize();
 
-	TitleHandle_ = TextureManager::Load("Title.png");
-	titleSprite_ = Sprite::Create(TitleHandle_, { 0,0 });
+	/*TitleHandle_ = TextureManager::Load("Title.png");
+	titleSprite_ = Sprite::Create(TitleHandle_, { 0,0 });*/
 }
 
 void TitleScene::Update()
@@ -26,11 +26,11 @@ void TitleScene::Draw()
 
 	Model::PostDraw();
 
-	// ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ‘Oˆ—
+	// å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»å‰å‡¦ç†
 	Sprite::PreDraw(commandList);
 
-	titleSprite_->Draw();
+	//titleSprite_->Draw();
 
-	// ƒXƒvƒ‰ƒCƒg•`‰æŒãˆ—
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»å¾Œå‡¦ç†
 	Sprite::PostDraw();
 }

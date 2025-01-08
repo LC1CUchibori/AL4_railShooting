@@ -33,7 +33,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
-	GameScene* gameScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -78,6 +77,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameScene = new GameScene();
 	gameScene->Initialize();
 
+	titleScene = new TitleScene;
+	titleScene->Initialize();
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -112,6 +114,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// 各種解放
 	SafeDelete(gameScene);
+
+	delete gameScene;
+	delete titleScene;
+
 	audio->Finalize();
 	// ImGui解放
 	imguiManager->Finalize();
@@ -141,7 +147,7 @@ void ChangeScene()
 	case Scene::kGame:
 		if (gameScene->IsFinished()) {
 			// シーン変更
-			scene = Scene::kGame;
+			scene = Scene::kTitle;
 			// 旧シーンの解放
 			delete gameScene;
 			gameScene = nullptr;
