@@ -2,6 +2,7 @@
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
