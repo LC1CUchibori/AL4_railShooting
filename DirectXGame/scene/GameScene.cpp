@@ -59,7 +59,7 @@ void GameScene::Initialize() {
 	//サウンド
 	CollisionDataHandle=audio_->LoadWave("Exprosion.mp3");
 	//音声再生
-	voice2Handle=audio_->PlayWave(CollisionDataHandle,true);
+	voice2Handle=audio_->PlayWave(CollisionDataHandle,false);
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
