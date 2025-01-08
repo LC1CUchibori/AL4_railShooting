@@ -24,6 +24,7 @@ void Enemy::Initialize(Model* model, const Vector3& position)
     // 初期位置を設定（奥に配置するためZを -100 に設定）
     worldTransform_.translation_ = { position.x, position.y, position.z + 30.0f };
 
+    hp_ = 5;  
 
     // ランダム移動用の初期化
     ChangeDirection();
@@ -137,6 +138,12 @@ void Enemy::Fire()
 
 void Enemy::OnCollision()
 {
+    hp_--; // 弾が当たるたびにHPを減少
+
+    if (hp_ <= 0) {
+        // HPが0以下なら死亡
+        hp_ = 0;
+    }
 }
 
 void Enemy::ApproachInitialize()
@@ -154,4 +161,9 @@ Vector3 Enemy::GetWorldPosition()
 	worldPos.z = worldTransform_.matWorld_.m[3][2]; 
 
 	return worldPos;
+}
+
+bool Enemy::IsDead() const
+{
+    return hp_ <= 0;
 }

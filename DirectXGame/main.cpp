@@ -91,6 +91,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
+
+		// シーン切り替え
+		ChangeScene();
+		// 現在シーン更新
+		UpdataScene();
+
 		// ゲームシーンの毎フレーム処理
 		gameScene->Update();
 		// 軸表示の更新
@@ -100,6 +106,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
+
+		DrawScene();
+
 		// ゲームシーンの描画
 		gameScene->Draw();
 		// 軸表示の描画

@@ -44,6 +44,8 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	bool IsDead() const;
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -75,5 +77,7 @@ private:
 	Player* player_ = nullptr;
 
 	Enemy* enemy_ = nullptr;
+
+	int hp_ = 5; // 敵のHP
 
 };
