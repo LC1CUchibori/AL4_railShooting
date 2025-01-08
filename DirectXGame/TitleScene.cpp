@@ -9,6 +9,13 @@ void TitleScene::Initialize()
 
 	/*TitleHandle_ = TextureManager::Load("Title.png");
 	titleSprite_ = Sprite::Create(TitleHandle_, { 0,0 });*/
+
+	// 天球の生成
+	skydome_ = new Skydome();
+	// 天球3Dモデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	// 天球の初期化
+	skydome_->Initalize(modelSkydome_, &viewProjection_);
 }
 
 void TitleScene::Update()

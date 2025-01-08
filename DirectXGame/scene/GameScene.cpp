@@ -20,7 +20,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("mario.jpg");
+	textureHandle_ = TextureManager::Load("Black.png");
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化
@@ -125,8 +125,10 @@ void GameScene::Draw() {
 	// 自キャラの描画
 	player_->Draw();
 
-	// 敵の描画
-	enemy_->Draw(viewProjection_);
+	if (isDead_ == false) {
+		// 敵の描画
+		enemy_->Draw(viewProjection_);
+	}
 
 	skydome_->Draw();
 
@@ -181,6 +183,15 @@ void GameScene::CheckAllCollision()
 			(posB.z - posA.z) * (posB.z - posA.z) <= (1.0f + 1.0f) * (1.0f + 1.0f))) {
 			enemy_->OnCollision();
 			bullet->OnCollision();
+
+			hp_--; // 弾が当たるたびにHPを減少
+
+			if (hp_ <= 0) {
+				// HPが0以下なら死亡
+				hp_ = 0;
+				isDead_ = true;
+				finished_ = true;
+			}
 		}
 	}
 	
@@ -199,6 +210,8 @@ void GameScene::CheckAllCollision()
 				playerBullet->OnCollision();
 				enemyBullet->OnCollision();
 			}
+
 		}
 	}
+
 }

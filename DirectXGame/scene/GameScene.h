@@ -85,4 +85,8 @@ private: // メンバ変数
 	bool debugCameraFlag_ = false;
 
 	bool finished_ = false;
+
+	int hp_ = 5; // 敵のHP
+
+	bool isDead_ = false;
 };

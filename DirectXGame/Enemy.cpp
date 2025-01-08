@@ -24,7 +24,6 @@ void Enemy::Initialize(Model* model, const Vector3& position)
     // 初期位置を設定（奥に配置するためZを -100 に設定）
     worldTransform_.translation_ = { position.x, position.y, position.z + 30.0f };
 
-    hp_ = 5;  
 
     // ランダム移動用の初期化
     ChangeDirection();
@@ -33,7 +32,6 @@ void Enemy::Initialize(Model* model, const Vector3& position)
     // 発射タイマーの初期化
     fireTimer = kFIreInterval;
 
-    isDead_ = false;
 }
 
 void Enemy::Update()
@@ -99,15 +97,13 @@ void Enemy::ChangeDirection()
 
 void Enemy::Draw(const ViewProjection& viewProjection)
 {
-    if (isDead_ == false) {
-        model_->Draw(worldTransform_, viewProjection, textureHandle_);
-    }
+  
+    model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
 	// 弾描画
-    if (isDead_ == false) {
-        for (EnemyBullet* bullet : bullets_) {
-            bullet->Draw(viewProjection);
-        }
+   
+    for (EnemyBullet* bullet : bullets_) {
+        bullet->Draw(viewProjection);
     }
 }
 
@@ -144,13 +140,6 @@ void Enemy::Fire()
 
 void Enemy::OnCollision()
 {
-    hp_--; // 弾が当たるたびにHPを減少
-
-    if (hp_ <= 0) {
-        // HPが0以下なら死亡
-        hp_ = 0;
-        isDead_ = true;
-    }
 }
 
 void Enemy::ApproachInitialize()
