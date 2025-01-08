@@ -120,6 +120,7 @@
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WorldTransformBlock.cpp" />
     <ClCompile Include="WorldTransformEx.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="Skydome.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="WorldTransformBlock.h" />
   </ItemGroup>
   <ItemGroup>
