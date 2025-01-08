@@ -51,6 +51,11 @@ void GameScene::Initialize() {
 	// 天球の初期化
 	skydome_->Initalize(modelSkydome_, &viewProjection_);
 
+	//サウンド
+	soundDataHandle=audio->LoadWave("GameBGM.mp3");
+	//音声再生
+	voiceHandle=audio->PlayWave(soundDataHandle,true);
+
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);

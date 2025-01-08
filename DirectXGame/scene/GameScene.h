@@ -89,4 +89,8 @@ private: // メンバ変数
 	int hp_ = 5; // 敵のHP
 
 	bool isDead_ = false;
+
+	//サウンド
+	uint32_t soundDataHandle=0;
+	uint32_t voiceHandle=0;    
 };
