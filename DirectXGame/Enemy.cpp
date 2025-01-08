@@ -99,14 +99,16 @@ void Enemy::ChangeDirection()
 
 void Enemy::Draw(const ViewProjection& viewProjection)
 {
-    if (isDead_ = true) {
+    if (isDead_ == false) {
         model_->Draw(worldTransform_, viewProjection, textureHandle_);
     }
 
 	// 弾描画
-	for (EnemyBullet* bullet : bullets_) {
-		bullet->Draw(viewProjection);
-	}
+    if (isDead_ == false) {
+        for (EnemyBullet* bullet : bullets_) {
+            bullet->Draw(viewProjection);
+        }
+    }
 }
 
 void Enemy::Fire()
@@ -147,6 +149,7 @@ void Enemy::OnCollision()
     if (hp_ <= 0) {
         // HPが0以下なら死亡
         hp_ = 0;
+        isDead_ = true;
     }
 }
 
@@ -167,7 +170,3 @@ Vector3 Enemy::GetWorldPosition()
 	return worldPos;
 }
 
-bool Enemy::IsDead() const
-{
-    return hp_ <= 0;
-}
