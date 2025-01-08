@@ -8,6 +8,22 @@
 #include "TextureManager.h"
 #include "WinApp.h"
 
+TitleScene* titleScene = nullptr;
+GameScene* gameScene = nullptr;
+
+enum class Scene {
+	kTitle,
+	kGame,
+};
+
+Scene scene = Scene::kTitle;
+
+void ChangeScene();
+
+void UpdataScene();
+
+void DrawScene();
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
@@ -104,4 +120,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	win->TerminateGameWindow();
 
 	return 0;
+}
+
+void ChangeScene()
+{
+}
+
+void UpdataScene()
+{
+}
+
+void DrawScene()
+{
 }
