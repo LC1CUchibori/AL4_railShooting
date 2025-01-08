@@ -17,6 +17,10 @@ public:
 
 	void Draw(const ViewProjection& viewProjection);
 
+	void ChangeDirection();
+
+	void ClampPosition();
+
 	enum class Phase
 	{
 		Approach, // 接近する
@@ -55,6 +59,11 @@ private:
 	const float ApproachSpeed = 0.1f;
 	// 離脱フェーズの移動
 	const float LeaveSpeed = 0.1f;
+
+	int32_t directionChangeTimer = 0;
+	const int32_t kDirectionChangeInterval = 60;
+	Vector3 moveDirection_;
+	float kMoveSpeed = 0.1f;
 
 	// 発射タイマー
 	int32_t fireTimer = 0;

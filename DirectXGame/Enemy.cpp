@@ -2,6 +2,7 @@
 #include <cassert>
 #include <MyMath.h>
 #include "Player.h"
+#include <algorithm>
 
 Enemy::~Enemy()
 {
@@ -15,69 +16,82 @@ Enemy::~Enemy()
 
 void Enemy::Initialize(Model* model, const Vector3& position)
 {
+    model_ = model;
+    textureHandle_ = TextureManager::Load("white1x1.png");
+    worldTransform_.Initialize();
+    worldTransform_.translation_ = position;
 
-	model_ = model;
-	// テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("white1x1.png");
-	// ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+    // 初期位置を設定（奥に配置するためZを -100 に設定）
+    worldTransform_.translation_ = { position.x, position.y, position.z + 30.0f };
 
-	worldTransform_.translation_ = position;
-	worldTransform_.translation_.x = 15.0f;
-	worldTransform_.translation_.z = 50.0f;
-	
-	// 弾を発射
-	//Fire();
 
-	// 接近フェーズ初期化
-	ApproachInitialize();
+    // ランダム移動用の初期化
+    ChangeDirection();
+    directionChangeTimer = kDirectionChangeInterval;
+
+    // 発射タイマーの初期化
+    fireTimer = kFIreInterval;
 }
 
 void Enemy::Update()
 {
+    // デスフラグの立った弾を削除
+    bullets_.remove_if([](EnemyBullet* bullet) {
+        if (bullet->IsDead()) {
+            delete bullet;
+            return true;
+        }
+        return false;
+        });
 
-	// デスフラグの立った弾を削除
-	bullets_.remove_if([](EnemyBullet* bullet) {
-		if (bullet->IsDead()) {
-			delete bullet;
-			return true;
-		}
-		return false;
-		});
+    // ランダム移動処理
+    directionChangeTimer--;
+    if (directionChangeTimer <= 0) {
+        ChangeDirection();  // 新しい移動方向を設定
+        directionChangeTimer = kDirectionChangeInterval;
+    }
 
-	switch (phase_)
-	{
-	case Phase::Approach:
-		// 移動
-		// 移動
-		worldTransform_.translation_ -= Vector3(0, 0, 0.1f);
-		// 既定の位置に到達したら離脱
-		if (worldTransform_.translation_.z <10.0f) {
-			phase_ = Phase::Leave;
-		}
-		// 発射タイマーカウントダウン
-		fireTimer--;
-		// 指定時間に達した
-		if (fireTimer<=0) {
-			// 弾を発射
-			Fire();
-			// 発射タイマーを初期化
-			fireTimer = kFIreInterval;
-		}
-		break;
-	case Phase::Leave:
-		worldTransform_.translation_ += Vector3(-0.1f, 0.1f, -0.1f);
-		
-		break;
-	}
+    // 現在の方向に移動
+    worldTransform_.translation_ += moveDirection_;
 
-	// 弾更新
-	for (EnemyBullet* bullet : bullets_) {
-		bullet->Update();
-	}
+    // 画面内の制約を守るよう調整
+    ClampPosition();
 
-	// 行列を更新
-	worldTransform_.UpdateMatrix();
+    // 弾発射処理
+    fireTimer--;
+    if (fireTimer <= 0) {
+        Fire();
+        fireTimer = kFIreInterval;
+    }
+
+    // 弾の更新
+    for (EnemyBullet* bullet : bullets_) {
+        bullet->Update();
+    }
+
+    // 行列を更新
+    worldTransform_.UpdateMatrix();
+}
+
+void Enemy::ClampPosition()
+{
+    // 画面内に敵を留める (仮の範囲 -50～50)
+    worldTransform_.translation_.x = std::clamp(worldTransform_.translation_.x, -50.0f, 50.0f);
+    worldTransform_.translation_.z = std::clamp(worldTransform_.translation_.z, -50.0f, 50.0f);
+}
+
+void Enemy::ChangeDirection()
+{
+    // ランダムな方向を生成 (-1.0f ～ 1.0f)
+    moveDirection_ = Vector3(
+        static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f,
+        0.0f,  // 水平方向のみ
+        static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f
+    );
+
+    // ベクトルの正規化と速度設定
+    moveDirection_.Normalize(moveDirection_);
+    moveDirection_ *= kMoveSpeed;  // 固定速度
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection)
