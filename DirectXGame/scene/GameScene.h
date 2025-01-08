@@ -49,6 +49,8 @@ public: // メンバ関数
 
 	bool isDebugCameraActiv_ = false;
 
+	bool IsFinished() const { return finished_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
