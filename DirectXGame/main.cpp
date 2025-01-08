@@ -3,6 +3,7 @@
 #include "DirectXCommon.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "GameClearScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
@@ -10,10 +11,12 @@
 
 TitleScene* titleScene = nullptr;
 GameScene* gameScene = nullptr;
+GameClearScene* gameClearScene = nullptr;
 
 enum class Scene {
 	kTitle,
 	kGame,
+	kClear
 };
 
 Scene scene = Scene::kTitle;
@@ -77,8 +80,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameScene = new GameScene();
 	gameScene->Initialize();
 
-	titleScene = new TitleScene;
+	titleScene = new TitleScene();
 	titleScene->Initialize();
+
+	gameClearScene = new GameClearScene();
+	gameClearScene->Initialize();
 
 	// メインループ
 	while (true) {
@@ -110,7 +116,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DrawScene();
 
 		// ゲームシーンの描画
-		gameScene->Draw();
+		//gameScene->Draw();
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット
@@ -124,6 +130,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// 各種解放
 	delete gameScene;
 	delete titleScene;
+	delete gameClearScene;
 
 	audio->Finalize();
 	// ImGui解放
@@ -154,11 +161,20 @@ void ChangeScene()
 	case Scene::kGame:
 		if (gameScene->IsFinished()) {
 			// シーン変更
-			scene = Scene::kTitle;
+			scene = Scene::kClear;
 			// 旧シーンの解放
 			delete gameScene;
 			gameScene = nullptr;
 			// 新シーンの生成と初期化
+			gameClearScene = new GameClearScene;
+			gameClearScene->Initialize();
+		}
+		break;
+	case Scene::kClear:
+		if (gameClearScene->IsFinished()) {
+			scene = Scene::kTitle;
+			delete gameClearScene;
+			gameClearScene = nullptr;
 			titleScene = new TitleScene;
 			titleScene->Initialize();
 		}
@@ -176,6 +192,8 @@ void UpdataScene()
 	case Scene::kGame:
 		gameScene->Update();
 		break;
+	case Scene::kClear:
+		gameClearScene->Update();
 	}
 }
 
@@ -188,6 +206,9 @@ void DrawScene()
 		break;
 	case Scene::kGame:
 		gameScene->Draw();
+		break;
+	case Scene::kClear:
+		gameClearScene->Draw();
 		break;
 	}
 }
