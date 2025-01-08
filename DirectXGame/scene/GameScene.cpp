@@ -52,9 +52,9 @@ void GameScene::Initialize() {
 	skydome_->Initalize(modelSkydome_, &viewProjection_);
 
 	//サウンド
-	soundDataHandle=audio->LoadWave("GameBGM.mp3");
+	soundDataHandle=audio_->LoadWave("GameBGM.wav");
 	//音声再生
-	voiceHandle=audio->PlayWave(soundDataHandle,true);
+	voiceHandle=audio_->PlayWave(soundDataHandle,true);
 
 
 	// 軸方向表示の表示を有効にする
