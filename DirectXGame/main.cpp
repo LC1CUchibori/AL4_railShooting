@@ -113,8 +113,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	// 各種解放
-	SafeDelete(gameScene);
-
 	delete gameScene;
 	delete titleScene;
 
