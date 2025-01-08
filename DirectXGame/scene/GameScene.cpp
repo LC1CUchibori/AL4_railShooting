@@ -20,7 +20,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("Black.png");
+	textureHandle_ = TextureManager::Load("BlackORE.png");
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化

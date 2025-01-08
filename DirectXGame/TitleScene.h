@@ -37,4 +37,7 @@ private:
 
     uint32_t TitleHandle_ = 0;
     Sprite* titleSprite_ = nullptr;
+
+    uint32_t BgHandle_ = 0;
+    Sprite* bgSprite_ = nullptr;
 };

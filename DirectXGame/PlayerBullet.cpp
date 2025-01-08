@@ -8,7 +8,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position,const Vector
 
 	model_ = model;
 	// テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("Black.png");
+	textureHandle_ = TextureManager::Load("BlackORE.png");
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
