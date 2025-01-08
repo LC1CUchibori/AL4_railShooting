@@ -91,6 +91,9 @@ private: // メンバ変数
 	bool isDead_ = false;
 
 	//サウンド
-	uint32_t soundDataHandle=0;
-	uint32_t voiceHandle=0;    
+	uint32_t soundDataHandle = 0;
+	uint32_t voiceHandle = 0;
+
+	uint32_t CollisionDataHandle = 0;
+	uint32_t voice2Handle = 0;
 };

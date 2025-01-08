@@ -56,6 +56,10 @@ void GameScene::Initialize() {
 	//音声再生
 	voiceHandle=audio_->PlayWave(soundDataHandle,true);
 
+	//サウンド
+	CollisionDataHandle=audio_->LoadWave("Exprosion.mp3");
+	//音声再生
+	voice2Handle=audio_->PlayWave(CollisionDataHandle,true);
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -189,12 +193,15 @@ void GameScene::CheckAllCollision()
 			enemy_->OnCollision();
 			bullet->OnCollision();
 
+			audio_->PlayWave(CollisionDataHandle);
+
 			hp_--; // 弾が当たるたびにHPを減少
 
 			if (hp_ <= 0) {
 				// HPが0以下なら死亡
 				hp_ = 0;
 				isDead_ = true;
+  				audio_->StopWave(voiceHandle);
 				finished_ = true;
 			}
 		}
