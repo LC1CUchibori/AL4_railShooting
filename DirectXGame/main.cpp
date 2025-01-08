@@ -155,8 +155,26 @@ void ChangeScene()
 
 void UpdataScene()
 {
+	switch (scene)
+	{
+	case Scene::kTitle:
+		titleScene->Update();
+		break;
+	case Scene::kGame:
+		gameScene->Update();
+		break;
+	}
 }
 
 void DrawScene()
 {
+	switch (scene)
+	{
+	case Scene::kTitle:
+		titleScene->Draw();
+		break;
+	case Scene::kGame:
+		gameScene->Draw();
+		break;
+	}
 }
