@@ -32,6 +32,8 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 
     // 発射タイマーの初期化
     fireTimer = kFIreInterval;
+
+    isDead_ = false;
 }
 
 void Enemy::Update()
@@ -97,7 +99,9 @@ void Enemy::ChangeDirection()
 
 void Enemy::Draw(const ViewProjection& viewProjection)
 {
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+    if (isDead_ = true) {
+        model_->Draw(worldTransform_, viewProjection, textureHandle_);
+    }
 
 	// 弾描画
 	for (EnemyBullet* bullet : bullets_) {

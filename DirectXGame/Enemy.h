@@ -44,7 +44,7 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
-	bool IsDead() const;
+	bool IsDead() const { return isDead_; }
 
 private:
 	// ワールド変換データ
@@ -80,4 +80,5 @@ private:
 
 	int hp_ = 5; // 敵のHP
 
+	bool isDead_ = false;
 };
