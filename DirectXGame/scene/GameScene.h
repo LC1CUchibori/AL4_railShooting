@@ -11,7 +11,8 @@
 #include "Player.h"
 #include "DebugCamera.h"
 #include "Enemy.h"
-#include <Skydome.h>
+#include "Skydome.h"
+#include "RailCamera.h"
 
 
 /// <summary>
@@ -77,6 +78,8 @@ private: // メンバ変数
 	Skydome* skydome_ = nullptr;
 	// 3Dモデル
 	Model* modelSkydome_ = nullptr;
+
+	RailCamera* railCamera_ = nullptr;
 
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;

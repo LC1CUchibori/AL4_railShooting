@@ -51,6 +51,13 @@ void GameScene::Initialize() {
 	// 天球の初期化
 	skydome_->Initalize(modelSkydome_, &viewProjection_);
 
+	Vector3 initialPosition = {0.0f, 5.0f, -10.0f}; // カメラの初期位置 (X, Y, Z)
+	float initialRotation = (45.0f);{}
+
+	// レールカメラの生成
+	railCamera_ = new RailCamera();
+	// レールカメラの初期化
+	railCamera_->Initialize(initialPosition,initialRotation);
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -70,6 +77,9 @@ void GameScene::Update() {
 
 	// 敵の更新
 	enemy_->Update();
+
+	// レールカメラの更新
+	railCamera_->Update();
 
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_SPACE)) {

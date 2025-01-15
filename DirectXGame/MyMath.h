@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include"Matrix4x4.h"
 #include"Vector3.h"
+#define N 4 //逆行列を求める行列の行数・列数 
+
 
 // アフィン変換行列の作成
 Matrix4x4 MakeAffineMatrix(const Vector3& scale_, const Vector3& rotation_, const Vector3& translation_);
@@ -27,3 +29,5 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 
 // ベクトル変換
 Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+
+Matrix4x4 Inverse(const Matrix4x4& m);
