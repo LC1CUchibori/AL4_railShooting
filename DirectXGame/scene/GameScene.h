@@ -48,8 +48,6 @@ public: // メンバ関数
 
 	void CheckAllCollision();
 
-	bool isDebugCameraActiv_ = false;
-
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -82,6 +80,8 @@ private: // メンバ変数
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	bool debugCameraFlag_ = false;
+
+	bool isDebugCameraActiv_ = false;
 
 	RailCamera* railCamera_ = nullptr;
 };
