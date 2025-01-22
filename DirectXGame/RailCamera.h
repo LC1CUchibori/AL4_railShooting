@@ -6,7 +6,7 @@
 class RailCamera
 {
 public:
-	void Initialize(const Vector3& position, float rotationRadians);
+	void Initialize(const Vector3& position, const Vector3& rotationRadians);
 	
 	void Update();
 

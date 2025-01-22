@@ -1,11 +1,11 @@
 ﻿#include "RailCamera.h"
 #include <imgui.h>
 
-void RailCamera::Initialize(const Vector3& position, float rotationRadians)
+void RailCamera::Initialize(const Vector3& position, const Vector3& rotationRadians)
 {
 	// ワールドトランスフォームの初期化
 	worldTransform_.translation_ = position;
-	worldTransform_.rotation_ .x= rotationRadians;
+	worldTransform_.rotation_ = rotationRadians;
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 }

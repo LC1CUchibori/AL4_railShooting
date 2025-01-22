@@ -11,6 +11,7 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	delete enemy_;
 	delete modelSkydome_;
+	delete railCamera_;
 }
 
 void GameScene::Initialize() {
@@ -52,12 +53,12 @@ void GameScene::Initialize() {
 	skydome_->Initalize(modelSkydome_, &viewProjection_);
 
 	Vector3 initialPosition = {0.0f, 5.0f, -10.0f}; // カメラの初期位置 (X, Y, Z)
-	float initialRotation = (45.0f);{}
+	
 
 	// レールカメラの生成
 	railCamera_ = new RailCamera();
 	// レールカメラの初期化
-	railCamera_->Initialize(initialPosition,initialRotation);
+	railCamera_->Initialize(Vector3(0,0,-50),Vector3(0,0,0));
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);

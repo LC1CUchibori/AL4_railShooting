@@ -79,9 +79,9 @@ private: // メンバ変数
 	// 3Dモデル
 	Model* modelSkydome_ = nullptr;
 
-	RailCamera* railCamera_ = nullptr;
-
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	bool debugCameraFlag_ = false;
+
+	RailCamera* railCamera_ = nullptr;
 };
