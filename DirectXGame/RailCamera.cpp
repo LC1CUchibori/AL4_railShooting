@@ -16,20 +16,18 @@ void RailCamera::Update()
 	Vector3 move = { 0,0,0 };
 
 	// 移動
-	worldTransform_.translation_.x += move.x;
-	worldTransform_.translation_.y += move.y;
-	worldTransform_.translation_.z += move.z;
+	worldTransform_.translation_ += Vector3(0, 0, 0.1f);
 	// 回転
-	worldTransform_.rotation_.x += move.x;
-	worldTransform_.rotation_.y += move.y;
-	worldTransform_.rotation_.z += move.z;
+	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 
 	// カメラオブジェクトのワールド行列からビュー行列を計算する
 	viewProjection_.matView = Inverse(worldTransform_.matWorld_);
 
+	viewProjection_.TransferMatrix();
+
 	// カメラの座標を画面表示する処理
 	ImGui::Begin("Camera");
-	ImGui::SliderFloat3("Position",&worldTransform_.translation_.x,-10.0f,10.0f);
+	ImGui::SliderFloat3("Position", &worldTransform_.translation_.x, -10.0f, 10.0f);
 	ImGui::SliderFloat3("rotation", &worldTransform_.rotation_.x, -10.0f, 10.0f);
 	ImGui::End();
-}
+};

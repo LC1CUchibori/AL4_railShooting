@@ -51,8 +51,6 @@ void GameScene::Initialize() {
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	// 天球の初期化
 	skydome_->Initalize(modelSkydome_, &viewProjection_);
-
-	Vector3 initialPosition = {0.0f, 5.0f, -10.0f}; // カメラの初期位置 (X, Y, Z)
 	
 
 	// レールカメラの生成
