@@ -1,5 +1,6 @@
 ﻿#include "RailCamera.h"
 #include <imgui.h>
+#include <MyMath.h>
 
 void RailCamera::Initialize(const Vector3& position, const Vector3& rotationRadians)
 {

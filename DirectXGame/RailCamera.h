@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <WorldTransform.h>
 #include <ViewProjection.h>
-#include "GameScene.h"
 
 class RailCamera
 {
