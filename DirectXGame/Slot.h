@@ -1,9 +1,5 @@
-﻿#include "Audio.h"
-#include "DirectXCommon.h"
-#include "Input.h"
+﻿
 #include "Model.h"
-#include "SafeDelete.h"
-#include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
@@ -18,9 +14,9 @@ public:
 
 private:
     // 3Dモデル
-    Model* model = nullptr;
+    Model* model_ = nullptr;
     // ワールドトランスフォーム
-    WorldTransform worldTransform;
+    WorldTransform worldTransform_;
     // ビュープロジェクション
-    ViewProjection viewProjection;
+    ViewProjection* viewProjection_ = nullptr;
 };
