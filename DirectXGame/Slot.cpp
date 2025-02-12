@@ -2,9 +2,6 @@
 
 void Slot::Initialize(Model* model, ViewProjection* viewProjection)
 {
-	// NULLチェック
-	assert(model);
-
 	worldTransform_.Initialize(); 
 	model_ = model;
 	viewProjection_ = viewProjection;

@@ -10,7 +10,6 @@
 class Slot
 {
 public:
-
     void Initialize(Model* model, ViewProjection* viewProjection);
 
     void Update();
