@@ -32,9 +32,10 @@ void GameScene::Initialize() {
 
 	// スロットの生成
 	slot_ = new Slot();
+	// モデル生成
+	slotModel_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの初期化
 	slot_->Initialize();
-	slotModel_ = Model::CreateFromOBJ("Slot", true);
 }
 
 void GameScene::Update() {
@@ -73,6 +74,8 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw();
+
+	slot_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
