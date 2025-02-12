@@ -8,6 +8,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene() { 
 	delete model_; 
 	delete modelSlot_;
+	delete modelReel_;
 }
 
 void GameScene::Initialize() {
@@ -30,6 +31,13 @@ void GameScene::Initialize() {
 	slot_ = new Slot();
 	// スロットの初期化
 	slot_->Initialize(modelSlot_, &viewProjection_);
+
+	// モデル生成
+	modelReel_ = Model::CreateFromOBJ("Reel", true);
+	// スロットリールの生成
+	reel_ = new Reel();
+	// スロットリールの初期化
+	reel_->Initialize(modelReel_, &viewProjection_);
 }
 
 void GameScene::Update() {
@@ -64,6 +72,8 @@ void GameScene::Draw() {
 	/// </summary>
 	
 	slot_->Draw();
+
+	reel_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

@@ -9,8 +9,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Slot.h"
-
-
+#include "Reel.h"
 
 /// <summary>
 /// ゲームシーン
@@ -60,4 +59,8 @@ private: // メンバ変数
 	// スロット
 	Slot* slot_ = nullptr;
 	Model* modelSlot_ = nullptr;
+
+	// スロットリール
+	Reel* reel_ = nullptr;
+	Model* modelReel_ = nullptr;
 };
