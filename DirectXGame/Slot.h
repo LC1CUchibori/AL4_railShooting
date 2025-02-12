@@ -1,7 +1,4 @@
-﻿
-#include "Model.h"
-#include "ViewProjection.h"
-#include "WorldTransform.h"
+﻿#pragma once
 
 class Slot
 {

@@ -7,9 +7,11 @@
 #include "SafeDelete.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
-#include "WorldTransform.h"
 
+#include "WorldTransform.h"
 #include "Slot.h"
+
+
 
 /// <summary>
 /// ゲームシーン
@@ -58,5 +60,5 @@ private: // メンバ変数
 
 	// スロット
 	Slot* slot_ = nullptr;
-	Model* slotModel_ = nullptr;
+	Model* modelSlot_ = nullptr;
 };

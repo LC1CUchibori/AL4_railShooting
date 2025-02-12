@@ -7,7 +7,7 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
 	delete model_; 
-	delete slotModel_;
+	delete modelSlot_;
 }
 
 void GameScene::Initialize() {
@@ -23,12 +23,13 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
+	
+	// モデル生成
+	modelSlot_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの生成
 	slot_ = new Slot();
-	// モデル生成
-	slotModel_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの初期化
-	slot_->Initialize(slotModel_, &viewProjection_);
+	slot_->Initialize(modelSlot_, &viewProjection_);
 }
 
 void GameScene::Update() {

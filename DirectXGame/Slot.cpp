@@ -1,4 +1,7 @@
-﻿#include "Slot.h"
+﻿#include "Model.h"
+#include "ViewProjection.h"
+#include "WorldTransform.h"
+#include "Slot.h"
 
 void Slot::Initialize(Model *model, ViewProjection* viewProjection)
 {
