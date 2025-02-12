@@ -35,12 +35,14 @@ void GameScene::Initialize() {
 	// モデル生成
 	slotModel_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの初期化
-	slot_->Initialize();
+	slot_->Initialize(slotModel_, &viewProjection_);;
 }
 
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+
+
 }
 
 void GameScene::Draw() {

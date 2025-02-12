@@ -1,6 +1,4 @@
-#pragma once
-
-#include "Audio.h"
+ï»¿#include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Model.h"
@@ -16,7 +14,7 @@ public:
 
     ~Slot();
 
-    void Initialize();
+    void Initialize(Model* model, ViewProjection* viewProjection);
 
     void Update();
 
@@ -27,10 +25,10 @@ private:
     Input* input = nullptr;
     Audio* audio = nullptr;
 
-    // 3Dƒ‚ƒfƒ‹
+    // 3Dãƒ¢ãƒ‡ãƒ«
     Model* model = nullptr;
-    // ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+    // ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
     WorldTransform worldTransform;
-    // ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“
+    // ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
     ViewProjection viewProjection;
 };

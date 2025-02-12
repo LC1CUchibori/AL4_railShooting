@@ -1,4 +1,4 @@
-#include "Slot.h"
+ï»¿#include "Slot.h"
 
 Slot::Slot()
 {
@@ -8,16 +8,16 @@ Slot::~Slot()
 {
 }
 
-void Slot::Initialize()
+void Slot::Initialize(Model* model, ViewProjection* viewProjection)
 {
-	// NULLƒ`ƒFƒbƒN
+	// NULLãƒã‚§ãƒƒã‚¯
 	assert(model);
 
-	// 3Dƒ‚ƒfƒ‹‚Ì¶¬
+	// 3Dãƒ¢ãƒ‡ãƒ«ã®ç”Ÿæˆ
 	model_ = Model::Create();
-	// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®åˆæœŸåŒ–
 	worldTransform_.Initialize();
-	// ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“‚Ì‰Šú‰»
+	// ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–
 	viewProjection_.Initialize();
 }
 
