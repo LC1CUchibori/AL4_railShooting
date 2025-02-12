@@ -1,13 +1,5 @@
 ﻿#include "Slot.h"
 
-Slot::Slot()
-{
-}
-
-Slot::~Slot()
-{
-}
-
 void Slot::Initialize(Model* model, ViewProjection* viewProjection)
 {
 	// NULLチェック

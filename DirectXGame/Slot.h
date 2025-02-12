@@ -10,9 +10,6 @@
 class Slot
 {
 public:
-    Slot();
-
-    ~Slot();
 
     void Initialize(Model* model, ViewProjection* viewProjection);
 
