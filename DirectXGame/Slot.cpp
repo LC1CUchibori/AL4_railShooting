@@ -27,5 +27,5 @@ void Slot::Update()
 
 void Slot::Draw()
 {
-	model_->Draw();
+	model_->Draw(worldTransform_, *viewProjection_);
 }
