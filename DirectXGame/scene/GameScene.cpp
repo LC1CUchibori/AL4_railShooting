@@ -29,6 +29,12 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_, &viewProjection_);
+
+	// スロットの生成
+	slot_ = new Slot();
+	// スロットの初期化
+	slot_->Initialize();
+	slotModel_ = Model::CreateFromOBJ("Slot", true);
 }
 
 void GameScene::Update() {
