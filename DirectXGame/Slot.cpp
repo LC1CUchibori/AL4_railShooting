@@ -13,12 +13,9 @@ void Slot::Initialize(Model* model, ViewProjection* viewProjection)
 	// NULLチェック
 	assert(model);
 
-	// 3Dモデルの生成
-	model_ = Model::Create();
-	// ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
-	// ビュープロジェクションの初期化
-	viewProjection_.Initialize();
+	worldTransform_.Initialize(); 
+	model_ = model;
+	viewProjection_ = viewProjection;
 }
 
 void Slot::Update()
