@@ -1,6 +1,6 @@
 ﻿#include "Slot.h"
 
-void Slot::Initialize(Model* model, ViewProjection* viewProjection)
+void Slot::Initialize(Model *model, ViewProjection* viewProjection)
 {
 	worldTransform_.Initialize(); 
 	model_ = model;
