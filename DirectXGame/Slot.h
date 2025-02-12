@@ -17,10 +17,6 @@ public:
     void Draw();
 
 private:
-    DirectXCommon* dxCommon = nullptr;
-    Input* input = nullptr;
-    Audio* audio = nullptr;
-
     // 3Dモデル
     Model* model = nullptr;
     // ワールドトランスフォーム
