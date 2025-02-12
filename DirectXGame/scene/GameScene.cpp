@@ -28,7 +28,7 @@ void GameScene::Initialize() {
 	// モデル生成
 	slotModel_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの初期化
-	slot_->Initialize(slotModel_, &viewProjection_);;
+	slot_->Initialize(slotModel_, &viewProjection_);
 }
 
 void GameScene::Update() {
