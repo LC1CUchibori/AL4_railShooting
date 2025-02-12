@@ -6,9 +6,8 @@
 #include "Model.h"
 #include "SafeDelete.h"
 #include "Sprite.h"
-#include "ViewProjection.h"
-
 #include "WorldTransform.h"
+#include "ViewProjection.h"
 #include "Slot.h"
 
 
