@@ -112,6 +112,8 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Reel.cpp" />
+    <ClCompile Include="Reel2.cpp" />
+    <ClCompile Include="Reel3.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Slot.cpp" />
   </ItemGroup>
@@ -145,6 +147,8 @@
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="Reel.h" />
+    <ClInclude Include="Reel2.h" />
+    <ClInclude Include="Reel3.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="Slot.h" />
   </ItemGroup>

@@ -8,8 +8,11 @@
 #include "Sprite.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+
 #include "Slot.h"
 #include "Reel.h"
+#include "Reel2.h"
+#include "Reel3.h"
 
 /// <summary>
 /// ゲームシーン
@@ -60,7 +63,15 @@ private: // メンバ変数
 	Slot* slot_ = nullptr;
 	Model* modelSlot_ = nullptr;
 
-	// スロットリール
+	// スロットリール1
 	Reel* reel_ = nullptr;
 	Model* modelReel_ = nullptr;
+
+	// スロットリール2
+	Reel2* reel2_ = nullptr;
+	Model* modelReel2_ = nullptr;
+
+	// スロットリール3
+	Reel3* reel3_ = nullptr;
+	Model* modelReel3_ = nullptr;
 };
