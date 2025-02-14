@@ -16,7 +16,7 @@ void Lever::Initialize(Model *model, ViewProjection* viewProjection)
 void Lever::Update()
 {
     // スペースキーが押されたらタイマー開始
-    if (input_->TriggerKey(DIK_SPACE)) {
+    if (input_->TriggerKey(DIK_RETURN)) {
         downTimer_ = DownTime;
     }
 

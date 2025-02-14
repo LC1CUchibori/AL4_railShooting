@@ -87,5 +87,7 @@ private: // メンバ変数
 
 	// ボタン
 	Button* button1_ = nullptr;
+	Button* button2_;  // 追加: 左側のボタン
+	Button* button3_; // 追加: 右側のボタン
 	Model* modelButton_ = nullptr;
 };

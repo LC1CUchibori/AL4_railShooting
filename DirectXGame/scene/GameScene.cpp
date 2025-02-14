@@ -74,10 +74,24 @@ void GameScene::Initialize() {
 
 	// モデルの生成
 	modelButton_ = Model::CreateFromOBJ("Botan", true);
+
 	// ボタン1の生成・初期化
 	button1_ = new Button();
 	button1_->Initialize(modelButton_, &viewProjection_);
+	// 中央のボタンの位置
+	button1_->SetPosition({0.5f, 0.0f, 0.0f});
 	
+	// 左側のボタン生成・初期化
+	button2_ = new Button();
+	button2_->Initialize(modelButton_, &viewProjection_);
+	// 中央のボタンから左に移動した位置
+	button2_->SetPosition({4.0f, 0.0f, 0.0f});
+
+	// 右側のボタン生成・初期化
+	button3_ = new Button();
+	button3_->Initialize(modelButton_, &viewProjection_);
+	// 中央のボタンから右に移動した位置
+	button3_->SetPosition({-3.0f, 0.0f, 0.0f});
 }
 
 void GameScene::Update() {
@@ -96,6 +110,34 @@ void GameScene::Update() {
 
 	// ボタン
 	button1_->Update();
+	// ボタン2
+	button2_->Update();
+	// ボタン3
+	button3_->Update();
+
+	Input* input = Input::GetInstance();
+
+	// 現在の状態を保存
+	static int currentButtonIndex = 0;
+
+	// スペースキーを押したらされたら、左から順にボタンを押す
+	if (input->TriggerKey(DIK_SPACE))
+	{
+		switch (currentButtonIndex)
+		{
+		case 0:
+			button3_->Press();
+			break;
+		case 1:
+			button1_->Press();
+			break;
+		case 2:
+			button2_->Press();
+			break;
+		}
+		// 次のボタンへ
+		currentButtonIndex = (currentButtonIndex + 1) % 3;
+	}
 }
 
 void GameScene::Draw() {
@@ -143,8 +185,12 @@ void GameScene::Draw() {
 	// レバーパーツ
 	leverParts_->Draw();
 
-	// ボタン
+	// ボタン1
 	button1_->Draw();
+	// ボタン2
+	button2_->Draw();
+	// ボタン3
+	button3_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
