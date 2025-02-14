@@ -66,13 +66,11 @@ private: // メンバ変数
 	Model* modelSlot_ = nullptr;
 
 	// スロットリール1
-	Reel* reel_ = nullptr;
+	Reel* reel1_ = nullptr;
 	Model* modelReel_ = nullptr;
-
 	// スロットリール2
 	Reel2* reel2_ = nullptr;
 	Model* modelReel2_ = nullptr;
-
 	// スロットリール3
 	Reel3* reel3_ = nullptr;
 	Model* modelReel3_ = nullptr;
@@ -85,9 +83,11 @@ private: // メンバ変数
 	Slot* leverParts_ = nullptr;
 	Model* modelLeverParts_ = nullptr;
 
-	// ボタン
+	// ボタン1
+	Button* button2_ = nullptr;
+	// ボタン2
+	Button* button3_ = nullptr;
+	// ボタン3
 	Button* button1_ = nullptr;
-	Button* button2_;  // 追加: 左側のボタン
-	Button* button3_; // 追加: 右側のボタン
 	Model* modelButton_ = nullptr;
 };

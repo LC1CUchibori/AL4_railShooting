@@ -24,7 +24,7 @@ void Lever::Update()
     if (downTimer_ > 0) {
         worldTransform_.translation_.y = DownOffsetY;
         downTimer_--;
-    } else {
+    } else{
         worldTransform_.translation_.y = 0.0f;
     }
 

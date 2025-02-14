@@ -29,7 +29,7 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
-	
+
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの生成
@@ -40,9 +40,9 @@ void GameScene::Initialize() {
 	// モデル生成
 	modelReel_ = Model::CreateFromOBJ("Reel", true);
 	// スロットリールの生成
-	reel_ = new Reel();
+	reel1_ = new Reel();
 	// スロットリールの初期化
-	reel_->Initialize(modelReel_, &viewProjection_);
+	reel1_->Initialize(modelReel_, &viewProjection_);
 
 	// モデル生成
 	modelReel2_ = Model::CreateFromOBJ("Reel2", true);
@@ -74,43 +74,56 @@ void GameScene::Initialize() {
 
 	// モデルの生成
 	modelButton_ = Model::CreateFromOBJ("Botan", true);
-
-	// ボタン1の生成・初期化
+	// 左側のボタン生成
 	button1_ = new Button();
+	// 左側のボタンの初期化
 	button1_->Initialize(modelButton_, &viewProjection_);
-	// 中央のボタンの位置
-	button1_->SetPosition({0.5f, 0.0f, 0.0f});
-	
-	// 左側のボタン生成・初期化
-	button2_ = new Button();
-	button2_->Initialize(modelButton_, &viewProjection_);
-	// 中央のボタンから左に移動した位置
-	button2_->SetPosition({4.0f, 0.0f, 0.0f});
+	// 左側のボタンの位置
+	button1_->SetPosition({-3.0f, 0.0f, 0.0f});
 
-	// 右側のボタン生成・初期化
+	// 真ん中のボタンの生成
+	button2_ = new Button();
+	// 真ん中のボタンの初期化
+	button2_->Initialize(modelButton_, &viewProjection_);
+	// 真ん中のボタンの位置
+	button2_->SetPosition({0.5f, 0.0f, 0.0f});
+	
+	// 右側のボタン生成
 	button3_ = new Button();
+	// 右側のボタンの初期化
 	button3_->Initialize(modelButton_, &viewProjection_);
-	// 中央のボタンから右に移動した位置
-	button3_->SetPosition({-3.0f, 0.0f, 0.0f});
+	// 右側のボタンの位置
+	button3_->SetPosition({4.0f, 0.0f, 0.0f});
 }
 
 void GameScene::Update() {
 
-	// 現在の状態を保存
-	static int currentButtonIndex = 0;
-	static int pressCount = 0; // 何回ボタンを押したかを数える変数
-
 	// スロットリール1
-	reel_->Update();
+	reel1_->Update();
 	// スロットリール2
 	reel2_->Update();
 	// スロットリール3
 	reel3_->Update();
 
+	// レバー
+	lever_->Update();
+
+	// ボタン1
+	button1_->Update();
+	// ボタン2
+	button2_->Update();
+	// ボタン3
+	button3_->Update();
+
+	// 現在の状態を保存
+	static int currentButtonIndex = 0;
+	static int pressCount = 0; // 何回ボタンを押したかを数える変数
+
+#pragma region レバーの処理
 	// レバーが引かれていたらリール回転開始
 	if (lever_->IsPulled())
 	{
-		reel_->StartRotation();
+		reel1_->StartRotation();
 		reel2_->StartRotation();
 		reel3_->StartRotation();
 
@@ -118,17 +131,10 @@ void GameScene::Update() {
 		currentButtonIndex = 0;
 		pressCount = 0;
 	}
+#pragma endregion
 
-	// レバー
-	lever_->Update();
-
-	// ボタン
-	button1_->Update();
-	// ボタン2
-	button2_->Update();
-	// ボタン3
-	button3_->Update();
-
+#pragma region ボタンの処理
+	// キー入力
 	Input* input = Input::GetInstance();
 
 	// スペースキーを押したら、左から順にボタンを押す
@@ -137,16 +143,16 @@ void GameScene::Update() {
 		switch (currentButtonIndex)
 		{
 		case 0:
-			button3_->Press();
-			reel_->StopRotation(); 
+			button1_->Press();
+			reel1_->StopRotation(); // ここでリール止める
 			break;
 		case 1:
-			button1_->Press();
-			reel2_->StopRotation();
+			button2_->Press();
+			reel2_->StopRotation(); // ここでリール止める
 			break;
 		case 2:
-			button2_->Press();
-			reel3_->StopRotation();
+			button3_->Press();
+			reel3_->StopRotation(); // ここでリール止める
 			break;
 		}
 
@@ -157,10 +163,11 @@ void GameScene::Update() {
 		// 3回押したらリセットする
 		if (pressCount >= 3)
 		{
-			currentButtonIndex = 0; // 左から（button3_）に戻る
-			pressCount = 0;          // カウントもリセット
+			currentButtonIndex = 0; // 左に戻る
+			pressCount = 0;         // カウントもリセット
 		}
 	}
+#pragma endregion
 }
 
 void GameScene::Draw() {
@@ -194,11 +201,9 @@ void GameScene::Draw() {
 	slot_->Draw();
 
 	// スロットリール1
-	reel_->Draw();
-
+	reel1_->Draw();
 	// スロットリール2
 	reel2_->Draw();
-
 	// スロットリール3
 	reel3_->Draw();
 
@@ -209,11 +214,11 @@ void GameScene::Draw() {
 	leverParts_->Draw();
 
 	// ボタン1
-	button1_->Draw();
-	// ボタン2
 	button2_->Draw();
-	// ボタン3
+	// ボタン2
 	button3_->Draw();
+	// ボタン3
+	button1_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

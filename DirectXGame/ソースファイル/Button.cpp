@@ -14,11 +14,9 @@ void Button::Initialize(Model* model, ViewProjection* viewProjection)
 
 void Button::Update()
 {
-
-    // 押し込み状態の場合、経過時間をカウントし、所定の時間経過でリセットする
+    // 押し込み状態のとき、時間をカウントして一定時間経ったらリセット
     if (isPressed_)
     {
-        // ここでは簡易的に 1/60 秒分を加算
         const float deltaTime = 1.0f / 60.0f;
         pressTimer_ += deltaTime;
         if (pressTimer_ >= pressDuration_)
@@ -28,9 +26,6 @@ void Button::Update()
             isPressed_ = false;
         }
     }
-
-    // ワールド行列を更新
-    worldTransform_.UpdateMatrix();
 
     // ワールドトランスフォームの更新
     worldTransform_.UpdateMatrix();
@@ -43,7 +38,7 @@ void Button::Draw()
 
 void Button::Press()
 {
-    // ボタンを押したとき、Z 軸方向にオフセットを加える
+    // ボタンを押したときの深さ
     worldTransform_.translation_.z = originalPosition_.z + pressedOffset_;
     isPressed_ = true;
     pressTimer_ = 0.0f;

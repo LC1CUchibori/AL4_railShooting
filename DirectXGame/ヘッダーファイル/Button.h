@@ -18,7 +18,6 @@ public:
  
     void Reset() { isPressed_ = false; } // 必要に応じてリセットも
 
-
 private:
     // 3Dモデル
     Model* model_ = nullptr;

@@ -18,7 +18,8 @@ void Slot::Update()
 
 void Slot::Draw()
 {
+	// 本体
 	model_->Draw(worldTransform_, *viewProjection_);
-
+	// レバーのパーツ
 	modelLeverParts_->Draw(worldTransform_, *viewProjection_);
 }

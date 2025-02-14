@@ -9,6 +9,7 @@ public:
     void Draw();
 
     void StartRotation() { isRotating_ = true; }
+
     void StopRotation() { isRotating_ = false; }
 
     bool IsRotating() const { return isRotating_; }
