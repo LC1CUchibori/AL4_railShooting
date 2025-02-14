@@ -8,6 +8,11 @@ public:
 
     void Draw();
 
+    void StartRotation() { isRotating_ = true; }
+    void StopRotation() { isRotating_ = false; }
+
+    bool IsRotating() const { return isRotating_; }
+
 private:
     // 3Dモデル
     Model* model_ = nullptr;
@@ -15,5 +20,8 @@ private:
     WorldTransform worldTransform_;
     // ビュープロジェクション
     ViewProjection* viewProjection_ = nullptr;
+
+    // 回転してるかのフラグ
+    bool isRotating_ = false;
 };
 

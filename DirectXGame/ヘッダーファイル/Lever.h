@@ -8,7 +8,10 @@ public:
 
     void Draw();
 
-    bool IsPressed() const { return downTimer_ > 0; }
+    bool IsPulled() const
+    {
+        return downTimer_ > 0;
+    }
 
 private:
     // 3Dモデル
@@ -23,5 +26,7 @@ private:
     const float DownOffsetY = -0.2f; // 下がる距離
     const int DownTime = 10;         // 下がっている時間
     int downTimer_ = 0;              // 下がり時間カウント
+
+    bool isPulled_ = false;
 };
 

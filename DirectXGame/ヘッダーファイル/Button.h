@@ -14,6 +14,11 @@ public:
 
     void SetPosition(const Vector3& position);
 
+    bool IsPressed() const { return isPressed_; }
+ 
+    void Reset() { isPressed_ = false; } // 必要に応じてリセットも
+
+
 private:
     // 3Dモデル
     Model* model_ = nullptr;

@@ -96,14 +96,28 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	// 現在の状態を保存
+	static int currentButtonIndex = 0;
+	static int pressCount = 0; // 何回ボタンを押したかを数える変数
+
 	// スロットリール1
 	reel_->Update();
-
 	// スロットリール2
 	reel2_->Update();
-
 	// スロットリール3
 	reel3_->Update();
+
+	// レバーが引かれていたらリール回転開始
+	if (lever_->IsPulled())
+	{
+		reel_->StartRotation();
+		reel2_->StartRotation();
+		reel3_->StartRotation();
+
+		// レバーを引いたらボタン押しの進行もリセットする
+		currentButtonIndex = 0;
+		pressCount = 0;
+	}
 
 	// レバー
 	lever_->Update();
@@ -117,26 +131,35 @@ void GameScene::Update() {
 
 	Input* input = Input::GetInstance();
 
-	// 現在の状態を保存
-	static int currentButtonIndex = 0;
-
-	// スペースキーを押したらされたら、左から順にボタンを押す
+	// スペースキーを押したら、左から順にボタンを押す
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		switch (currentButtonIndex)
 		{
 		case 0:
 			button3_->Press();
+			reel_->StopRotation(); 
 			break;
 		case 1:
 			button1_->Press();
+			reel2_->StopRotation();
 			break;
 		case 2:
 			button2_->Press();
+			reel3_->StopRotation();
 			break;
 		}
+
 		// 次のボタンへ
-		currentButtonIndex = (currentButtonIndex + 1) % 3;
+		currentButtonIndex++;
+		pressCount++;
+
+		// 3回押したらリセットする
+		if (pressCount >= 3)
+		{
+			currentButtonIndex = 0; // 左から（button3_）に戻る
+			pressCount = 0;          // カウントもリセット
+		}
 	}
 }
 
