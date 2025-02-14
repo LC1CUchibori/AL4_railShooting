@@ -1,6 +1,5 @@
 ﻿#pragma once
-
-class Slot
+class Lever
 {
 public:
     void Initialize(Model* model, ViewProjection* viewProjection);
@@ -17,5 +16,10 @@ private:
     // ビュープロジェクション
     ViewProjection* viewProjection_ = nullptr;
 
-    Model* modelLeverParts_ = nullptr;
+    Input* input_ = nullptr;
+
+    const float DownOffsetY = -0.2f; // 下がる距離
+    const int DownTime = 10;         // 下がっている時間(フレーム)
+    int downTimer_ = 0;              // 下がり時間カウント
 };
+

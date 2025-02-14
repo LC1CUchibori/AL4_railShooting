@@ -11,6 +11,8 @@ GameScene::~GameScene() {
 	delete modelReel_;
 	delete modelReel2_;
 	delete modelReel3_;
+	delete modelLeverParts_;
+	delete modelLever_;
 }
 
 void GameScene::Initialize() {
@@ -54,10 +56,35 @@ void GameScene::Initialize() {
 	reel3_ = new Reel3();
 	// スロットリー3の初期化
 	reel3_->Initialize(modelReel3_, &viewProjection_);
+
+	// モデル生成
+	modelLever_ = Model::CreateFromOBJ("Lever", true);
+	// レバーの生成
+	lever_ = new Lever();
+	// レバーの初期化
+	lever_->Initialize(modelLever_, &viewProjection_);
+
+	// モデル生成
+	modelLeverParts_ = Model::CreateFromOBJ("LeverParts", true);
+	// レバーパーツの生成
+	leverParts_ = new Slot();
+	// レバーパーツの初期化
+	leverParts_->Initialize(modelLeverParts_, &viewProjection_);
 }
 
 void GameScene::Update() {
 
+	// スロットリール1
+	reel_->Update();
+
+	// スロットリール2
+	reel2_->Update();
+
+	// スロットリール3
+	reel3_->Update();
+
+	// レバー
+	lever_->Update();
 }
 
 void GameScene::Draw() {
@@ -98,6 +125,12 @@ void GameScene::Draw() {
 
 	// スロットリール3
 	reel3_->Draw();
+
+	// レバー
+	lever_->Draw();
+
+	// レバーパーツ
+	leverParts_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

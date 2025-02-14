@@ -13,6 +13,7 @@
 #include "ヘッダーファイル/Reel.h"
 #include "ヘッダーファイル/Reel2.h"
 #include "ヘッダーファイル/Reel3.h"
+#include "ヘッダーファイル/Lever.h"
 
 /// <summary>
 /// ゲームシーン
@@ -74,4 +75,12 @@ private: // メンバ変数
 	// スロットリール3
 	Reel3* reel3_ = nullptr;
 	Model* modelReel3_ = nullptr;
+
+	// レバー
+	Lever* lever_ = nullptr;
+	Model* modelLever_ = nullptr;
+
+	// レバーパーツ
+	Slot* leverParts_ = nullptr;
+	Model* modelLeverParts_ = nullptr;
 };

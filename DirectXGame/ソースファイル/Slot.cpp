@@ -8,6 +8,8 @@ void Slot::Initialize(Model *model, ViewProjection* viewProjection)
 	worldTransform_.Initialize(); 
 	model_ = model;
 	viewProjection_ = viewProjection;
+
+	modelLeverParts_ = model;
 }
 
 void Slot::Update()
@@ -17,4 +19,6 @@ void Slot::Update()
 void Slot::Draw()
 {
 	model_->Draw(worldTransform_, *viewProjection_);
+
+	modelLeverParts_->Draw(worldTransform_, *viewProjection_);
 }

@@ -13,7 +13,10 @@ void Reel2::Initialize(Model* model, ViewProjection* viewProjection)
 void Reel2::Update()
 {
 	// Y軸周りに回転（例: 毎フレーム少しずつ回す）
-	worldTransform_.rotation_.y += 0.1f;
+	worldTransform_.rotation_.x += 0.1f;
+
+	// リールの位置を少し下に
+	worldTransform_.translation_.y = -1.5f;
 
 	// ワールドトランスフォームの更新
 	worldTransform_.UpdateMatrix();
