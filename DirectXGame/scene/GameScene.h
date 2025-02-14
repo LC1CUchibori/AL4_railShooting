@@ -9,10 +9,10 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 
-#include "Slot.h"
-#include "Reel.h"
-#include "Reel2.h"
-#include "Reel3.h"
+#include "ヘッダーファイル/Slot.h"
+#include "ヘッダーファイル/Reel.h"
+#include "ヘッダーファイル/Reel2.h"
+#include "ヘッダーファイル/Reel3.h"
 
 /// <summary>
 /// ゲームシーン

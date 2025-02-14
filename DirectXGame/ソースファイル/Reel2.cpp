@@ -1,7 +1,7 @@
 ﻿#include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Reel2.h"
+#include "ヘッダーファイル/Reel2.h"
 
 void Reel2::Initialize(Model* model, ViewProjection* viewProjection)
 {
@@ -12,6 +12,12 @@ void Reel2::Initialize(Model* model, ViewProjection* viewProjection)
 
 void Reel2::Update()
 {
+	// Y軸周りに回転（例: 毎フレーム少しずつ回す）
+	worldTransform_.rotation_.y += 0.1f;
+
+	// ワールドトランスフォームの更新
+	worldTransform_.UpdateMatrix();
+
 }
 
 void Reel2::Draw()
