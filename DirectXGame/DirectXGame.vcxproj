@@ -110,6 +110,7 @@
     <ClCompile Include="2d\ImGuiManager.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="ソースファイル\Button.cpp" />
     <ClCompile Include="ソースファイル\Lever.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ソースファイル\math.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="base\StringUtility.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="ヘッダーファイル\Button.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="ヘッダーファイル\Lever.h" />
     <ClInclude Include="ヘッダーファイル\math.h" />

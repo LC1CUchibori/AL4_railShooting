@@ -13,6 +13,7 @@ GameScene::~GameScene() {
 	delete modelReel3_;
 	delete modelLeverParts_;
 	delete modelLever_;
+	delete modelButton_;
 }
 
 void GameScene::Initialize() {
@@ -70,6 +71,13 @@ void GameScene::Initialize() {
 	leverParts_ = new Slot();
 	// レバーパーツの初期化
 	leverParts_->Initialize(modelLeverParts_, &viewProjection_);
+
+	// モデルの生成
+	modelButton_ = Model::CreateFromOBJ("Botan", true);
+	// ボタン1の生成・初期化
+	button1_ = new Button();
+	button1_->Initialize(modelButton_, &viewProjection_);
+	
 }
 
 void GameScene::Update() {
@@ -85,6 +93,9 @@ void GameScene::Update() {
 
 	// レバー
 	lever_->Update();
+
+	// ボタン
+	button1_->Update();
 }
 
 void GameScene::Draw() {
@@ -131,6 +142,9 @@ void GameScene::Draw() {
 
 	// レバーパーツ
 	leverParts_->Draw();
+
+	// ボタン
+	button1_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

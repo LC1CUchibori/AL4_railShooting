@@ -14,6 +14,7 @@
 #include "ヘッダーファイル/Reel2.h"
 #include "ヘッダーファイル/Reel3.h"
 #include "ヘッダーファイル/Lever.h"
+#include "ヘッダーファイル/Button.h"
 
 /// <summary>
 /// ゲームシーン
@@ -83,4 +84,8 @@ private: // メンバ変数
 	// レバーパーツ
 	Slot* leverParts_ = nullptr;
 	Model* modelLeverParts_ = nullptr;
+
+	// ボタン
+	Button* button1_ = nullptr;
+	Model* modelButton_ = nullptr;
 };
