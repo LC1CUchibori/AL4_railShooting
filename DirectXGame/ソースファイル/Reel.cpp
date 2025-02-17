@@ -32,3 +32,21 @@ void Reel::Draw()
 	model_->Draw(worldTransform_, *viewProjection_);
 }
 
+void Reel::StopRotation()
+{
+	isRotating_ = false;
+
+	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
+	float& rotationX = worldTransform_.rotation_.x;
+
+	// 0～2πの範囲に正規化
+	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
+
+	float nearestStopAngle = round(rotationX / symbolAngleRad) * symbolAngleRad;
+
+	// 半個分(= 1/2) 上にズラす
+	nearestStopAngle -= symbolAngleRad * 0.4f;
+
+	rotationX = nearestStopAngle;
+}
+

@@ -10,7 +10,7 @@ public:
 
     void StartRotation() { isRotating_ = true; }
 
-    void StopRotation() { isRotating_ = false; }
+    void StopRotation();
 
     bool IsRotating() const { return isRotating_; }
 
@@ -24,5 +24,7 @@ private:
 
     // 回転してるかのフラグ
     bool isRotating_ = false;
+
+    float symbolAngle = 360.0f / 10.0f; // → 36度
 };
 
