@@ -127,6 +127,11 @@ void GameScene::Update() {
 		reel2_->StartRotation();
 		reel3_->StartRotation();
 
+		reel1IsStopped_ = false; // リール回転開始時に停止フラグをリセット
+		reel2IsStopped_ = false;
+		reel3IsStopped_ = false;
+
+
 		// レバーを引いたらボタン押しの進行もリセットする
 		currentButtonIndex = 0;
 		pressCount = 0;
@@ -140,20 +145,24 @@ void GameScene::Update() {
 	// スペースキーを押したら、左から順にボタンを押す
 	if (input->TriggerKey(DIK_SPACE))
 	{
-		switch (currentButtonIndex)
+		// リールが停止していない場合のみボタンを押す
+		if (!reel1IsStopped_ && currentButtonIndex == 0)
 		{
-		case 0:
 			button1_->Press();
-			reel1_->StopRotation(); // ここでリール止める
-			break;
-		case 1:
+			reel1_->StopRotation();
+			reel1IsStopped_ = true; // リール1を停止状態に設定
+		}
+		else if (!reel2IsStopped_ && currentButtonIndex == 1)
+		{
 			button2_->Press();
-			reel2_->StopRotation(); // ここでリール止める
-			break;
-		case 2:
+			reel2_->StopRotation();
+			reel2IsStopped_ = true; // リール2を停止状態に設定
+		}
+		else if (!reel3IsStopped_ && currentButtonIndex == 2)
+		{
 			button3_->Press();
-			reel3_->StopRotation(); // ここでリール止める
-			break;
+			reel3_->StopRotation();
+			reel3IsStopped_ = true; // リール3を停止状態に設定
 		}
 
 		// 次のボタンへ

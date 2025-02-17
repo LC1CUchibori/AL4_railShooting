@@ -90,4 +90,8 @@ private: // メンバ変数
 	// ボタン3
 	Button* button1_ = nullptr;
 	Model* modelButton_ = nullptr;
+
+	bool reel1IsStopped_ = false;
+	bool reel2IsStopped_ = false;
+	bool reel3IsStopped_ = false;
 };

@@ -55,8 +55,18 @@ void Reel::Draw()
 	model_->Draw(worldTransform_, *viewProjection_);
 }
 
+void Reel::StartRotation()
+{
+	if (isRotating_ || isStopping_) return; // すでに回転中か停止中なら何もしない
+
+	isRotating_ = true; // 回転を開始
+	isStopping_ = false; // 停止フラグをリセット
+}
+
 void Reel::StopRotation()
 {
+	if (!isRotating_ || isStopping_) return; 
+
 	isRotating_ = false;
 
 	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);

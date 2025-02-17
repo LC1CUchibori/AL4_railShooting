@@ -8,7 +8,7 @@ public:
 
     void Draw();
 
-    void StartRotation() { isRotating_ = true; }
+    void StartRotation();
 
     void StopRotation();
 
@@ -25,7 +25,7 @@ private:
     // 回転してるかのフラグ
     bool isRotating_ = false;
 
-    float symbolAngle = 360.0f / 10.0f; // → 36度
+    float symbolAngle = 360.0f / 10.0f; // 36度
 
     bool isStopping_ = false; // 滑らか停止中フラグ
     float stopTargetAngle_ = 0.0f; // 止めたい最終角度
