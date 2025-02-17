@@ -64,7 +64,7 @@ void Reel2::StopRotation()
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
 
-	float offsetAngle = symbolAngleRad * 0.6f; // 0.6個分 ちょっと進ませる
+	float offsetAngle = symbolAngleRad * 0.4f; // 0.6個分 ちょっと進ませる
 	float nextSymbolAngle = ceil(rotationX / symbolAngleRad) * symbolAngleRad + offsetAngle;
 
 	// 目標角度に向けて一定速度で進むようにする
