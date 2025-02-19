@@ -6,35 +6,9 @@
 #include "TextureManager.h"
 #include "WinApp.h"
 
-#include "TitleScene.h"
-#include "RuleScene.h"
-#include "GameScene.h"
-#include "GameClearScene.h"
-#include "GameOverScene.h"
+
 #include <Sprite.h>
-
-TitleScene* titleScene = nullptr;
-RuleScene* ruleScene = nullptr;
-GameScene* gameScene = nullptr;
-GameClearScene* gameClearScene = nullptr;
-GameOverScene* gameOverScene = nullptr;
-
-
-enum class Scene {
-	kTitle,
-	kRule,
-	kGame,
-	kGameClear,
-	kGameOver,
-};
-
-Scene scene = Scene::kTitle;
-
-void ChangeScene();
-
-void UpdataScene();
-
-void DrawScene();
+#include <Input.h>
 
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -86,17 +60,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer->Initialize();
 #pragma endregion
 
-	// ゲームシーンの初期化
-	gameScene = new GameScene();
-	gameScene->Initialize();
-
-	scene = Scene::kTitle;
-	titleScene = new TitleScene;
-	titleScene->Initialize();
-
-	ruleScene = new RuleScene();
-	ruleScene->Initialize();
-
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -109,11 +72,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 入力関連の毎フレーム処理
 		input->Update();
 
-		// シーン切り替え
-		ChangeScene();
-		// 現在シーン更新
-		UpdataScene();
-
 		// 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
@@ -121,9 +79,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-
-		// 現在シーンの描画
-		DrawScene();
 
 		// 軸表示の描画
 		axisIndicator->Draw();
@@ -134,13 +89,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 描画終了
 		dxCommon->PostDraw();
 	}
-
-	// 各種解放
-	delete titleScene;
-	delete ruleScene;
-	delete gameScene;
-	delete gameClearScene;
-	delete gameOverScene;
 
 	audio->Finalize();
 	// ImGui解放
