@@ -94,4 +94,15 @@ private: // メンバ変数
 	bool reel1IsStopped_ = false;
 	bool reel2IsStopped_ = false;
 	bool reel3IsStopped_ = false;
+
+	//メダル
+	int Medal = 0;
+
+	//数字
+	Sprite* sprite_[10];
+	//テクスチャハンドル
+	uint32_t TextureHandle_[10];
+
+	//リールを動かせなくするフラグ
+	bool Realflag = false;
 };

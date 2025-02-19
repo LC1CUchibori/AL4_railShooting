@@ -14,6 +14,20 @@ public:
 
     bool IsRotating() const { return isRotating_; }
 
+    enum class Symbol {
+        Cherry,
+        RedSeven,
+        blueSeven,
+        Bar,
+        Bell,
+        Watermelon,
+        RePlay,
+    };
+
+    Reel::Symbol GetResultSymbol();
+
+    std::vector<Symbol> GetSymbols() const;
+
 private:
     // 3Dモデル
     Model* model_ = nullptr;
@@ -30,5 +44,9 @@ private:
     bool isStopping_ = false; // 滑らか停止中フラグ
     float stopTargetAngle_ = 0.0f; // 止めたい最終角度
     float rotationSpeed_ = 0.1f;   // 現在の回転速度
+
+    std::vector<Symbol> symbols_; // リールに並ぶ役
+
+    const float symbolAngleRad_ = 36.0f * (3.14159265f / 180.0f); // 一つのシンボル間の角度（10シンボルなら36度）
 };
 

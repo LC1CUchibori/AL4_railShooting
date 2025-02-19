@@ -94,6 +94,17 @@ void GameScene::Initialize() {
 	button3_->Initialize(modelButton_, &viewProjection_);
 	// 右側のボタンの位置
 	button3_->SetPosition({4.0f, 0.0f, 0.0f});
+
+	//画像生成
+	TextureHandle_[0] = TextureManager::Load("0.png");
+	TextureHandle_[1] = TextureManager::Load("1.png");
+	TextureHandle_[2] = TextureManager::Load("2.png");
+	TextureHandle_[3] = TextureManager::Load("3.png");
+	//数字生成
+	sprite_[0] = Sprite::Create(TextureHandle_[0], { 1200,0});
+	sprite_[1] = Sprite::Create(TextureHandle_[1], { 1200,0 });
+	sprite_[2] = Sprite::Create(TextureHandle_[2], { 1200,0 });
+	sprite_[3] = Sprite::Create(TextureHandle_[3], { 1200,0 });
 }
 
 void GameScene::Update() {
@@ -119,6 +130,25 @@ void GameScene::Update() {
 	static int currentButtonIndex = 0;
 	static int pressCount = 0; // 何回ボタンを押したかを数える変数
 
+#pragma region メダルの処理
+	//投入口にメダル入れる処理
+	if (Input::GetInstance()->IsTriggerMouse(0)) {
+		//マウスの位置取得
+		Vector2 v = Input::GetInstance()->GetMousePosition();
+
+		//緑の投入口の判定処理
+		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455) {
+			Medal += 1;
+		}
+
+		//メダルが3枚の時にレールを回す処理
+		if (Medal >= 3) {
+			Medal = 3;
+			Realflag = true;
+		}
+	}
+#pragma endregion
+
 #pragma region レバーの処理
 	// レバーが引かれていたらリール回転開始
 	if (lever_->IsPulled())
@@ -131,10 +161,10 @@ void GameScene::Update() {
 		reel2IsStopped_ = false;
 		reel3IsStopped_ = false;
 
-
 		// レバーを引いたらボタン押しの進行もリセットする
 		currentButtonIndex = 0;
 		pressCount = 0;
+		Medal = 0;
 	}
 #pragma endregion
 
@@ -240,6 +270,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	sprite_[Medal]->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

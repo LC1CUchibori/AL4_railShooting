@@ -8,6 +8,20 @@ void Reel2::Initialize(Model* model, ViewProjection* viewProjection)
 	worldTransform_.Initialize(); 
 	model_ = model;
 	viewProjection_ = viewProjection;
+
+	// リール上のシンボルをセットアップ
+	symbols_ = {
+		Symbol::Bell,
+		Symbol::Watermelon,
+		Symbol::blueSeven,
+		Symbol::Cherry,
+		Symbol::RePlay,
+		Symbol::Bell,
+		Symbol::Bar,
+		Symbol::Cherry,
+		Symbol::Bar,
+		Symbol::RedSeven,
+	};
 }
 
 void Reel2::Update()
@@ -71,6 +85,22 @@ void Reel2::StopRotation()
 	stopTargetAngle_ = nextSymbolAngle;
 	// 滑らかに止まる
 	isStopping_ = true; 
+}
+
+Reel2::Symbol Reel2::GetResultSymbol()
+{
+	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
+	// 回転角からシンボルインデックスを求める
+	float rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
+	if (rotationX < 0) rotationX += 2.0f * 3.14159265f; // マイナス対策
+
+	int symbolIndex = static_cast<int>(round(rotationX / symbolAngleRad)) % symbols_.size();
+	return symbols_[symbolIndex];
+}
+
+std::vector<Reel2::Symbol> Reel2::GetSymbols() const
+{
+	return symbols_;
 }
 
 
