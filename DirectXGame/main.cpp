@@ -1,11 +1,41 @@
 #include "Audio.h"
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
-#include "GameScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
 #include "WinApp.h"
+
+#include "TitleScene.h"
+#include "RuleScene.h"
+#include "GameScene.h"
+#include "GameClearScene.h"
+#include "GameOverScene.h"
+#include <Sprite.h>
+
+TitleScene* titleScene = nullptr;
+RuleScene* ruleScene = nullptr;
+GameScene* gameScene = nullptr;
+GameClearScene* gameClearScene = nullptr;
+GameOverScene* gameOverScene = nullptr;
+
+
+enum class Scene {
+	kTitle,
+	kRule,
+	kGame,
+	kGameClear,
+	kGameOver,
+};
+
+Scene scene = Scene::kTitle;
+
+void ChangeScene();
+
+void UpdataScene();
+
+void DrawScene();
+
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -16,11 +46,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
-	GameScene* gameScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow();
+	win->CreateGameWindow(L"2263_〇と✕");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
@@ -61,6 +90,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameScene = new GameScene();
 	gameScene->Initialize();
 
+	scene = Scene::kTitle;
+	titleScene = new TitleScene;
+	titleScene->Initialize();
+
+	ruleScene = new RuleScene();
+	ruleScene->Initialize();
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -72,8 +108,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+
+		// シーン切り替え
+		ChangeScene();
+		// 現在シーン更新
+		UpdataScene();
+
 		// 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
@@ -81,8 +121,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		gameScene->Draw();
+
+		// 現在シーンの描画
+		DrawScene();
+
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット
@@ -94,7 +136,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	// 各種解放
-	SafeDelete(gameScene);
+	delete titleScene;
+	delete ruleScene;
+	delete gameScene;
+	delete gameClearScene;
+	delete gameOverScene;
+
 	audio->Finalize();
 	// ImGui解放
 	imguiManager->Finalize();
