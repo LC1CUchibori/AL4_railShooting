@@ -44,6 +44,11 @@ void Button::Press()
     pressTimer_ = 0.0f;
 }
 
+void Button::Push()
+{
+
+}
+
 void Button::SetPosition(const Vector3& position)
 {
 	// ワールドトランスフォーム内の位置を更新

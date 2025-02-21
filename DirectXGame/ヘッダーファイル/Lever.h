@@ -4,7 +4,7 @@ class Lever
 public:
     void Initialize(Model* model, ViewProjection* viewProjection);
 
-    void Update();
+    void Update(int &medal);
 
     void Draw();
 

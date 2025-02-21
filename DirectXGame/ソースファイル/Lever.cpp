@@ -13,11 +13,14 @@ void Lever::Initialize(Model *model, ViewProjection* viewProjection)
 	viewProjection_ = viewProjection;
 }
 
-void Lever::Update()
+void Lever::Update(int &medal)
 {
     // エンターキーが押されたらタイマー開始
     if (input_->TriggerKey(DIK_RETURN)) {
         downTimer_ = DownTime;
+        if (medal >= 3) {
+            medal -= 3;
+        }
     }
 
     // タイマーが残っている間は下げる
@@ -26,6 +29,11 @@ void Lever::Update()
         downTimer_--;
     } else{
         worldTransform_.translation_.y = 0.0f;
+    }
+
+    //0以下にならないようにする処理
+    if (medal < 0) {
+        medal = 0;
     }
 
     worldTransform_.UpdateMatrix();

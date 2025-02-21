@@ -99,7 +99,7 @@ void GameScene::Initialize() {
 	// モデルの生成
 	modelPushButton_ = Model::CreateFromOBJ("Push", true);
 	// Pushボタンの生成
-	pushButton_ = new Button();
+	pushButton_ = new PushButton();
 	// Pushボタンの初期化
 	pushButton_->Initialize(modelPushButton_, &viewProjection_);
 
@@ -137,7 +137,7 @@ void GameScene::Update() {
 	reel3_->Update();
 
 	// レバー
-	lever_->Update();
+	lever_->Update(Medal);
 
 	// ボタン1
 	button1_->Update();
@@ -145,6 +145,8 @@ void GameScene::Update() {
 	button2_->Update();
 	// ボタン3
 	button3_->Update();
+
+	pushButton_->Update();
 
 	// 現在の状態を保存
 	static int currentButtonIndex = 0;
@@ -224,6 +226,11 @@ void GameScene::Update() {
 		{
 			currentButtonIndex = 0; // 左に戻る
 			pressCount = 0;         // カウントもリセット
+		}
+
+		if (Medal == 0 || Medal == 1 || Medal == 2)
+		{
+			Realflag = false;
 		}
 	}
 #pragma endregion

@@ -15,6 +15,8 @@
 #include "ヘッダーファイル/Reel3.h"
 #include "ヘッダーファイル/Lever.h"
 #include "ヘッダーファイル/Button.h"
+#include "ヘッダーファイル/PushButton.h"
+
 
 /// <summary>
 /// ゲームシーン
@@ -92,7 +94,7 @@ private: // メンバ変数
 	Model* modelButton_ = nullptr;
 
 	// Pushボタン
-	Button* pushButton_ = nullptr;
+	PushButton* pushButton_ = nullptr;
 	Model* modelPushButton_ = nullptr;
 
 	bool reel1IsStopped_ = false;

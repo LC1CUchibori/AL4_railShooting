@@ -10,6 +10,8 @@ public:
 
     void Press();
 
+    void Push();
+
     const WorldTransform& GetWorldTransform() const { return worldTransform_; }
 
     void SetPosition(const Vector3& position);
@@ -27,6 +29,9 @@ private:
     ViewProjection* viewProjection_ = nullptr;
     // ボタンの初期位置
     Vector3 originalPosition_;
+
+    // Pushボタンのモデル
+    Model* modelPushButton_ = nullptr;
 
     // 押し込み状態フラグ
     bool isPressed_ = false;
