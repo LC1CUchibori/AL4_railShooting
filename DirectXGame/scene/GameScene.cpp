@@ -11,6 +11,7 @@ GameScene::~GameScene() {
 	delete modelReel_;
 	delete modelReel2_;
 	delete modelReel3_;
+	delete modelPushButton_;
 	delete modelLeverParts_;
 	delete modelLever_;
 	delete modelButton_;
@@ -95,16 +96,35 @@ void GameScene::Initialize() {
 	// 右側のボタンの位置
 	button3_->SetPosition({4.0f, 0.0f, 0.0f});
 
+	// モデルの生成
+	modelPushButton_ = Model::CreateFromOBJ("Push", true);
+	// Pushボタンの生成
+	pushButton_ = new Button();
+	// Pushボタンの初期化
+	pushButton_->Initialize(modelPushButton_, &viewProjection_);
+
 	//画像生成
 	TextureHandle_[0] = TextureManager::Load("0.png");
 	TextureHandle_[1] = TextureManager::Load("1.png");
 	TextureHandle_[2] = TextureManager::Load("2.png");
 	TextureHandle_[3] = TextureManager::Load("3.png");
+	TextureHandle_[4] = TextureManager::Load("4.png");
+	TextureHandle_[5] = TextureManager::Load("5.png");
+	TextureHandle_[6] = TextureManager::Load("6.png");
+	TextureHandle_[7] = TextureManager::Load("7.png");
+	TextureHandle_[8] = TextureManager::Load("8.png");
+	TextureHandle_[9] = TextureManager::Load("9.png");
 	//数字生成
 	sprite_[0] = Sprite::Create(TextureHandle_[0], { 1200,0});
 	sprite_[1] = Sprite::Create(TextureHandle_[1], { 1200,0 });
 	sprite_[2] = Sprite::Create(TextureHandle_[2], { 1200,0 });
 	sprite_[3] = Sprite::Create(TextureHandle_[3], { 1200,0 });
+	sprite_[4] = Sprite::Create(TextureHandle_[4], { 1200,0 });
+	sprite_[5] = Sprite::Create(TextureHandle_[5], { 1200,0 });
+	sprite_[6] = Sprite::Create(TextureHandle_[6], { 1200,0 });
+	sprite_[7] = Sprite::Create(TextureHandle_[7], { 1200,0 });
+	sprite_[8] = Sprite::Create(TextureHandle_[8], { 1200,0 });
+	sprite_[9] = Sprite::Create(TextureHandle_[9], { 1200,0 });
 }
 
 void GameScene::Update() {
@@ -258,6 +278,9 @@ void GameScene::Draw() {
 	button3_->Draw();
 	// ボタン3
 	button1_->Draw();
+
+	// Pushボタン
+	pushButton_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

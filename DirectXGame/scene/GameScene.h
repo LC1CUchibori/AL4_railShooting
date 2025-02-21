@@ -91,6 +91,10 @@ private: // メンバ変数
 	Button* button1_ = nullptr;
 	Model* modelButton_ = nullptr;
 
+	// Pushボタン
+	Button* pushButton_ = nullptr;
+	Model* modelPushButton_ = nullptr;
+
 	bool reel1IsStopped_ = false;
 	bool reel2IsStopped_ = false;
 	bool reel3IsStopped_ = false;
@@ -105,10 +109,4 @@ private: // メンバ変数
 
 	//リールを動かせなくするフラグ
 	bool Realflag = false;
-
-	bool isPluchunEffectActive = false;  // プチュン演出が発動中かどうか
-	float effectTimer = 0.0f;            // エフェクトの持続時間
-	float topBlackHeight = 0.0f;         // 上側の黒い部分の高さ
-	float bottomBlackHeight = 0.0f;      // 下側の黒い部分の高さ
-	Sprite* pluchunEffectSprite = nullptr; // プチュンエフェクト用のスプライト
 };
