@@ -3,6 +3,7 @@
 #include "WorldTransform.h"
 #include <Input.h>
 #include "ヘッダーファイル/Lever.h"
+#include "Sprite.h"
 
 void Lever::Initialize(Model *model, ViewProjection* viewProjection)
 {
@@ -13,7 +14,7 @@ void Lever::Initialize(Model *model, ViewProjection* viewProjection)
 	viewProjection_ = viewProjection;
 }
 
-void Lever::Update(int &medal)
+void Lever::Update(int &medal,int&gameCount)
 {
     // エンターキーが押されたらタイマー開始
     if (input_->TriggerKey(DIK_RETURN)) {
@@ -21,6 +22,7 @@ void Lever::Update(int &medal)
         if (medal >= 3) {
             medal -= 3;
         }
+        gameCount+= 1;
     }
 
     // タイマーが残っている間は下げる
@@ -43,5 +45,3 @@ void Lever::Draw()
 {
 	model_->Draw(worldTransform_, *viewProjection_);
 }
-
-

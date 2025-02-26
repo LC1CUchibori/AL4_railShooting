@@ -4,7 +4,7 @@ class Lever
 public:
     void Initialize(Model* model, ViewProjection* viewProjection);
 
-    void Update(int &medal);
+    void Update(int &medal,int&gameCont);
 
     void Draw();
 
@@ -28,5 +28,8 @@ private:
     int downTimer_ = 0;              // 下がり時間カウント
 
     bool isPulled_ = false;
+
+    // ゲーム数
+    int gameCount_ = 0;
 };
 

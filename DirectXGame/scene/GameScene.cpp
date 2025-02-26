@@ -137,7 +137,7 @@ void GameScene::Update() {
 	reel3_->Update();
 
 	// レバー
-	lever_->Update(Medal);
+	lever_->Update(Medal,gameCount_);
 
 	// ボタン1
 	button1_->Update();
@@ -302,8 +302,33 @@ void GameScene::Draw() {
 	/// </summary>
 	sprite_[Medal]->Draw();
 
+	// ゲーム数のスプライト描画
+	DrawGameCount();
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::DrawGameCount()
+{
+	// 4桁の各桁の数字を取得
+	int num = gameCount_;
+	int digits[4] = { 0, 0, 0, 0 };
+
+	for (int i = 3; i >= 0; i--) {
+		digits[i] = num % 10;  // 下位の桁から取得
+		num /= 10;
+	}
+
+	// 各桁をスプライトとして描画（右寄せの位置調整）
+	float startX = 550.0f;  // 右端のX座標
+	float y = 250.0f;         // Y座標（固定）
+	float spacing = 50.0f;   // 各桁の間隔
+
+	for (int i = 0; i < 4; i++) {
+		sprite_[digits[i]]->SetPosition({ startX + i * spacing, y });
+		sprite_[digits[i]]->Draw();
+	}
 }
