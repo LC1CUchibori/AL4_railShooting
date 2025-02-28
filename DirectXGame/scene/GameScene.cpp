@@ -164,8 +164,7 @@ void GameScene::Update() {
 		}
 
 		//メダルが3枚の時にレールを回す処理
-		if (Medal >= 3) {
-			Medal = 3;
+		if (Medal >= 3) {			
 			Realflag = true;
 		}
 	}
@@ -328,7 +327,8 @@ void GameScene::DrawGameCount()
 	float spacing = 50.0f;   // 各桁の間隔
 
 	for (int i = 0; i < 4; i++) {
-		sprite_[digits[i]]->SetPosition({ startX + i * spacing, y });
-		sprite_[digits[i]]->Draw();
+		sprite_[i]->SetPosition({ startX + i * spacing, y });
+		sprite_[i]->Draw();
+		sprite_[i]->SetTextureHandle(TextureHandle_[digits[i]]);
 	}
 }
