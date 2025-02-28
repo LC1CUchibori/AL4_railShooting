@@ -13,6 +13,7 @@ public:
         return downTimer_ > 0;
     }
 
+
 private:
     // 3Dモデル
     Model* model_ = nullptr;
