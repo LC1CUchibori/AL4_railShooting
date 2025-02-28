@@ -49,6 +49,10 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	//メダルの数を描画
+	void MedalDraw();
+
+	//回転数を描画
 	void DrawGameCount();
 
 private: // メンバ変数
@@ -113,6 +117,14 @@ private: // メンバ変数
 	Sprite* sprite_[10];
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
+
+	//サウンドデータハンドル
+	uint32_t SLOT = 0;
+	uint32_t Click = 0;
+
+	//音声再生ハンドル
+	uint32_t voiceHandle1_ = 0;
+	uint32_t voiceHandle2_ = 0;
 
 	//リールを動かせなくするフラグ
 	bool Realflag = false;

@@ -7,7 +7,11 @@
 
 void Lever::Initialize(Model *model, ViewProjection* viewProjection)
 {
+    audio_ = Audio::GetInstance();
 	input_ = Input::GetInstance();
+
+    //BGM・SE読み込み
+    LEVER = audio_->LoadWave("SE/Lever.wav");
 
 	worldTransform_.Initialize(); 
 	model_ = model;
@@ -18,6 +22,7 @@ void Lever::Update(int &medal,int&gameCount)
 {
     // エンターキーが押されたらタイマー開始
     if (input_->TriggerKey(DIK_RETURN)) {
+        voiceHandle_ = audio_->PlayWave(LEVER, false);
         downTimer_ = DownTime;
         if (medal >= 3) {
             medal -= 3;

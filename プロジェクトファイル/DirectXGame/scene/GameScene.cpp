@@ -30,6 +30,9 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
+	// BGM・SE読み込み
+	SLOT = audio_->LoadWave("BGM/Slot.wav");
+	Click = audio_->LoadWave("SE/Decision.wav");
 
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
@@ -115,16 +118,19 @@ void GameScene::Initialize() {
 	TextureHandle_[8] = TextureManager::Load("8.png");
 	TextureHandle_[9] = TextureManager::Load("9.png");
 	//数字生成
-	sprite_[0] = Sprite::Create(TextureHandle_[0], { 1200,0});
-	sprite_[1] = Sprite::Create(TextureHandle_[1], { 1200,0 });
-	sprite_[2] = Sprite::Create(TextureHandle_[2], { 1200,0 });
-	sprite_[3] = Sprite::Create(TextureHandle_[3], { 1200,0 });
-	sprite_[4] = Sprite::Create(TextureHandle_[4], { 1200,0 });
-	sprite_[5] = Sprite::Create(TextureHandle_[5], { 1200,0 });
-	sprite_[6] = Sprite::Create(TextureHandle_[6], { 1200,0 });
-	sprite_[7] = Sprite::Create(TextureHandle_[7], { 1200,0 });
-	sprite_[8] = Sprite::Create(TextureHandle_[8], { 1200,0 });
-	sprite_[9] = Sprite::Create(TextureHandle_[9], { 1200,0 });
+	sprite_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
+	sprite_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
+	sprite_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
+	sprite_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
+	sprite_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
+	sprite_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
+	sprite_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
+	sprite_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
+	sprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
+	sprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
+
+	// 音声再生
+	voiceHandle1_ = audio_->PlayWave(SLOT, true);
 }
 
 void GameScene::Update() {
@@ -171,21 +177,21 @@ void GameScene::Update() {
 #pragma endregion
 
 #pragma region レバーの処理
-	// レバーが引かれていたらリール回転開始
-	if (lever_->IsPulled())
-	{
-		reel1_->StartRotation();
-		reel2_->StartRotation();
-		reel3_->StartRotation();
+	if (Realflag) {
+		// レバーが引かれていたらリール回転開始
+		if (lever_->IsPulled()) {
+			reel1_->StartRotation();
+			reel2_->StartRotation();
+			reel3_->StartRotation();
 
-		reel1IsStopped_ = false; // リール回転開始時に停止フラグをリセット
-		reel2IsStopped_ = false;
-		reel3IsStopped_ = false;
+			reel1IsStopped_ = false; // リール回転開始時に停止フラグをリセット
+			reel2IsStopped_ = false;
+			reel3IsStopped_ = false;
 
-		// レバーを引いたらボタン押しの進行もリセットする
-		currentButtonIndex = 0;
-		pressCount = 0;
-		Medal = 0;
+			// レバーを引いたらボタン押しの進行もリセットする
+			currentButtonIndex = 0;
+			pressCount = 0;
+		}
 	}
 #pragma endregion
 
@@ -199,18 +205,21 @@ void GameScene::Update() {
 		 // リールが停止していない場合のみボタンを押す
         if (!reel1IsStopped_ && currentButtonIndex == 0)
         {
+			voiceHandle2_ = audio_->PlayWave(Click, false);
             button1_->Press();
             reel1_->StopRotation();
             reel1IsStopped_ = true; // リール1を停止状態に設定
         }
         else if (!reel2IsStopped_ && currentButtonIndex == 1)
         {
+			voiceHandle2_ = audio_->PlayWave(Click, false);
             button2_->Press();
             reel2_->StopRotation();
             reel2IsStopped_ = true; // リール2を停止状態に設定
         }
         else if (!reel3IsStopped_ && currentButtonIndex == 2)
         {
+			voiceHandle2_ = audio_->PlayWave(Click, false);
             button3_->Press();
             reel3_->StopRotation();
             reel3IsStopped_ = true; // リール3を停止状態に設定
@@ -299,7 +308,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_[Medal]->Draw();
+	
+	//メダルの数を描画
+	MedalDraw();
 
 	// ゲーム数のスプライト描画
 	DrawGameCount();
@@ -308,6 +319,28 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+//メダルの数を描画
+void GameScene::MedalDraw() {
+	//メダル数を最大5桁に制限
+	if (Medal > 99999) {
+		Medal = 99999; //6桁以上にならないようにする
+	}
+
+	//メダル数を文字列に変換
+	std::string countStr = std::to_string(Medal);
+	float x = 1200.0f; //描画開始位置
+
+	//各桁を対応する画像で描画
+	for (size_t i = 0; i < countStr.length(); i++) {
+		int index = countStr[i] - '0'; // 0～9 のインデックス
+		if (index >= 0 && index < 10) {
+			sprite_[index]->SetPosition({ x, 0 }); //各桁の位置を更新
+			sprite_[index]->Draw(); //描画
+		}
+		x -= 65.0f; // 画像の間隔
+	}
 }
 
 void GameScene::DrawGameCount()
