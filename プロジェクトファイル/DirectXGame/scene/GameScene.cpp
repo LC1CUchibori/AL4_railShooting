@@ -313,7 +313,7 @@ void GameScene::Draw() {
 	MedalDraw();
 
 	// ゲーム数のスプライト描画
-	DrawGameCount();
+	//DrawGameCount();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
