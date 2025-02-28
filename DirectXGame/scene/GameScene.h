@@ -109,11 +109,11 @@ private: // メンバ変数
 	// ゲーム数
 	int gameCount_ = 0;
 
-	//数字
+	// 数字
 	Sprite* sprite_[10];
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
-	//リールを動かせなくするフラグ
+	// リールを動かせなくするフラグ
 	bool Realflag = false;
 };

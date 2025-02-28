@@ -321,10 +321,10 @@ void GameScene::DrawGameCount()
 		num /= 10;
 	}
 
-	// 各桁をスプライトとして描画（右寄せの位置調整）
+	// 各桁をスプライトとして描画
 	float startX = 550.0f;  // 右端のX座標
-	float y = 250.0f;         // Y座標（固定）
-	float spacing = 50.0f;   // 各桁の間隔
+	float y = 250.0f;       // Y座標
+	float spacing = 50.0f;  // 各桁の間隔
 
 	for (int i = 0; i < 4; i++) {
 		sprite_[i]->SetPosition({ startX + i * spacing, y });

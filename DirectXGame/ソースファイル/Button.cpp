@@ -46,7 +46,6 @@ void Button::Press()
 
 void Button::Push()
 {
-
 }
 
 void Button::SetPosition(const Vector3& position)
