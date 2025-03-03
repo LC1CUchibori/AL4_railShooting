@@ -55,6 +55,12 @@ public: // メンバ関数
 	//回転数を描画
 	void DrawGameCount();
 
+	//クリアフラグのgetter
+	bool IsCleared() const { return cleared_; }
+
+	//デスフラグのgetter
+	bool IsDead() const { return finished_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -108,7 +114,7 @@ private: // メンバ変数
 	bool reel3IsStopped_ = false;
 
 	//メダル
-	int Medal = 0;
+	int Medal = 30;
 
 	// ゲーム数
 	int gameCount_ = 0;
@@ -128,4 +134,8 @@ private: // メンバ変数
 
 	//リールを動かせなくするフラグ
 	bool Realflag = false;
+
+	//終了フラグ
+	bool cleared_ = false;
+	bool finished_ = false;
 };
