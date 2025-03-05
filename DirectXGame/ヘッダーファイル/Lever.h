@@ -1,4 +1,9 @@
 ﻿#pragma once
+#include <GameScene.h>
+#include <rand.h>
+
+
+
 class Lever
 {
 public:
@@ -12,6 +17,8 @@ public:
     {
         return downTimer_ > 0;
     }
+
+    int GetStorenum(){return storenum;}
 
 
 private:
@@ -30,7 +37,12 @@ private:
 
     bool isPulled_ = false;
 
-    // ゲーム数
-    int gameCount_ = 0;
+
+    Rand rng;
+
+    int storenum = rng.GetRandamNumber(0,300);
 };
+
+
+
 

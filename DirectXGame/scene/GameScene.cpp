@@ -39,32 +39,32 @@ void GameScene::Initialize() {
 	slot_->Initialize(modelSlot_, &viewProjection_);
 
 	// モデル生成
+	modelLever_ = Model::CreateFromOBJ("Lever", true);
+	// レバーの生成
+	lever_ = new Lever();
+	// レバーの初期化
+	lever_->Initialize(modelLever_, &viewProjection_);
+
+	// モデル生成
 	modelReel_ = Model::CreateFromOBJ("Reel", true);
 	// スロットリールの生成
 	reel1_ = new Reel();
 	// スロットリールの初期化
-	reel1_->Initialize(modelReel_, &viewProjection_);
+	reel1_->Initialize(modelReel_, &viewProjection_,lever_);
 
 	// モデル生成
 	modelReel2_ = Model::CreateFromOBJ("Reel2", true);
 	// スロットリール2の生成
 	reel2_ = new Reel2();
 	// スロットリール2の初期化
-	reel2_->Initialize(modelReel2_, &viewProjection_);
+	reel2_->Initialize(modelReel2_, &viewProjection_,lever_);
 
 	// モデル生成
 	modelReel3_ = Model::CreateFromOBJ("Reel3", true);
 	// スロットリール3の生成
 	reel3_ = new Reel3();
 	// スロットリー3の初期化
-	reel3_->Initialize(modelReel3_, &viewProjection_);
-
-	// モデル生成
-	modelLever_ = Model::CreateFromOBJ("Lever", true);
-	// レバーの生成
-	lever_ = new Lever();
-	// レバーの初期化
-	lever_->Initialize(modelLever_, &viewProjection_);
+	reel3_->Initialize(modelReel3_, &viewProjection_,lever_);
 
 	// モデル生成
 	modelLeverParts_ = Model::CreateFromOBJ("LeverParts", true);
@@ -102,6 +102,20 @@ void GameScene::Initialize() {
 	pushButton_ = new PushButton();
 	// Pushボタンの初期化
 	pushButton_->Initialize(modelPushButton_, &viewProjection_);
+
+	// モデルの生成
+	modelMedalCountButton_ = Model::CreateFromOBJ("MedalCountButton", true);
+	// メダルカウントボタンの生成
+	medalCountButton_ = new Slot();
+	// メダルカウントボタンの初期化
+	medalCountButton_->Initialize(modelMedalCountButton_, &viewProjection_);
+
+	// モデルの生成
+	modelMoneyBox_ = Model::CreateFromOBJ("MoneyBox", true);
+	// 投入機の生成
+	MoneyBox_ = new Slot();
+	// 投入機の初期化
+	MoneyBox_->Initialize(modelMoneyBox_, &viewProjection_);
 
 	//画像生成
 	TextureHandle_[0] = TextureManager::Load("0.png");
@@ -277,6 +291,12 @@ void GameScene::Draw() {
 
 	// レバーパーツ
 	leverParts_->Draw();
+
+	// メダルカウントボタン
+	medalCountButton_->Draw();
+
+	// 投入機
+	MoneyBox_->Draw();
 
 	// ボタン1
 	button2_->Draw();

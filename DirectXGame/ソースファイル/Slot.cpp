@@ -10,6 +10,10 @@ void Slot::Initialize(Model *model, ViewProjection* viewProjection)
 	viewProjection_ = viewProjection;
 
 	modelLeverParts_ = model;
+
+    modelMedalCountButton_ = model;
+
+    modelMoneyBox_ = model;
 }
 
 void Slot::Update()
@@ -22,6 +26,10 @@ void Slot::Draw()
 	model_->Draw(worldTransform_, *viewProjection_);
 	// レバーのパーツ
 	modelLeverParts_->Draw(worldTransform_, *viewProjection_);
+    // メダルカウントボタン
+    modelMedalCountButton_->Draw(worldTransform_, *viewProjection_);
+    // 投入機
+    modelMoneyBox_->Draw(worldTransform_, *viewProjection_);
 }
 
 bool Slot::CheckHorizontal()

@@ -28,7 +28,14 @@ private:
     // ビュープロジェクション
     ViewProjection* viewProjection_ = nullptr;
 
+    // レバーパーツのモデル
     Model* modelLeverParts_ = nullptr;
+
+    // メダルカウントボタンのモデル
+    Model* modelMedalCountButton_ = nullptr;
+
+    // 投入機のモデル
+    Model* modelMoneyBox_ = nullptr;
 
     Reel* reel1_;
     Reel* reel2_;

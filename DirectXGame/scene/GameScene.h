@@ -99,6 +99,14 @@ private: // メンバ変数
 	PushButton* pushButton_ = nullptr;
 	Model* modelPushButton_ = nullptr;
 
+	// メダルカウントボタン
+	Slot* medalCountButton_ = nullptr;
+	Model* modelMedalCountButton_ = nullptr;
+
+	// 投入機
+	Slot* MoneyBox_ = nullptr;
+	Model* modelMoneyBox_ = nullptr;
+
 	bool reel1IsStopped_ = false;
 	bool reel2IsStopped_ = false;
 	bool reel3IsStopped_ = false;

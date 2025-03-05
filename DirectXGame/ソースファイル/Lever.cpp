@@ -19,6 +19,7 @@ void Lever::Update(int &medal,int&gameCount)
     // エンターキーが押されたらタイマー開始
     if (input_->TriggerKey(DIK_RETURN)) {
         downTimer_ = DownTime;
+        storenum = rng.GetRandamNumber(1,300);
         if (medal >= 3) {
             medal -= 3;
         }
@@ -39,6 +40,8 @@ void Lever::Update(int &medal,int&gameCount)
     }
 
     worldTransform_.UpdateMatrix();
+
+    std::cout<<"ランダム"<<storenum<<std::endl;
 }
 
 void Lever::Draw()

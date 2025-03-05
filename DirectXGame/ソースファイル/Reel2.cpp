@@ -2,12 +2,15 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "ヘッダーファイル/Reel2.h"
+#include "ヘッダーファイル/Reel.h"
+#include "ヘッダーファイル/Lever.h"
 
-void Reel2::Initialize(Model* model, ViewProjection* viewProjection)
+void Reel2::Initialize(Model* model, ViewProjection* viewProjection ,Lever* lever)
 {
 	worldTransform_.Initialize(); 
 	model_ = model;
 	viewProjection_ = viewProjection;
+	lever_ = lever;
 
 	// リール上のシンボルをセットアップ
 	symbols_ = {
@@ -32,7 +35,7 @@ void Reel2::Update()
 	if (isRotating_)
 	{
 		// Y軸周りに回転
-		worldTransform_.rotation_.x += 0.1f;
+		worldTransform_.rotation_.x += 0.5f;
 	}
 	else if (isStopping_)
 	{
@@ -75,8 +78,20 @@ void Reel2::StopRotation()
 	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
 	float& rotationX = worldTransform_.rotation_.x;
 
+	if (lever_->GetStorenum() <= 50) {
+		rotationX = 137.0f;
+	}
+
+	else if (lever_->GetStorenum() <= 20) {
+		rotationX = 200.0f;
+	}
+
+	//if(reel1->GetResultSymbol() == Bell){}
+
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
+
+
 
 	float offsetAngle = symbolAngleRad * 0.4f; // 0.6個分 ちょっと進ませる
 	float nextSymbolAngle = ceil(rotationX / symbolAngleRad) * symbolAngleRad + offsetAngle;
@@ -92,6 +107,16 @@ Reel2::Symbol Reel2::GetResultSymbol()
 	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
 	// 回転角からシンボルインデックスを求める
 	float rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
+
+
+	if (lever_->GetStorenum() <= 50) {
+		rotationX = 180.0f;
+	}
+	else if (lever_->GetStorenum() <= 20) {
+		rotationX = 200.0f;
+	}
+
+	rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
 	if (rotationX < 0) rotationX += 2.0f * 3.14159265f; // マイナス対策
 
 	int symbolIndex = static_cast<int>(round(rotationX / symbolAngleRad)) % symbols_.size();
