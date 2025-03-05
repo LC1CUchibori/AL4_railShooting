@@ -115,9 +115,8 @@ private: // メンバ変数
 
 	//メダル
 	int Medal = 30;
-
-	// ゲーム数
-	int gameCount_ = 0;
+	//ゲーム数
+	int GameCount = 0;
 
 	//数字
 	Sprite* sprite_[10];

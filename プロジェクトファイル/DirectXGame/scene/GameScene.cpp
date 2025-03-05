@@ -143,7 +143,7 @@ void GameScene::Update() {
 	reel3_->Update();
 
 	// レバー
-	lever_->Update(Medal,gameCount_);
+	lever_->Update(Medal,GameCount);
 
 	// ボタン1
 	button1_->Update();
@@ -324,10 +324,10 @@ void GameScene::Draw() {
 	/// </summary>
 	
 	//メダルの数を描画
-	MedalDraw();
+	//MedalDraw();
 
 	// ゲーム数のスプライト描画
-	//DrawGameCount();
+	DrawGameCount();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -354,11 +354,12 @@ void GameScene::MedalDraw() {
 	float x = baseX - (spacing * (digitCount - 1));
 
 	//各桁を対応する画像で描画
-	for (size_t i = 0; i < countStr.length(); i++) {
+	for (size_t i = 0; i < digitCount; i++) {
 		int index = countStr[i] - '0'; // 0～9 のインデックス
 		if (index >= 0 && index < 10) {
-			sprite_[index]->SetPosition({ x, 0 }); //各桁の位置を更新
-			sprite_[index]->Draw(); //描画
+			sprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
+			sprite_[i]->SetPosition({ x, 0 }); // 位置を更新
+			sprite_[i]->Draw(); // 描画
 		}
 		x += spacing; // 画像の間隔
 	}
@@ -366,23 +367,27 @@ void GameScene::MedalDraw() {
 
 void GameScene::DrawGameCount()
 {
-	// 4桁の各桁の数字を取得
-	int num = gameCount_;
-	int digits[4] = { 0, 0, 0, 0 };
-
-	for (int i = 3; i >= 0; i--) {
-		digits[i] = num % 10;  // 下位の桁から取得
-		num /= 10;
+	//ゲームカウントを最大4桁に制限
+	if (GameCount > 9999) {
+		GameCount = 9999; //5桁以上にならないようにする
 	}
 
-	// 各桁をスプライトとして描画（右寄せの位置調整）
-	float startX = 550.0f;  // 右端のX座標
-	float y = 250.0f;         // Y座標（固定）
-	float spacing = 50.0f;   // 各桁の間隔
+	//メダル数を文字列に変換
+	std::string countStr = std::to_string(GameCount);
+	size_t digitCount = countStr.length();
 
-	for (int i = 0; i < 4; i++) {
-		sprite_[i]->SetPosition({ startX + i * spacing, y });
-		sprite_[i]->Draw();
-		sprite_[i]->SetTextureHandle(TextureHandle_[digits[i]]);
+	// 基準となる描画開始位置
+	float x = 1200.0f, y = 80.0f;
+	float spacing = 65.0f; // 画像の間隔
+
+	//各桁を対応する画像で描画
+	for (size_t i = 0; i < digitCount; i++) {
+		int index = countStr[digitCount - 1 - i] - '0'; // 0～9 のインデックス
+		if (index >= 0 && index < 10) {
+			sprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
+			sprite_[i]->SetPosition({ x, y }); // 位置を更新
+			sprite_[i]->Draw(); // 描画
+		}
+		x -= spacing; // 画像の間隔
 	}
 }
