@@ -243,11 +243,16 @@ void GameScene::Update() {
 	}
 #pragma endregion
 
-#pragma region 勝つ条件の処理
+#pragma region 勝つ・負ける条件の処理
 
 	//メダルの数が一定数超えたらクリア
 	if (Medal >= 100) {
 		cleared_ = true;
+	}
+
+	//メダルが無くなったらゲームオーバー
+	if (Medal <= 2) {
+		finished_ = true;
 	}
 
 #pragma endregion
@@ -339,7 +344,14 @@ void GameScene::MedalDraw() {
 
 	//メダル数を文字列に変換
 	std::string countStr = std::to_string(Medal);
-	float x = 1200.0f; //描画開始位置
+	size_t digitCount = countStr.length();
+
+	// 基準となる描画開始位置
+	float baseX = 1200.0f;
+	float spacing = 65.0f; // 画像の間隔
+
+	// 最小2桁はそのまま描画
+	float x = baseX - (spacing * (digitCount - 1));
 
 	//各桁を対応する画像で描画
 	for (size_t i = 0; i < countStr.length(); i++) {
@@ -348,7 +360,7 @@ void GameScene::MedalDraw() {
 			sprite_[index]->SetPosition({ x, 0 }); //各桁の位置を更新
 			sprite_[index]->Draw(); //描画
 		}
-		x -= 65.0f; // 画像の間隔
+		x += spacing; // 画像の間隔
 	}
 }
 
