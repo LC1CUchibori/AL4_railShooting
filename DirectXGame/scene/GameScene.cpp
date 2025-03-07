@@ -129,16 +129,22 @@ void GameScene::Initialize() {
 	TextureHandle_[8] = TextureManager::Load("8.png");
 	TextureHandle_[9] = TextureManager::Load("9.png");
 	//数字生成
-	sprite_[0] = Sprite::Create(TextureHandle_[0], { 1200,0});
-	sprite_[1] = Sprite::Create(TextureHandle_[1], { 1200,0 });
-	sprite_[2] = Sprite::Create(TextureHandle_[2], { 1200,0 });
-	sprite_[3] = Sprite::Create(TextureHandle_[3], { 1200,0 });
-	sprite_[4] = Sprite::Create(TextureHandle_[4], { 1200,0 });
-	sprite_[5] = Sprite::Create(TextureHandle_[5], { 1200,0 });
-	sprite_[6] = Sprite::Create(TextureHandle_[6], { 1200,0 });
-	sprite_[7] = Sprite::Create(TextureHandle_[7], { 1200,0 });
-	sprite_[8] = Sprite::Create(TextureHandle_[8], { 1200,0 });
-	sprite_[9] = Sprite::Create(TextureHandle_[9], { 1200,0 });
+	sprite_[0] = Sprite::Create(TextureHandle_[0], { 10,0});
+	sprite_[1] = Sprite::Create(TextureHandle_[1], { 10,0 });
+	sprite_[2] = Sprite::Create(TextureHandle_[2], { 10,0 });
+	sprite_[3] = Sprite::Create(TextureHandle_[3], { 10,0 });
+	sprite_[4] = Sprite::Create(TextureHandle_[4], { 10,0 });
+	sprite_[5] = Sprite::Create(TextureHandle_[5], { 10,0 });
+	sprite_[6] = Sprite::Create(TextureHandle_[6], { 10,0 });
+	sprite_[7] = Sprite::Create(TextureHandle_[7], { 10,0 });
+	sprite_[8] = Sprite::Create(TextureHandle_[8], { 10,0 });
+	sprite_[9] = Sprite::Create(TextureHandle_[9], { 10,0 });
+
+	// メダルカウント用のスプライトを作成
+	for (int i = 0; i < 10; i++) {
+		medalSprite_[i] = Sprite::Create(TextureHandle_[i], { 50,50 }); // 初期位置
+	}
+
 }
 
 void GameScene::Update() {
@@ -176,11 +182,6 @@ void GameScene::Update() {
 		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455) {
 			Medal += 1;
 		}
-
-		//メダルが3枚の時にレールを回す処理
-		if (Medal >= 3) {			
-			Realflag = true;
-		}
 	}
 #pragma endregion
 
@@ -199,7 +200,6 @@ void GameScene::Update() {
 		// レバーを引いたらボタン押しの進行もリセットする
 		currentButtonIndex = 0;
 		pressCount = 0;
-		Medal = 0;
 	}
 #pragma endregion
 
@@ -239,11 +239,6 @@ void GameScene::Update() {
 		{
 			currentButtonIndex = 0; // 左に戻る
 			pressCount = 0;         // カウントもリセット
-		}
-
-		if (Medal == 0 || Medal == 1 || Medal == 2)
-		{
-			Realflag = false;
 		}
 	}
 #pragma endregion
@@ -319,10 +314,11 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_[Medal]->Draw();
 
 	// ゲーム数のスプライト描画
 	DrawGameCount();
+
+	DrawMedalCount();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -350,5 +346,28 @@ void GameScene::DrawGameCount()
 		sprite_[i]->SetPosition({ startX + i * spacing, y });
 		sprite_[i]->Draw();
 		sprite_[i]->SetTextureHandle(TextureHandle_[digits[i]]);
+	}
+}
+
+void GameScene::DrawMedalCount()
+{
+	// 4桁の各桁の数字を取得
+	int MedalNum = Medal;
+	int MedalDigits[2] = { 0, 0  };
+
+	for (int j = 1; j >= 0; j--) {
+		MedalDigits[j] = MedalNum % 10;  // 下位の桁から取得
+		MedalNum /= 10;
+	}
+
+	// 各桁をスプライトとして描画
+	float startMedalX = 1000.0f;  // 右端のX座標
+	float MedalY = 50.0f;       // Y座標
+	float Medalspacing = 50.0f;  // 各桁の間隔
+
+	for (int j = 0; j < 2; j++) {
+		medalSprite_[j]->SetPosition({ startMedalX + j * Medalspacing, MedalY });
+		medalSprite_[j]->Draw();
+		medalSprite_[j]->SetTextureHandle(TextureHandle_[MedalDigits[j]]);
 	}
 }

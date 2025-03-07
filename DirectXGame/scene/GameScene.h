@@ -51,6 +51,8 @@ public: // メンバ関数
 
 	void DrawGameCount();
 
+	void DrawMedalCount();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -119,6 +121,8 @@ private: // メンバ変数
 
 	// 数字
 	Sprite* sprite_[10];
+	// メダルカウント用のスプライト
+	Sprite* medalSprite_[10];
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
