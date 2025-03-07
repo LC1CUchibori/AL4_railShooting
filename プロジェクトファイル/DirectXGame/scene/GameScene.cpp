@@ -15,6 +15,9 @@ GameScene::~GameScene() {
 	delete modelLeverParts_;
 	delete modelLever_;
 	delete modelButton_;
+
+	//音声停止
+	audio_->StopWave(voiceHandle1_);
 }
 
 void GameScene::Initialize() {
@@ -117,17 +120,30 @@ void GameScene::Initialize() {
 	TextureHandle_[7] = TextureManager::Load("7.png");
 	TextureHandle_[8] = TextureManager::Load("8.png");
 	TextureHandle_[9] = TextureManager::Load("9.png");
-	//数字生成
-	sprite_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
-	sprite_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
-	sprite_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
-	sprite_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
-	sprite_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
-	sprite_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
-	sprite_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
-	sprite_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
-	sprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
-	sprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
+
+	//メダル用の数字生成
+	sprite1_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
+	sprite1_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
+	sprite1_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
+	sprite1_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
+	sprite1_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
+	sprite1_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
+	sprite1_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
+	sprite1_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
+	sprite1_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
+	sprite1_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
+
+	//ゲームカウント用の数字生成
+	sprite2_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
+	sprite2_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
+	sprite2_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
+	sprite2_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
+	sprite2_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
+	sprite2_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
+	sprite2_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
+	sprite2_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
+	sprite2_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
+	sprite2_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
 
 	// 音声再生
 	voiceHandle1_ = audio_->PlayWave(SLOT, true);
@@ -169,10 +185,11 @@ void GameScene::Update() {
 			Medal += 1;
 		}
 
-		//メダルが3枚の時にレールを回す処理
-		if (Medal >= 3) {			
-			Realflag = true;
-		}
+	}
+
+	//メダルが3枚の時にレールを回す処理
+	if (Medal >= 3) {
+		Realflag = true;
 	}
 #pragma endregion
 
@@ -250,11 +267,6 @@ void GameScene::Update() {
 		cleared_ = true;
 	}
 
-	//メダルが無くなったらゲームオーバー
-	if (Medal <= 2) {
-		finished_ = true;
-	}
-
 #pragma endregion
 }
 
@@ -323,16 +335,42 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 	
-	//メダルの数を描画
-	//MedalDraw();
-
-	// ゲーム数のスプライト描画
+	//ゲーム数のスプライト描画
 	DrawGameCount();
+
+	//メダルの数を描画
+	MedalDraw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::DrawGameCount() {
+	//ゲームカウントを最大4桁に制限
+	if (GameCount > 9999) {
+		GameCount = 9999; //5桁以上にならないようにする
+	}
+
+	//メダル数を文字列に変換
+	std::string countStr = std::to_string(GameCount);
+	size_t digitCount = countStr.length();
+
+	// 基準となる描画開始位置
+	float x = 1200.0f;
+	float spacing = 65.0f; // 画像の間隔
+
+	//各桁を対応する画像で描画
+	for (size_t i = 0; i < digitCount; i++) {
+		int index = countStr[digitCount - 1 - i] - '0'; // 0～9 のインデックス
+		if (index >= 0 && index < 10) {
+			sprite2_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
+			sprite2_[i]->SetPosition({ x, 0 }); // 位置を更新
+			sprite2_[i]->Draw(); // 描画
+		}
+		x -= spacing; // 画像の間隔
+	}
 }
 
 //メダルの数を描画
@@ -347,7 +385,7 @@ void GameScene::MedalDraw() {
 	size_t digitCount = countStr.length();
 
 	// 基準となる描画開始位置
-	float baseX = 1200.0f;
+	float baseX = 1200.0f, y = 120.0f;
 	float spacing = 65.0f; // 画像の間隔
 
 	// 最小2桁はそのまま描画
@@ -357,37 +395,10 @@ void GameScene::MedalDraw() {
 	for (size_t i = 0; i < digitCount; i++) {
 		int index = countStr[i] - '0'; // 0～9 のインデックス
 		if (index >= 0 && index < 10) {
-			sprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
-			sprite_[i]->SetPosition({ x, 0 }); // 位置を更新
-			sprite_[i]->Draw(); // 描画
+			sprite1_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
+			sprite1_[i]->SetPosition({ x, y }); // 位置を更新
+			sprite1_[i]->Draw(); // 描画
 		}
 		x += spacing; // 画像の間隔
-	}
-}
-
-void GameScene::DrawGameCount()
-{
-	//ゲームカウントを最大4桁に制限
-	if (GameCount > 9999) {
-		GameCount = 9999; //5桁以上にならないようにする
-	}
-
-	//メダル数を文字列に変換
-	std::string countStr = std::to_string(GameCount);
-	size_t digitCount = countStr.length();
-
-	// 基準となる描画開始位置
-	float x = 1200.0f, y = 80.0f;
-	float spacing = 65.0f; // 画像の間隔
-
-	//各桁を対応する画像で描画
-	for (size_t i = 0; i < digitCount; i++) {
-		int index = countStr[digitCount - 1 - i] - '0'; // 0～9 のインデックス
-		if (index >= 0 && index < 10) {
-			sprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
-			sprite_[i]->SetPosition({ x, y }); // 位置を更新
-			sprite_[i]->Draw(); // 描画
-		}
-		x -= spacing; // 画像の間隔
 	}
 }

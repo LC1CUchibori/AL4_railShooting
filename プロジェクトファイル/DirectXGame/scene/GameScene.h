@@ -49,11 +49,11 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	//メダルの数を描画
-	void MedalDraw();
-
 	//回転数を描画
 	void DrawGameCount();
+
+	//メダルの数を描画
+	void MedalDraw();
 
 	//クリアフラグのgetter
 	bool IsCleared() const { return cleared_; }
@@ -118,8 +118,10 @@ private: // メンバ変数
 	//ゲーム数
 	int GameCount = 0;
 
-	//数字
-	Sprite* sprite_[10];
+	//メダル用の数字
+	Sprite* sprite1_[10];
+	//ゲームカウント用の数字
+	Sprite* sprite2_[10];
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
