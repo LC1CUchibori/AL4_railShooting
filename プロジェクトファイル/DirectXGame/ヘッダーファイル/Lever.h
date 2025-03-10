@@ -22,6 +22,8 @@ public:
 
 
 private:
+    Audio *audio_ = nullptr;
+
     // 3Dモデル
     Model* model_ = nullptr;
     // ワールドトランスフォーム
@@ -35,12 +37,15 @@ private:
     const int DownTime = 10;         // 下がっている時間
     int downTimer_ = 0;              // 下がり時間カウント
 
-    bool isPulled_ = false;
-
-
     Rand rng;
 
     int storenum = rng.GetRandamNumber(0,300);
+
+    // サウンドデータハンドル
+    uint32_t LEVER = 0;
+
+    // 音声再生ハンドル
+    uint32_t voiceHandle_ = 0u;
 };
 
 

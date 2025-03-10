@@ -49,8 +49,10 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	// 回転数を描画
 	void DrawGameCount();
 
+	// メダルの数を描画
 	void DrawMedalCount();
 
 private: // メンバ変数
@@ -113,19 +115,24 @@ private: // メンバ変数
 	bool reel2IsStopped_ = false;
 	bool reel3IsStopped_ = false;
 
-	//メダル
-	int Medal = 0;
+	// メダル
+	int Medal = 30;
 
 	// ゲーム数
-	int gameCount_ = 0;
+	int GameCount = 0;
 
-	// 数字
-	Sprite* sprite_[10];
+	// ゲームカウント用のスプライト
+	Sprite* gameCountSprite_[10];
 	// メダルカウント用のスプライト
 	Sprite* medalSprite_[10];
-	//テクスチャハンドル
+	// テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
-	// リールを動かせなくするフラグ
-	bool Realflag = false;
+	// サウンドデータハンドル
+	uint32_t SLOT = 0;
+	uint32_t Click = 0;
+
+	// 音声再生ハンドル
+	uint32_t voiceHandle1_ = 0u;
+	uint32_t voiceHandle2_ = 0u;
 };
