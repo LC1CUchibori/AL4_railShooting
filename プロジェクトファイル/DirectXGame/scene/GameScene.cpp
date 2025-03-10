@@ -261,6 +261,20 @@ void GameScene::Update() {
 		}
 	}
 #pragma endregion
+
+#pragma region 勝つ・負ける条件の処理
+
+	//メダルの数が一定数超えたらクリア
+	if (Medal >= 100) {
+		cleared_ = true;
+	}
+
+	//メダルの数が2以下になったらゲームオーバー
+	if (Medal <= 2) {
+		finished_ = true;
+	}
+
+#pragma endregion
 }
 
 void GameScene::Draw() {

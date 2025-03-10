@@ -55,6 +55,12 @@ public: // メンバ関数
 	// メダルの数を描画
 	void DrawMedalCount();
 
+	// クリアフラグのgetter
+	bool IsCleared() const { return cleared_; }
+
+	// デスフラグのgetter
+	bool IsDead() const { return finished_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -135,4 +141,8 @@ private: // メンバ変数
 	// 音声再生ハンドル
 	uint32_t voiceHandle1_ = 0u;
 	uint32_t voiceHandle2_ = 0u;
+
+	// 終了フラグ
+	bool cleared_ = false;
+	bool finished_ = false;
 };
