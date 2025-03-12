@@ -1,15 +1,13 @@
 ﻿#pragma once
-#include <GameScene.h>
-#include <rand.h>
 
-
+#include "Audio.h"
 
 class Lever
 {
 public:
     void Initialize(Model* model, ViewProjection* viewProjection);
 
-    void Update(int &medal,int&gameCont);
+    void Update(int &medal, int&gameCont);
 
     void Draw();
 
@@ -17,9 +15,6 @@ public:
     {
         return downTimer_ > 0;
     }
-
-    int GetStorenum(){return storenum;}
-
 
 private:
     Audio *audio_ = nullptr;
@@ -37,17 +32,12 @@ private:
     const int DownTime = 10;         // 下がっている時間
     int downTimer_ = 0;              // 下がり時間カウント
 
-    Rand rng;
-
-    int storenum = rng.GetRandamNumber(0,300);
-
-    // サウンドデータハンドル
+    //サウンドデータハンドル
     uint32_t LEVER = 0;
 
-    // 音声再生ハンドル
-    uint32_t voiceHandle_ = 0u;
+    //音声再生ハンドル
+    uint32_t voiceHandle_ = 0;
+
+    bool isPulled_ = false;
 };
-
-
-
 

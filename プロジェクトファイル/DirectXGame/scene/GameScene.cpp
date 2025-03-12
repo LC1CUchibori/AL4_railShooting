@@ -56,21 +56,21 @@ void GameScene::Initialize() {
 	// スロットリールの生成
 	reel1_ = new Reel();
 	// スロットリールの初期化
-	reel1_->Initialize(modelReel_, &viewProjection_,lever_);
+	reel1_->Initialize(modelReel_, &viewProjection_);
 
 	// モデル生成
 	modelReel2_ = Model::CreateFromOBJ("Reel2", true);
 	// スロットリール2の生成
 	reel2_ = new Reel2();
 	// スロットリール2の初期化
-	reel2_->Initialize(modelReel2_, &viewProjection_,lever_);
+	reel2_->Initialize(modelReel2_, &viewProjection_);
 
 	// モデル生成
 	modelReel3_ = Model::CreateFromOBJ("Reel3", true);
 	// スロットリール3の生成
 	reel3_ = new Reel3();
 	// スロットリー3の初期化
-	reel3_->Initialize(modelReel3_, &viewProjection_,lever_);
+	reel3_->Initialize(modelReel3_, &viewProjection_);
 
 	// モデル生成
 	modelLeverParts_ = Model::CreateFromOBJ("LeverParts", true);
@@ -189,14 +189,14 @@ void GameScene::Update() {
 	static int pressCount = 0; // 何回ボタンを押したかを数える変数
 
 #pragma region メダルの処理
-	//投入口にメダル入れる処理
-	if (Input::GetInstance()->IsTriggerMouse(0)) {
+	//メダルが入る処理
+	if (Medal <= 2 && Input::GetInstance()->IsTriggerMouse(0)) {
 		//マウスの位置取得
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
-		//緑の投入口の判定処理
-		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455) {
-			Medal += 1;
+		//緑の貸出の判定処理
+		if (v.x >= 890 && v.x <= 935 && v.y >= 380 && v.y <= 400) {
+			Medal += 50;
 		}
 	}
 #pragma endregion
@@ -264,14 +264,9 @@ void GameScene::Update() {
 
 #pragma region 勝つ・負ける条件の処理
 
-	//メダルの数が一定数超えたらクリア
+	// メダルの数が一定数超えたらクリア
 	if (Medal >= 100) {
 		cleared_ = true;
-	}
-
-	//メダルの数が2以下になったらゲームオーバー
-	if (Medal <= 2) {
-		finished_ = true;
 	}
 
 #pragma endregion
@@ -304,6 +299,8 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	
+
 	// スロット鏡台
 	slot_->Draw();
 
@@ -399,7 +396,7 @@ void GameScene::DrawMedalCount()
 	size_t digitCount = countStr.length();
 
 	// 基準となる描画開始位置
-	float baseX = 1200.0f, y = 120.0f;
+	float baseX = 690.0f, y = 400.0f;
 	float spacing = 65.0f; // 画像の間隔
 
 	// 最小2桁はそのまま描画

@@ -122,7 +122,7 @@ private: // メンバ変数
 	bool reel3IsStopped_ = false;
 
 	// メダル
-	int Medal = 30;
+	int Medal = 0;
 
 	// ゲーム数
 	int GameCount = 0;

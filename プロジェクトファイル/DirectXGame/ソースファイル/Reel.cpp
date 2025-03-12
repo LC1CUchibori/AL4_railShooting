@@ -2,14 +2,12 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "ヘッダーファイル/Reel.h"
-#include "ヘッダーファイル/Lever.h"
 
-void Reel::Initialize(Model* model, ViewProjection* viewProjection, Lever* lever)
+void Reel::Initialize(Model* model, ViewProjection* viewProjection)
 {
 	worldTransform_.Initialize(); 
 	model_ = model;
 	viewProjection_ = viewProjection;
-	lever_ = lever;
 
 	// リール上のシンボルをセットアップ
 	symbols_ = {
@@ -35,7 +33,7 @@ void Reel::Update()
 	if (isRotating_)
 	{
 		// Y軸周りに回転
-		worldTransform_.rotation_.x += 0.5f;
+		worldTransform_.rotation_.x += 0.1f;
 	}  
 	else if (isStopping_)
 	{
@@ -85,17 +83,9 @@ void Reel::StopRotation()
 
 	isRotating_ = false;
 
-	float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
+	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
 	float& rotationX = worldTransform_.rotation_.x;
 
-
-	if (lever_->GetStorenum() <= 50) {
-		rotationX = 180.0f;
-	}
-
-	/*if (lever_->GetStorenum() <= 20) {
-	rotationX = 220.0f;
-	}*/
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
 
@@ -110,27 +100,10 @@ void Reel::StopRotation()
 
 Reel::Symbol Reel::GetResultSymbol()
 {
-	float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
+	const float symbolAngleRad = 36.0f * (3.14159265f / 180.0f);
 	// 回転角からシンボルインデックスを求める
-
-
 	float rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
-
-	if (lever_->GetStorenum() <= 50) {
-		rotationX = 180.0f;
-	}
-	/* if (lever_->GetStorenum() <= 20) {
-	rotationX = 220.0f;
-	}*/
-
-	rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
-
-
 	if (rotationX < 0) rotationX += 2.0f * 3.14159265f; // マイナス対策
-	/*if (lever_->GetStorenum() <= 50) {
-	symbolAngleRad =36.0f;
-	}*/
-
 
 	int symbolIndex = static_cast<int>(round(rotationX / symbolAngleRad)) % symbols_.size();
 	return symbols_[symbolIndex];

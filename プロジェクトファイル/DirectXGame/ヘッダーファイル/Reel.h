@@ -1,10 +1,8 @@
 ﻿#pragma once
-class Lever;
-
 class Reel
 {
 public:
-    void Initialize(Model* model, ViewProjection* viewProjection,Lever* lever);
+    void Initialize(Model* model, ViewProjection* viewProjection);
 
     void Update();
 
@@ -38,8 +36,6 @@ private:
     // ビュープロジェクション
     ViewProjection* viewProjection_ = nullptr;
 
-    Lever* lever_ = nullptr;
-
     // 回転してるかのフラグ
     bool isRotating_ = false;
 
@@ -52,6 +48,5 @@ private:
     std::vector<Symbol> symbols_; // リールに並ぶ役
 
     const float symbolAngleRad_ = 36.0f * (3.14159265f / 180.0f); // 一つのシンボル間の角度（10シンボルなら36度）
-
 };
 

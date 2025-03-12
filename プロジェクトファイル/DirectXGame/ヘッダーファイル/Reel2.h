@@ -1,10 +1,8 @@
 ﻿#pragma once
-class Lever;
-
 class Reel2
 {
 public:
-    void Initialize(Model* model, ViewProjection* viewProjection,Lever* lever);
+    void Initialize(Model* model, ViewProjection* viewProjection);
 
     void Update();
 
@@ -50,9 +48,5 @@ private:
     std::vector<Symbol> symbols_; // リールに並ぶ役
 
     const float symbolAngleRad_ = 36.0f * (3.14159265f / 180.0f);
-
-    //eel* reel1 = nullptr;
-
-    Lever* lever_ = nullptr;
 };
 
